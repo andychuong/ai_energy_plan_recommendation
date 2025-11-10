@@ -11,6 +11,7 @@ This document outlines the implementation plan for building the AI Energy Plan R
 ### Parallel Development Approach
 
 The project will be developed in three parallel tracks:
+
 1. **Frontend Track**: React application with shadcn UI
 2. **Backend Track**: AWS Amplify infrastructure and APIs
 3. **CI/CD Track**: GitHub Actions workflows and automation
@@ -22,11 +23,13 @@ These tracks will be integrated at defined milestones, with a memory bank system
 ## Phase 1: Foundation & CI/CD Setup (Week 1-2)
 
 ### Objective
+
 Set up development infrastructure, CI/CD pipelines, and foundational components that both frontend and backend will use.
 
 ### Parallel Tasks
 
 #### Track 1: CI/CD Infrastructure
+
 **Priority**: Critical - Must be done first
 
 - [ ] Create GitHub repository
@@ -49,12 +52,14 @@ Set up development infrastructure, CI/CD pipelines, and foundational components 
 - [ ] Configure preview deployments
 
 **Deliverables**:
+
 - Working CI/CD pipeline
 - Automated linting and testing
 - Preview deployments for PRs
 - Code quality gates in place
 
 #### Track 2: Project Initialization
+
 **Priority**: Critical - Foundation for both tracks
 
 - [ ] Initialize React application with TypeScript
@@ -70,12 +75,14 @@ Set up development infrastructure, CI/CD pipelines, and foundational components 
 - [ ] Set up OAuth providers (Google, Facebook, etc.)
 
 **Deliverables**:
+
 - React application initialized
 - AWS Amplify project initialized
 - Development environment ready
 - Authentication configured
 
 #### Track 3: Memory Bank System
+
 **Priority**: High - Supports both frontend and backend
 
 - [ ] Design memory bank architecture
@@ -93,6 +100,7 @@ Set up development infrastructure, CI/CD pipelines, and foundational components 
 - [ ] Create memory bank analytics
 
 **Deliverables**:
+
 - Memory bank database schema
 - Memory bank API endpoints
 - Memory bank service layer
@@ -103,11 +111,13 @@ Set up development infrastructure, CI/CD pipelines, and foundational components 
 ## Phase 2: Parallel Development - Frontend & Backend (Week 3-6)
 
 ### Objective
+
 Develop frontend and backend components independently with mock data and APIs, using the memory bank for data persistence.
 
 ### Frontend Track
 
 #### 2.1 UI Foundation
+
 - [x] Install and configure shadcn/ui
 - [x] Set up Tailwind CSS
 - [x] Create base layout components
@@ -123,6 +133,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [x] Create toast notification system (via Alert component)
 
 #### 2.2 Data Visualization Components
+
 - [x] Install Recharts
 - [x] Create usage pattern line chart component
 - [x] Create monthly usage bar chart component
@@ -134,6 +145,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create interactive chart components (can be added later)
 
 #### 2.3 Address Lookup
+
 - [ ] Set up Google Places API (pending backend integration)
 - [ ] Create address autocomplete component (pending backend integration)
 - [ ] Implement address validation (pending backend integration)
@@ -141,6 +153,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Integrate with user profile (pending backend integration)
 
 #### 2.4 Usage Data Upload Interface
+
 - [x] Create upload page layout
 - [x] Build file upload component
 - [x] Create CSV parser component (basic implementation)
@@ -153,6 +166,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Build API connection interface (pending backend integration)
 
 #### 2.5 Preferences Interface
+
 - [x] Create preferences form layout
 - [x] Build cost savings priority selector
 - [x] Create flexibility preference selector
@@ -163,6 +177,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [x] Implement form validation
 
 #### 2.6 Recommendation Display
+
 - [x] Design recommendation card component
 - [x] Create top 3 recommendations display
 - [x] Build savings visualization
@@ -173,6 +188,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [x] Create recommendation loading states
 
 #### 2.7 Plan Comparison Interface
+
 - [ ] Create side-by-side comparison view (can be added later)
 - [ ] Build plan feature table (can be added later)
 - [ ] Create cost breakdown visualization (can be added later)
@@ -181,6 +197,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Make comparison responsive (can be added later)
 
 #### 2.8 Risk Awareness UI
+
 - [x] Create risk flag UI components (integrated in RecommendationCard)
 - [x] Build risk explanation tooltips (via Alert component)
 - [x] Create risk severity indicators (via Badge component)
@@ -189,6 +206,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create switching analysis display (can be added later)
 
 #### 2.9 Feedback Interface
+
 - [ ] Create rating component (pending backend integration)
 - [ ] Build star rating interface (pending backend integration)
 - [ ] Create thumbs up/down interface (pending backend integration)
@@ -197,6 +215,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create feedback collection UI (pending backend integration)
 
 #### 2.10 Mobile Responsiveness & Accessibility
+
 - [x] Test and fix mobile layouts
 - [x] Optimize touch interactions
 - [x] Create mobile navigation (via Header component)
@@ -209,6 +228,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Optimize mobile data usage (pending optimization)
 
 **Frontend Deliverables**:
+
 - [x] Complete UI components
 - [x] All user flows functional
 - [x] Data visualizations working
@@ -218,6 +238,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 ### Backend Track
 
 #### 2.1 AWS Amplify Infrastructure
+
 - [ ] Configure Amplify API (AppSync or REST)
 - [ ] Set up DynamoDB tables
   - [ ] Users table
@@ -236,6 +257,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Configure CORS policies
 
 #### 2.2 Energy API Integrations
+
 - [ ] Set up EIA API client
   - [ ] Create API client service
   - [ ] Implement error handling
@@ -257,6 +279,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create plan catalog update scheduler
 
 #### 2.3 Usage Data API Integrations
+
 - [ ] Set up Public Grid API client
   - [ ] Create API client service
   - [ ] Implement OAuth flow
@@ -276,6 +299,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create usage data storage schema
 
 #### 2.4 OpenAI Integration
+
 - [ ] Set up OpenAI API client
 - [ ] Create data normalization prompts
 - [ ] Implement data normalization service
@@ -294,6 +318,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Add caching for OpenAI responses
 
 #### 2.5 Recommendation Engine
+
 - [ ] Design recommendation algorithm
 - [ ] Implement plan ranking logic
 - [ ] Create preference matching algorithm
@@ -319,6 +344,7 @@ Develop frontend and backend components independently with mock data and APIs, u
   - [ ] Early termination fee analysis
 
 #### 2.6 Risk Awareness Logic
+
 - [ ] Implement high termination fee detection
 - [ ] Create variable rate risk detection
 - [ ] Implement promotional rate expiration detection
@@ -333,6 +359,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create stay vs switch recommendation
 
 #### 2.7 API Endpoints
+
 - [ ] Create usage data upload endpoint
 - [ ] Create usage data retrieval endpoint
 - [ ] Create preferences save endpoint
@@ -347,6 +374,7 @@ Develop frontend and backend components independently with mock data and APIs, u
 - [ ] Create API documentation
 
 **Backend Deliverables**:
+
 - All API endpoints functional
 - Energy API integrations working
 - OpenAI integration complete
@@ -358,11 +386,13 @@ Develop frontend and backend components independently with mock data and APIs, u
 ## Phase 3: Integration & Testing (Week 7-8)
 
 ### Objective
+
 Integrate frontend and backend, replace mock data with real APIs, and perform comprehensive testing.
 
 ### Integration Tasks
 
 #### 3.1 API Integration
+
 - [ ] Connect frontend to backend APIs
 - [ ] Replace mock data with real API calls
 - [ ] Implement API error handling in frontend
@@ -373,6 +403,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Verify data flow end-to-end
 
 #### 3.2 Authentication Integration
+
 - [ ] Connect frontend auth to Cognito
 - [ ] Implement OAuth flows in frontend
 - [ ] Add protected routes
@@ -382,6 +413,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Verify user data persistence
 
 #### 3.3 Memory Bank Integration
+
 - [ ] Connect frontend to memory bank APIs
 - [ ] Implement user preferences persistence
 - [ ] Store usage patterns in memory bank
@@ -391,6 +423,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Test memory bank data flow
 
 #### 3.4 Data Flow Testing
+
 - [ ] Test complete user registration flow
 - [ ] Test usage data upload flow
 - [ ] Test recommendation generation flow
@@ -402,6 +435,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 ### Testing Tasks
 
 #### 3.5 Unit Testing
+
 - [ ] Write tests for frontend components
 - [ ] Write tests for backend functions
 - [ ] Write tests for API clients
@@ -411,6 +445,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Achieve 70%+ code coverage
 
 #### 3.6 Integration Testing
+
 - [ ] Write API integration tests
 - [ ] Create database integration tests
 - [ ] Write authentication flow tests
@@ -419,6 +454,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Test memory bank integration
 
 #### 3.7 End-to-End Testing
+
 - [ ] Create user registration flow test
 - [ ] Write usage data upload flow test
 - [ ] Create recommendation display flow test
@@ -427,6 +463,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Test complete user journey
 
 #### 3.8 Performance Testing
+
 - [ ] Test recommendation generation speed
 - [ ] Load test API endpoints
 - [ ] Test database query performance
@@ -435,6 +472,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Optimize slow operations
 
 #### 3.9 Security Testing
+
 - [ ] Perform security vulnerability scanning
 - [ ] Test authentication and authorization
 - [ ] Test data encryption
@@ -443,6 +481,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Verify API security
 
 #### 3.10 Accessibility Testing
+
 - [ ] Test with screen readers
 - [ ] Test keyboard navigation
 - [ ] Test color contrast
@@ -451,6 +490,7 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 - [ ] Fix accessibility issues
 
 **Integration Deliverables**:
+
 - Frontend and backend fully integrated
 - All APIs connected and working
 - Memory bank integrated
@@ -463,11 +503,13 @@ Integrate frontend and backend, replace mock data with real APIs, and perform co
 ## Phase 4: Deployment & Launch (Week 9-10)
 
 ### Objective
+
 Deploy to production, set up monitoring, and launch the application.
 
 ### Deployment Tasks
 
 #### 4.1 Production Setup
+
 - [ ] Configure production AWS environment
 - [ ] Set up production DynamoDB tables
 - [ ] Configure production S3 buckets
@@ -478,6 +520,7 @@ Deploy to production, set up monitoring, and launch the application.
 - [ ] Set up production Amplify app
 
 #### 4.2 Monitoring & Alerting
+
 - [ ] Set up CloudWatch monitoring
 - [ ] Configure error tracking (Sentry)
 - [ ] Set up performance monitoring
@@ -488,6 +531,7 @@ Deploy to production, set up monitoring, and launch the application.
 - [ ] Create monitoring dashboards
 
 #### 4.3 Documentation
+
 - [ ] Write user guide
 - [ ] Create API documentation
 - [ ] Write deployment guide
@@ -497,6 +541,7 @@ Deploy to production, set up monitoring, and launch the application.
 - [ ] Write admin documentation
 
 #### 4.4 Launch Preparation
+
 - [ ] Perform final testing
 - [ ] Create launch checklist
 - [ ] Set up support channels
@@ -507,6 +552,7 @@ Deploy to production, set up monitoring, and launch the application.
 - [ ] Configure feature flags
 
 #### 4.5 Launch
+
 - [ ] Deploy to production
 - [ ] Verify all systems operational
 - [ ] Monitor initial traffic
@@ -515,6 +561,7 @@ Deploy to production, set up monitoring, and launch the application.
 - [ ] Gather initial feedback
 
 **Deployment Deliverables**:
+
 - Production deployment complete
 - Monitoring operational
 - Documentation complete
@@ -532,6 +579,7 @@ The memory bank system stores and retrieves user data, preferences, usage patter
 ### Data Models
 
 #### User Preferences
+
 - User ID
 - Cost savings priority
 - Flexibility preference
@@ -543,6 +591,7 @@ The memory bank system stores and retrieves user data, preferences, usage patter
 - Last updated timestamp
 
 #### Usage Patterns
+
 - User ID
 - Historical usage data
 - Seasonal patterns
@@ -552,6 +601,7 @@ The memory bank system stores and retrieves user data, preferences, usage patter
 - Last updated timestamp
 
 #### Recommendation History
+
 - User ID
 - Recommendation ID
 - Plan ID
@@ -562,6 +612,7 @@ The memory bank system stores and retrieves user data, preferences, usage patter
 - Created timestamp
 
 #### Feedback and Ratings
+
 - User ID
 - Recommendation ID
 - Rating (1-5 stars)
@@ -576,6 +627,7 @@ The memory bank system stores and retrieves user data, preferences, usage patter
 #### Database Schema (DynamoDB)
 
 **UserPreferences Table**
+
 ```
 PK: userId (String)
 Attributes:
@@ -585,6 +637,7 @@ Attributes:
 ```
 
 **UsagePatterns Table**
+
 ```
 PK: userId (String)
 SK: patternId (String)
@@ -595,6 +648,7 @@ Attributes:
 ```
 
 **RecommendationHistory Table**
+
 ```
 PK: userId (String)
 SK: recommendationId (String)
@@ -608,6 +662,7 @@ Attributes:
 ```
 
 **Feedback Table**
+
 ```
 PK: userId (String)
 SK: feedbackId (String)
@@ -634,15 +689,15 @@ Attributes:
 ```typescript
 // Memory Bank Service
 class MemoryBankService {
-  async savePreferences(userId: string, preferences: Preferences)
-  async getPreferences(userId: string): Promise<Preferences>
-  async saveUsagePattern(userId: string, pattern: UsagePattern)
-  async getUsagePatterns(userId: string): Promise<UsagePattern[]>
-  async saveRecommendation(userId: string, recommendation: Recommendation)
-  async getRecommendationHistory(userId: string): Promise<Recommendation[]>
-  async saveFeedback(userId: string, feedback: Feedback)
-  async getFeedback(userId: string): Promise<Feedback[]>
-  async analyzeUserPatterns(userId: string): Promise<Analysis>
+  async savePreferences(userId: string, preferences: Preferences);
+  async getPreferences(userId: string): Promise<Preferences>;
+  async saveUsagePattern(userId: string, pattern: UsagePattern);
+  async getUsagePatterns(userId: string): Promise<UsagePattern[]>;
+  async saveRecommendation(userId: string, recommendation: Recommendation);
+  async getRecommendationHistory(userId: string): Promise<Recommendation[]>;
+  async saveFeedback(userId: string, feedback: Feedback);
+  async getFeedback(userId: string): Promise<Feedback[]>;
+  async analyzeUserPatterns(userId: string): Promise<Analysis>;
 }
 ```
 
@@ -671,24 +726,28 @@ class MemoryBankService {
 ## CI/CD Implementation Timeline
 
 ### Week 1: Basic CI/CD Setup
+
 - Set up GitHub Actions workflows
 - Configure linting and testing
 - Set up automated builds
 - Configure branch protection
 
 ### Week 2: Advanced CI/CD
+
 - Set up preview deployments
 - Configure security scanning
 - Set up code quality gates
 - Configure automated testing
 
 ### Week 3: Integration with Development
+
 - Connect CI/CD to development workflow
 - Set up automated deployments for branches
 - Configure environment-specific deployments
 - Set up monitoring and alerting
 
 ### Week 4: Production CI/CD
+
 - Configure production deployment pipeline
 - Set up staging environment
 - Configure production approval gates
@@ -699,6 +758,7 @@ class MemoryBankService {
 ## Parallel Development Coordination
 
 ### Daily Standups
+
 - Frontend team updates
 - Backend team updates
 - CI/CD team updates
@@ -706,6 +766,7 @@ class MemoryBankService {
 - Integration points discussion
 
 ### Weekly Integration Checkpoints
+
 - Review API contracts
 - Test integration points
 - Verify data flow
@@ -713,12 +774,14 @@ class MemoryBankService {
 - Update documentation
 
 ### Integration Milestones
+
 - **Milestone 1**: API contracts defined (Week 2)
 - **Milestone 2**: Mock APIs ready (Week 4)
 - **Milestone 3**: Real APIs integrated (Week 6)
 - **Milestone 4**: Full integration complete (Week 8)
 
 ### Communication Channels
+
 - API contract documentation
 - Shared mock data format
 - Integration testing environment
@@ -732,28 +795,34 @@ class MemoryBankService {
 ### Parallel Development Risks
 
 **Risk**: API contracts change during development
+
 - **Mitigation**: Define API contracts early and maintain versioning
 - **Mitigation**: Use mock APIs that match contracts
 
 **Risk**: Integration issues discovered late
+
 - **Mitigation**: Weekly integration checkpoints
 - **Mitigation**: Early integration testing
 
 **Risk**: Frontend and backend out of sync
+
 - **Mitigation**: Shared API documentation
 - **Mitigation**: Regular communication
 
 **Risk**: Memory bank not ready when needed
+
 - **Mitigation**: Build memory bank early (Phase 1)
 - **Mitigation**: Use simple storage initially, enhance later
 
 ### CI/CD Risks
 
 **Risk**: CI/CD pipeline breaks development flow
+
 - **Mitigation**: Test CI/CD thoroughly before enforcing
 - **Mitigation**: Allow manual overrides for emergencies
 
 **Risk**: Deployment failures
+
 - **Mitigation**: Comprehensive testing before production
 - **Mitigation**: Staging environment for testing
 - **Mitigation**: Rollback procedures in place
@@ -763,24 +832,28 @@ class MemoryBankService {
 ## Success Criteria
 
 ### Phase 1 Success
+
 - CI/CD pipeline operational
 - Development environment ready
 - Memory bank system functional
 - Authentication working
 
 ### Phase 2 Success
+
 - Frontend components complete
 - Backend APIs functional
 - All integrations working
 - Tests passing
 
 ### Phase 3 Success
+
 - Frontend and backend integrated
 - All APIs connected
 - Memory bank integrated
 - Comprehensive test coverage
 
 ### Phase 4 Success
+
 - Production deployment successful
 - Monitoring operational
 - System stable
@@ -801,11 +874,10 @@ class MemoryBankService {
 ## Document Control
 
 **Version**: 1.0  
-**Last Updated**: 2025  
+**Last Updated**: November 2025  
 **Owner**: Engineering Team  
 **Stakeholders**: Frontend Team, Backend Team, DevOps Team, Product Team
 
 ---
 
 **End of Document**
-

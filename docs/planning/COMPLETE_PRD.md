@@ -3,7 +3,7 @@
 **Organization:** Arbor  
 **Project ID:** 85twgWvlJ3Z1g6dpiGy5_1762214728178  
 **Version:** 1.0  
-**Last Updated:** 2025
+**Last Updated:** November 2025
 
 ---
 
@@ -1101,7 +1101,7 @@ See ARCHITECTURE.md for detailed system architecture and diagrams.
 ## Document Control
 
 **Version**: 1.0  
-**Last Updated**: 2025  
+**Last Updated**: November 2025  
 **Next Review**: TBD  
 **Owner**: Arbor Product Team  
 **Stakeholders**: Engineering, Design, Product, Business

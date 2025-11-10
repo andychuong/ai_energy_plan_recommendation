@@ -45,11 +45,13 @@ git push -u origin main
 Go to **Settings → Secrets and variables → Actions** and add:
 
 **Required**:
+
 - `AWS_ACCESS_KEY_ID`
 - `AWS_SECRET_ACCESS_KEY`
 - `AMPLIFY_APP_ID`
 
 **Optional**:
+
 - `REACT_APP_API_URL`
 - `REACT_APP_GOOGLE_MAPS_API_KEY`
 - `REACT_APP_OPENAI_API_KEY`
@@ -58,6 +60,7 @@ Go to **Settings → Secrets and variables → Actions** and add:
 ### 3. Set Up Branch Protection
 
 Go to **Settings → Branches** and protect `main`:
+
 - Require PR before merging
 - Require status checks: `lint`, `test`, `build`, `security`
 
@@ -81,4 +84,3 @@ See `docs/setup/GITHUB_REPO_SETUP.md` for detailed setup instructions.
 ---
 
 **Ready to push!** 🚀
-

@@ -7,6 +7,7 @@ The frontend for the Arbor AI Energy Plan Recommendation Agent has been successf
 ## What Was Built
 
 ### 1. UI Components (shadcn/ui)
+
 - **Button** - Multiple variants (default, destructive, outline, secondary, ghost, link)
 - **Card** - Card container with header, content, footer, title, and description
 - **Input** - Form input component
@@ -16,11 +17,13 @@ The frontend for the Arbor AI Energy Plan Recommendation Agent has been successf
 - **Slider** - Range slider component for preferences
 
 ### 2. Layout Components
+
 - **Header** - Navigation header with user authentication state
 - **Layout** - Main layout wrapper
 - **ProtectedRoute** - Route guard for authenticated pages
 
 ### 3. Pages
+
 - **HomePage** - Landing page with feature overview
 - **Dashboard** - Main dashboard showing usage data, preferences, and recommendations status
 - **UploadPage** - CSV file upload for energy usage data
@@ -28,21 +31,26 @@ The frontend for the Arbor AI Energy Plan Recommendation Agent has been successf
 - **RecommendationsPage** - Display and generate energy plan recommendations
 
 ### 4. Feature Components
+
 - **RecommendationCard** - Card component for displaying individual recommendations with savings, plan details, and risk flags
 
 ### 5. Chart Components
+
 - **UsageChart** - Line chart showing energy usage and cost over time
 - **MonthlyUsageChart** - Bar chart showing monthly energy usage
 
 ### 6. Hooks
+
 - **useRecommendations** - Hook for fetching and generating recommendations
 - **useUsageData** - Hook for managing usage data
 - **useUserPreferences** - Hook for managing user preferences
 
 ### 7. Contexts
+
 - **AuthContext** - Authentication context using AWS Amplify Auth
 
 ### 8. Services
+
 - **API Client** - Centralized API client with mock data support
 - **Format Utilities** - Currency, number, and percentage formatting utilities
 
@@ -67,6 +75,7 @@ src/
 ## Key Features
 
 ### Authentication
+
 - AWS Amplify Auth integration
 - Google OAuth support
 - Email/password authentication
@@ -74,12 +83,14 @@ src/
 - User session management
 
 ### Data Management
+
 - React Query for server state management
 - Mock API support for development
 - Type-safe API client
 - Error handling
 
 ### User Experience
+
 - Responsive design with Tailwind CSS
 - Loading states
 - Error messages
@@ -87,6 +98,7 @@ src/
 - Form validation
 
 ### Data Visualization
+
 - Recharts integration for charts
 - Usage pattern visualization
 - Cost comparison charts
@@ -95,6 +107,7 @@ src/
 ## Integration Points
 
 ### Backend Integration
+
 The frontend is designed to integrate seamlessly with the backend:
 
 1. **API Client** (`src/services/api/client.ts`)
@@ -112,21 +125,25 @@ The frontend is designed to integrate seamlessly with the backend:
    - Session management
 
 ### Environment Variables
+
 - `VITE_USE_MOCK_API` - Set to `true` to use mock data (default: false)
 
 ## Running the Application
 
 1. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 2. **Start Development Server**
+
    ```bash
    npm run dev
    ```
 
 3. **Build for Production**
+
    ```bash
    npm run build
    ```
@@ -166,6 +183,7 @@ The frontend is designed to integrate seamlessly with the backend:
 ## Type Safety
 
 All components and services are fully typed with TypeScript:
+
 - Shared types in `shared/types/`
 - Component prop types
 - API request/response types
@@ -181,6 +199,7 @@ All components and services are fully typed with TypeScript:
 ## Testing
 
 The application is ready for testing:
+
 - Unit tests can be added using Jest and React Testing Library
 - Integration tests for API calls
 - E2E tests for user flows
@@ -199,4 +218,3 @@ The application is ready for testing:
 - Authentication is fully integrated with AWS Amplify
 - The UI is responsive and accessible
 - All routes are protected except the home page and auth page
-

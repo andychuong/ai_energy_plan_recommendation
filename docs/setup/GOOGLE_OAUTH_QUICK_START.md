@@ -72,5 +72,5 @@ See `GOOGLE_OAUTH_SETUP.md` for detailed instructions and troubleshooting.
 ---
 
 **Version**: 1.0  
-**Last Updated**: 2025
+**Last Updated**: November 2025
 

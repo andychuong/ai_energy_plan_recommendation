@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -8,11 +14,14 @@ export function HomePage() {
 
   return (
     <div className="container mx-auto px-4 py-16">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">AI Energy Plan Recommendation Agent</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Get personalized energy plan recommendations based on your usage patterns and preferences.
-          Save money and find the perfect plan for your needs.
+      <div className="mb-12 text-center">
+        <h1 className="mb-4 text-4xl font-bold">
+          AI Energy Plan Recommendation Agent
+        </h1>
+        <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
+          Get personalized energy plan recommendations based on your usage
+          patterns and preferences. Save money and find the perfect plan for
+          your needs.
         </p>
       </div>
 
@@ -30,17 +39,19 @@ export function HomePage() {
         </div>
       )}
 
-      <div className="grid gap-6 md:grid-cols-3 mt-16">
+      <div className="mt-16 grid gap-6 md:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>Upload Your Data</CardTitle>
             <CardDescription>
-              Upload your energy usage data to get started with personalized recommendations
+              Upload your energy usage data to get started with personalized
+              recommendations
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              We support CSV files and can integrate with popular energy providers
+              We support CSV files and can integrate with popular energy
+              providers
             </p>
           </CardContent>
         </Card>
@@ -49,7 +60,8 @@ export function HomePage() {
           <CardHeader>
             <CardTitle>Set Your Preferences</CardTitle>
             <CardDescription>
-              Configure your preferences for cost, renewable energy, and contract flexibility
+              Configure your preferences for cost, renewable energy, and
+              contract flexibility
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -68,7 +80,8 @@ export function HomePage() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Our AI analyzes your data and preferences to find the best energy plans for you
+              Our AI analyzes your data and preferences to find the best energy
+              plans for you
             </p>
           </CardContent>
         </Card>
@@ -76,4 +89,3 @@ export function HomePage() {
     </div>
   );
 }
-

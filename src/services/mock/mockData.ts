@@ -1,6 +1,6 @@
 /**
  * Mock Data for Frontend Development
- * 
+ *
  * This file contains mock data generators for development.
  * Switch to real API when backend is ready.
  */
@@ -33,7 +33,7 @@ export function generateMockPlans(): EnergyPlan[] {
       planId: 'plan-2',
       supplierName: 'Budget Power',
       planName: 'Budget Basic',
-      ratePerKwh: 0.10,
+      ratePerKwh: 0.1,
       contractType: 'fixed',
       contractLengthMonths: 24,
       renewablePercentage: 0,
@@ -72,11 +72,15 @@ export function generateMockUsageData(): CustomerUsageData {
       utilityName: 'PG&E',
       utilityId: 'pge-123',
     },
-    usageDataPoints: Array.from({ length: 12 }, (_, i) => ({
-      timestamp: new Date(2025, i, 1).toISOString(),
-      kwh: 500 + Math.random() * 200,
-      cost: (500 + Math.random() * 200) * 0.12,
-    })),
+    usageDataPoints: Array.from({ length: 12 }, (_, i) => {
+      const now = new Date();
+      const date = new Date(now.getFullYear(), i, 1);
+      return {
+        timestamp: date.toISOString(),
+        kwh: 500 + Math.random() * 200,
+        cost: (500 + Math.random() * 200) * 0.12,
+      };
+    }),
     aggregatedStats: {
       totalKwh: 7200,
       totalCost: 864,
@@ -92,8 +96,12 @@ export function generateMockUsageData(): CustomerUsageData {
         ratePerKwh: 0.13,
       },
       billingPeriod: {
-        start: '2025-01-01',
-        end: '2025-12-31',
+        start: new Date(new Date().getFullYear(), 0, 1)
+          .toISOString()
+          .split('T')[0],
+        end: new Date(new Date().getFullYear(), 11, 31)
+          .toISOString()
+          .split('T')[0],
       },
     },
   };
@@ -110,7 +118,8 @@ export function generateMockRecommendations(): Recommendation[] {
       planId: 'plan-1',
       rank: 1,
       projectedSavings: 120,
-      explanation: 'Best match for your usage pattern with 100% renewable energy',
+      explanation:
+        'Best match for your usage pattern with 100% renewable energy',
       riskFlags: [],
       createdAt: now,
     },
@@ -176,4 +185,3 @@ export function generateMockUsagePattern(): UsagePattern {
     updatedAt: new Date().toISOString(),
   };
 }
-

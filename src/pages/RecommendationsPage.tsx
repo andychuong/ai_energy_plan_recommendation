@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,7 +28,10 @@ export function RecommendationsPage() {
   const [error, setError] = useState<string | null>(null);
   const [plans, setPlans] = useState<Map<string, EnergyPlan>>(new Map());
 
-  const { generateRecommendations } = useRecommendations(userId, usageData || null);
+  const { generateRecommendations } = useRecommendations(
+    userId,
+    usageData || null
+  );
 
   const handleGenerateRecommendations = async () => {
     if (!userId || !usageData || !preferences) {
@@ -37,7 +46,7 @@ export function RecommendationsPage() {
       // Fetch plans first
       const state = 'CA'; // TODO: Get from user profile or preferences
       const availablePlans = await apiClient.getEnergyPlans(state);
-      const plansMap = new Map(availablePlans.map((plan) => [plan.planId, plan]));
+      const plansMap = new Map(availablePlans.map(plan => [plan.planId, plan]));
       setPlans(plansMap);
 
       // Generate recommendations
@@ -48,18 +57,26 @@ export function RecommendationsPage() {
           preferences,
         },
         {
-          onSuccess: (data) => {
+          onSuccess: data => {
             setRecommendations(data);
             setIsGenerating(false);
           },
-          onError: (err) => {
-            setError(err instanceof Error ? err.message : 'Failed to generate recommendations');
+          onError: err => {
+            setError(
+              err instanceof Error
+                ? err.message
+                : 'Failed to generate recommendations'
+            );
             setIsGenerating(false);
           },
         }
       );
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to generate recommendations');
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Failed to generate recommendations'
+      );
       setIsGenerating(false);
     }
   };
@@ -75,11 +92,12 @@ export function RecommendationsPage() {
   if (!usageData || !preferences) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <Card className="max-w-2xl mx-auto">
+        <Card className="mx-auto max-w-2xl">
           <CardHeader>
             <CardTitle>Missing Information</CardTitle>
             <CardDescription>
-              You need to upload usage data and set preferences before getting recommendations
+              You need to upload usage data and set preferences before getting
+              recommendations
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -103,8 +121,9 @@ export function RecommendationsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Recommendations</h1>
-        <p className="text-muted-foreground mt-2">
-          Get personalized energy plan recommendations based on your usage and preferences
+        <p className="mt-2 text-muted-foreground">
+          Get personalized energy plan recommendations based on your usage and
+          preferences
         </p>
       </div>
 
@@ -121,11 +140,12 @@ export function RecommendationsPage() {
       )}
 
       {recommendations.length === 0 ? (
-        <Card className="max-w-2xl mx-auto">
+        <Card className="mx-auto max-w-2xl">
           <CardHeader>
             <CardTitle>Generate Recommendations</CardTitle>
             <CardDescription>
-              Click the button below to generate personalized energy plan recommendations
+              Click the button below to generate personalized energy plan
+              recommendations
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -135,7 +155,9 @@ export function RecommendationsPage() {
               className="w-full"
               size="lg"
             >
-              {isGenerating ? 'Generating Recommendations...' : 'Generate Recommendations'}
+              {isGenerating
+                ? 'Generating Recommendations...'
+                : 'Generate Recommendations'}
             </Button>
           </CardContent>
         </Card>
@@ -143,13 +165,17 @@ export function RecommendationsPage() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">Top Recommendations</h2>
-            <Button variant="outline" onClick={handleGenerateRecommendations} disabled={isGenerating}>
+            <Button
+              variant="outline"
+              onClick={handleGenerateRecommendations}
+              disabled={isGenerating}
+            >
               Regenerate
             </Button>
           </div>
 
           <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-            {recommendations.map((recommendation) => (
+            {recommendations.map(recommendation => (
               <RecommendationCard
                 key={recommendation.recommendationId || recommendation.planId}
                 recommendation={recommendation}
@@ -172,4 +198,3 @@ export function RecommendationsPage() {
     </div>
   );
 }
-

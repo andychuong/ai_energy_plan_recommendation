@@ -1,10 +1,15 @@
 /**
  * API contract types
- * 
+ *
  * These types define the API contracts between frontend and backend
  */
 
-import type { UserPreferences, UsageData, Recommendation, CurrentPlan } from './models';
+import type {
+  UserPreferences,
+  UsageData,
+  Recommendation,
+  CurrentPlan,
+} from './models';
 
 // Request types
 export interface RecommendationRequest {
@@ -53,4 +58,3 @@ export interface ApiResponse<T> {
   data?: T;
   error?: ApiError;
 }
-

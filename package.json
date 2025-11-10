@@ -17,7 +17,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --coverage --maxWorkers=2 --passWithNoTests",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage --passWithNoTests"
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.17.0",

@@ -33,4 +33,3 @@ export function useUserPreferences(userId: string | undefined) {
     isUpdating: mutation.isPending,
   };
 }
-

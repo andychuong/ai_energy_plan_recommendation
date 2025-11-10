@@ -1,6 +1,6 @@
 /**
  * Memory Bank Data Models
- * 
+ *
  * These types define the data structures for the memory bank system,
  * which stores user preferences, usage patterns, recommendation history,
  * and feedback to improve recommendations over time.
@@ -144,4 +144,3 @@ export interface CreateFeedbackRequest {
 export interface GetFeedbackResponse {
   feedback: Feedback[];
 }
-

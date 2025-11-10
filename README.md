@@ -25,23 +25,27 @@ An intelligent solution to assist customers in deregulated energy markets by ana
 ### Installation
 
 1. Clone the repository
+
 ```bash
 git clone <repository-url>
 cd arbor_ai_energy
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables
+
 ```bash
 cp .env.example .env
 # Edit .env with your API keys
 ```
 
 4. Start development server
+
 ```bash
 npm run dev
 ```
@@ -115,4 +119,4 @@ UNLICENSED - Proprietary software
 ---
 
 **Version**: 0.1.0  
-**Last Updated**: 2025
+**Last Updated**: November 2025

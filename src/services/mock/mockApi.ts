@@ -1,6 +1,6 @@
 /**
  * Mock API Client
- * 
+ *
  * This mock API client can be used for frontend development
  * before the backend is ready. Switch to real API when ready.
  */
@@ -30,7 +30,7 @@ import {
 const MOCK_DELAY = 500;
 
 function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /**
@@ -157,4 +157,3 @@ export class MockApiClient {
  * Export singleton instance
  */
 export const mockApi = new MockApiClient();
-

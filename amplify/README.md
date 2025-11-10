@@ -51,5 +51,5 @@ The sandbox runs in watch mode and automatically deploys changes to your backend
 ---
 
 **Version**: 1.0  
-**Last Updated**: 2025
+**Last Updated**: November 2025
 

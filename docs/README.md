@@ -121,4 +121,4 @@ Planning documents, PRDs, and architecture:
 
 ---
 
-**Last Updated**: 2025
+**Last Updated**: November 2025

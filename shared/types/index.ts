@@ -1,6 +1,6 @@
 /**
  * Shared TypeScript types for frontend and backend
- * 
+ *
  * This file contains types that are used by both frontend and backend
  * to ensure type safety across the application.
  */
@@ -23,4 +23,3 @@ export type {
   CreateFeedbackRequest,
   GetFeedbackResponse,
 } from './memory-bank';
-

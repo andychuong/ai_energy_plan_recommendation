@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -35,8 +41,8 @@ export function UploadPage() {
     try {
       // Parse CSV file (simplified - in production, use a proper CSV parser)
       const text = await file.text();
-      const lines = text.split('\n').filter((line) => line.trim());
-      const headers = lines[0].split(',').map((h) => h.trim().toLowerCase());
+      const lines = text.split('\n').filter(line => line.trim());
+      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
 
       const usagePoints: UsageDataPoint[] = [];
       for (let i = 1; i < lines.length; i++) {
@@ -78,7 +84,9 @@ export function UploadPage() {
         totalAnnualKwh: totalKwh,
         averageMonthlyKwh,
         peakMonthKwh: peakPoint.kwh,
-        peakMonth: new Date(peakPoint.timestamp).toLocaleString('default', { month: 'long' }),
+        peakMonth: new Date(peakPoint.timestamp).toLocaleString('default', {
+          month: 'long',
+        }),
       };
 
       uploadUsageData(
@@ -90,8 +98,10 @@ export function UploadPage() {
               navigate('/dashboard');
             }, 2000);
           },
-          onError: (err) => {
-            setError(err instanceof Error ? err.message : 'Failed to upload data');
+          onError: err => {
+            setError(
+              err instanceof Error ? err.message : 'Failed to upload data'
+            );
           },
         }
       );
@@ -104,17 +114,17 @@ export function UploadPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Upload Usage Data</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="mt-2 text-muted-foreground">
           Upload your energy usage data to get personalized recommendations
         </p>
       </div>
 
-      <Card className="max-w-2xl mx-auto">
+      <Card className="mx-auto max-w-2xl">
         <CardHeader>
           <CardTitle>Upload CSV File</CardTitle>
           <CardDescription>
-            Upload a CSV file with your energy usage data. The file should include columns for
-            timestamp/date and kWh usage.
+            Upload a CSV file with your energy usage data. The file should
+            include columns for timestamp/date and kWh usage.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -142,7 +152,8 @@ export function UploadPage() {
               disabled={isUploading}
             />
             <p className="text-xs text-muted-foreground">
-              Expected columns: timestamp (or date), kwh (or usage, consumption), cost (optional)
+              Expected columns: timestamp (or date), kwh (or usage,
+              consumption), cost (optional)
             </p>
           </div>
 
@@ -158,4 +169,3 @@ export function UploadPage() {
     </div>
   );
 }
-

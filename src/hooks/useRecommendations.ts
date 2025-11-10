@@ -2,7 +2,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/services/api/client';
 import type { CustomerUsageData, UserPreferences } from 'shared/types';
 
-export function useRecommendations(userId: string | undefined, usageData: CustomerUsageData | null) {
+export function useRecommendations(
+  userId: string | undefined,
+  usageData: CustomerUsageData | null
+) {
   const queryClient = useQueryClient();
 
   const query = useQuery({
@@ -17,7 +20,11 @@ export function useRecommendations(userId: string | undefined, usageData: Custom
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: { userId: string; usageData: CustomerUsageData; preferences?: UserPreferences }) => {
+    mutationFn: async (data: {
+      userId: string;
+      usageData: CustomerUsageData;
+      preferences?: UserPreferences;
+    }) => {
       return apiClient.generateRecommendations(data.userId, data.usageData);
     },
     onSuccess: () => {
@@ -33,4 +40,3 @@ export function useRecommendations(userId: string | undefined, usageData: Custom
     isGenerating: mutation.isPending,
   };
 }
-

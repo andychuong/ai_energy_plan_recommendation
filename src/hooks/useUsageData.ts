@@ -34,4 +34,3 @@ export function useUsageData(userId: string | undefined) {
     isUploading: mutation.isPending,
   };
 }
-

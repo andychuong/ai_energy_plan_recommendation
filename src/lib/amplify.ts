@@ -8,4 +8,3 @@ import outputs from '../../amplify_outputs.json';
 Amplify.configure(outputs);
 
 export default Amplify;
-

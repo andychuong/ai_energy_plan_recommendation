@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -13,7 +19,8 @@ import type { UserPreferences } from 'shared/types';
 export function PreferencesPage() {
   const { user } = useAuth();
   const userId = user?.userId || user?.username;
-  const { preferences, isLoading, updatePreferences, isUpdating } = useUserPreferences(userId);
+  const { preferences, isLoading, updatePreferences, isUpdating } =
+    useUserPreferences(userId);
   const navigate = useNavigate();
   const [formData, setFormData] = useState<Partial<UserPreferences>>({
     costSavingsPriority: 'medium',
@@ -59,7 +66,9 @@ export function PreferencesPage() {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <p className="text-center text-muted-foreground">Loading preferences...</p>
+        <p className="text-center text-muted-foreground">
+          Loading preferences...
+        </p>
       </div>
     );
   }
@@ -68,16 +77,17 @@ export function PreferencesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Preferences</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="mt-2 text-muted-foreground">
           Set your preferences to get personalized energy plan recommendations
         </p>
       </div>
 
-      <Card className="max-w-2xl mx-auto">
+      <Card className="mx-auto max-w-2xl">
         <CardHeader>
           <CardTitle>Your Preferences</CardTitle>
           <CardDescription>
-            Configure your preferences to receive recommendations tailored to your needs
+            Configure your preferences to receive recommendations tailored to
+            your needs
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -93,15 +103,20 @@ export function PreferencesPage() {
             <div className="space-y-2">
               <Label>Cost Savings Priority</Label>
               <div className="flex space-x-4">
-                {(['low', 'medium', 'high'] as const).map((priority) => (
+                {(['low', 'medium', 'high'] as const).map(priority => (
                   <Button
                     key={priority}
                     type="button"
                     variant={
-                      formData.costSavingsPriority === priority ? 'default' : 'outline'
+                      formData.costSavingsPriority === priority
+                        ? 'default'
+                        : 'outline'
                     }
                     onClick={() =>
-                      setFormData({ ...formData, costSavingsPriority: priority })
+                      setFormData({
+                        ...formData,
+                        costSavingsPriority: priority,
+                      })
                     }
                   >
                     {priority.charAt(0).toUpperCase() + priority.slice(1)}
@@ -164,34 +179,42 @@ export function PreferencesPage() {
             <div className="space-y-2">
               <Label>Contract Type Preference</Label>
               <div className="flex flex-wrap gap-2">
-                {(['fixed', 'variable', 'indexed', 'hybrid'] as const).map((type) => (
-                  <Button
-                    key={type}
-                    type="button"
-                    variant={
-                      formData.contractTypePreference === type ? 'default' : 'outline'
-                    }
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        contractTypePreference:
-                          formData.contractTypePreference === type ? null : type,
-                      })
-                    }
-                  >
-                    {type.charAt(0).toUpperCase() + type.slice(1)}
-                  </Button>
-                ))}
+                {(['fixed', 'variable', 'indexed', 'hybrid'] as const).map(
+                  type => (
+                    <Button
+                      key={type}
+                      type="button"
+                      variant={
+                        formData.contractTypePreference === type
+                          ? 'default'
+                          : 'outline'
+                      }
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          contractTypePreference:
+                            formData.contractTypePreference === type
+                              ? null
+                              : type,
+                        })
+                      }
+                    >
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </Button>
+                  )
+                )}
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="terminationFee">Early Termination Fee Tolerance ($)</Label>
+              <Label htmlFor="terminationFee">
+                Early Termination Fee Tolerance ($)
+              </Label>
               <Input
                 id="terminationFee"
                 type="number"
                 value={formData.earlyTerminationFeeTolerance || 100}
-                onChange={(e) =>
+                onChange={e =>
                   setFormData({
                     ...formData,
                     earlyTerminationFeeTolerance: parseInt(e.target.value) || 0,
@@ -202,17 +225,21 @@ export function PreferencesPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="maxMonthly">Max Monthly Cost ($) - Optional</Label>
+              <Label htmlFor="maxMonthly">
+                Max Monthly Cost ($) - Optional
+              </Label>
               <Input
                 id="maxMonthly"
                 type="number"
                 value={formData.budgetConstraints?.maxMonthlyCost || ''}
-                onChange={(e) =>
+                onChange={e =>
                   setFormData({
                     ...formData,
                     budgetConstraints: {
                       ...formData.budgetConstraints,
-                      maxMonthlyCost: e.target.value ? parseFloat(e.target.value) : undefined,
+                      maxMonthlyCost: e.target.value
+                        ? parseFloat(e.target.value)
+                        : undefined,
                     },
                   })
                 }
@@ -221,7 +248,11 @@ export function PreferencesPage() {
             </div>
 
             <div className="flex space-x-4">
-              <Button type="submit" disabled={isUpdating || success} className="flex-1">
+              <Button
+                type="submit"
+                disabled={isUpdating || success}
+                className="flex-1"
+              >
                 {isUpdating ? 'Saving...' : 'Save Preferences'}
               </Button>
               <Button
@@ -238,4 +269,3 @@ export function PreferencesPage() {
     </div>
   );
 }
-

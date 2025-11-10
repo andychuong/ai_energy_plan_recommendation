@@ -139,5 +139,5 @@ Currently, the API client falls back to mock data when function URLs are not ava
 ---
 
 **Version**: 1.0  
-**Last Updated**: 2025
+**Last Updated**: November 2025
 

@@ -14,20 +14,25 @@ export function SignIn() {
 
   return (
     <div className="container mx-auto px-4 py-16">
-      <div className="max-w-md mx-auto">
+      <div className="mx-auto max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold mb-2">Welcome to Arbor AI Energy</h1>
+          <h1 className="mb-2 text-3xl font-bold">
+            Welcome to Arbor AI Energy
+          </h1>
           <p className="text-muted-foreground">
             Sign in to get personalized energy plan recommendations
           </p>
         </div>
-        <Authenticator
-          loginMechanisms={['email']}
-          socialProviders={['google']}
-        >
+        <Authenticator loginMechanisms={['email']} socialProviders={['google']}>
           {({ user }) => {
             // Use a separate component to handle the effect
-            return <SignInHandler user={user} refreshUser={refreshUser} navigate={navigate} />;
+            return (
+              <SignInHandler
+                user={user}
+                refreshUser={refreshUser}
+                navigate={navigate}
+              />
+            );
           }}
         </Authenticator>
       </div>
@@ -54,4 +59,3 @@ function SignInHandler({
   }, [user, navigate, refreshUser]);
   return null;
 }
-

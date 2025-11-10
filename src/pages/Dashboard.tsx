@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
@@ -15,7 +21,7 @@ export function Dashboard() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="mt-2 text-muted-foreground">
           Welcome back! Manage your energy plan recommendations here.
         </p>
       </div>
@@ -25,7 +31,9 @@ export function Dashboard() {
           <CardHeader>
             <CardTitle>Usage Data</CardTitle>
             <CardDescription>
-              {usageData ? 'Your usage data is ready' : 'Upload your usage data to get started'}
+              {usageData
+                ? 'Your usage data is ready'
+                : 'Upload your usage data to get started'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -35,11 +43,14 @@ export function Dashboard() {
               <div className="space-y-2">
                 <p className="text-sm">
                   <span className="font-medium">Average Monthly:</span>{' '}
-                  {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(0) || 'N/A'} kWh
+                  {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(0) ||
+                    'N/A'}{' '}
+                  kWh
                 </p>
                 <p className="text-sm">
                   <span className="font-medium">Total Annual:</span>{' '}
-                  {usageData?.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'} kWh
+                  {usageData?.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'}{' '}
+                  kWh
                 </p>
                 <Link to="/upload">
                   <Button variant="outline" className="mt-4 w-full">
@@ -59,7 +70,9 @@ export function Dashboard() {
           <CardHeader>
             <CardTitle>Preferences</CardTitle>
             <CardDescription>
-              {preferences ? 'Your preferences are set' : 'Set your preferences for personalized recommendations'}
+              {preferences
+                ? 'Your preferences are set'
+                : 'Set your preferences for personalized recommendations'}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -103,7 +116,7 @@ export function Dashboard() {
               </Button>
             </Link>
             {(!usageData || !preferences) && (
-              <p className="text-xs text-muted-foreground mt-2">
+              <p className="mt-2 text-xs text-muted-foreground">
                 Upload usage data and set preferences first
               </p>
             )}
@@ -113,4 +126,3 @@ export function Dashboard() {
     </div>
   );
 }
-
