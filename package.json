@@ -17,7 +17,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --coverage --maxWorkers=2 --passWithNoTests",
-    "test:coverage": "jest --coverage --passWithNoTests"
+    "test:coverage": "jest --coverage --passWithNoTests",
+    "sandbox": "ampx sandbox --exclude '**/node_modules/**' --exclude '**/.amplify/**' --exclude '**/.amplify-hosting/**' --exclude '**/build/**' --exclude '**/dist/**' --exclude '**/coverage/**'"
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.17.0",

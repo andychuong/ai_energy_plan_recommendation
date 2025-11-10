@@ -194,10 +194,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
       
-      - name: Deploy frontend to Amplify Hosting
-        uses: aws-amplify/amplify-cli-action@v1
-        with:
-          amplify_command: publish
-          amplify_env: production
-          amplify_app_id: ${{ secrets.AMPLIFY_APP_ID }}
+      # Note: Frontend deployment to Amplify Hosting requires manual setup
+      # For Amplify Gen 2, use the Amplify Console or AWS CLI to deploy
+      # Option 1: Use AWS CLI to deploy to S3/CloudFront (if configured)
+      # Option 2: Use Amplify Console with GitHub App integration
+      # Option 3: Manual deployment via Amplify Console
+      - name: Frontend deployment
+        run: |
+          echo "Frontend build completed. Deploy manually via Amplify Console or configure AWS CLI deployment."
+          echo "Build artifacts are in the 'build' directory."
+          # Uncomment and configure if using S3/CloudFront:
+          # aws s3 sync build/ s3://your-bucket-name --delete
+          # aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
 

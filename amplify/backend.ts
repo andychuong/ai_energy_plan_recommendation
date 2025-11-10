@@ -6,6 +6,7 @@ import {
   generateRecommendationsFunction,
   updatePlanCatalogFunction,
   processUsageDataFunction,
+  readStatementFunction,
 } from './api/resource';
 
 export const backend = defineBackend({
@@ -15,6 +16,7 @@ export const backend = defineBackend({
   generateRecommendationsFunction,
   updatePlanCatalogFunction,
   processUsageDataFunction,
+  readStatementFunction,
 });
 
 // Functions will be accessible via amplify_outputs.json after deployment

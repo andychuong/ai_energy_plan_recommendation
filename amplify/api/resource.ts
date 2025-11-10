@@ -8,6 +8,7 @@ import { defineFunction } from '@aws-amplify/backend';
  * - Recommendation generation
  * - Plan catalog updates
  * - Usage data processing
+ * - AI statement reader (PDF/image/text extraction)
  */
 
 /**
@@ -56,5 +57,19 @@ export const updatePlanCatalogFunction = defineFunction({
 export const processUsageDataFunction = defineFunction({
   name: 'process-usage-data',
   entry: '../function/process-usage-data/handler.ts',
+});
+
+/**
+ * AI Statement Reader Function
+ * Reads and extracts data from energy bill statements using AI
+ * Supports PDF, images (PNG, JPG), and text formats
+ * Uses OpenRouter AI with GPT-4 Vision for image/PDF processing
+ */
+export const readStatementFunction = defineFunction({
+  name: 'read-statement',
+  entry: '../function/read-statement/handler.ts',
+  environment: {
+    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || '',
+  },
 });
 

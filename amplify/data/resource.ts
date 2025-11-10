@@ -92,6 +92,31 @@ const schema = a.schema({
     .authorization((allow) => [
       allow.owner(), // Users can only access their own feedback
     ]),
+
+  /**
+   * Energy Plans
+   * Stores energy plans from various suppliers
+   * Public data - readable by all authenticated users
+   */
+  EnergyPlan: a
+    .model({
+      planId: a.string().required(), // Custom plan ID (not the primary key)
+      supplierName: a.string().required(),
+      planName: a.string().required(),
+      ratePerKwh: a.float().required(),
+      contractType: a.string().required(), // 'fixed' | 'variable' | 'indexed' | 'hybrid'
+      contractLengthMonths: a.integer(), // Optional contract length
+      renewablePercentage: a.integer(), // Optional renewable energy percentage
+      earlyTerminationFee: a.float(), // Optional early termination fee
+      supplierRating: a.float(), // Optional supplier rating (0-5)
+      state: a.string().required(), // State code (e.g., 'CA', 'TX')
+      utilityTerritory: a.string(), // Optional utility territory
+      createdAt: a.datetime().required(),
+      updatedAt: a.datetime().required(),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(['read', 'create', 'update', 'delete']), // Authenticated users can read and modify
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

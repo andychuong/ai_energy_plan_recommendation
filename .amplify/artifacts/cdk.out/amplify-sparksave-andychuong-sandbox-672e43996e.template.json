@@ -256,6 +256,13 @@
         "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionprocessusagedatalambdaDAC73B89Ref"
        ]
       },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaF8588808Ref"
+       ]
+      },
       "\"]"
      ]
     ]
@@ -292,7 +299,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/8ff9a9985f3d906272a2f0f1fa108b9b881be7b43412c59b9e0c5dc765d2da94.json"
+       "/cedb04710d7d0ae56e36110c10ebd464cbd82f658d994104dc5c62c23de52929.json"
       ]
      ]
     }
@@ -360,7 +367,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/85dda3b6d8a550d3f90320ebf957938ee4d8c4260de3b1bc6242acbed394e83b.json"
+       "/0842a5b0b43729cb59fa6677d53b76107b7b1511b0e10c830ca10ea3abebaac7.json"
       ]
      ]
     }
@@ -402,7 +409,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/05fcddb5a47cf7df8c7a45f924829e4a3fd3f1c70e371a564d0f1a8d35122713.json"
+       "/63956de4f01e41f09c87a4375bfa807ad9cc327653ef7aa73dbb1807da525606.json"
       ]
      ]
     }

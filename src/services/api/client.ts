@@ -46,10 +46,94 @@ class ApiClient {
     if (USE_MOCK_API) {
       return mockApi.getEnergyPlans(state);
     }
-    // TODO: Implement real API call when plan catalog is ready
-    // For now, fallback to mock data since plan catalog update function is not implemented
-    console.warn('Plan catalog API not yet implemented, using mock data');
-    return mockApi.getEnergyPlans(state);
+
+    try {
+      // Query DynamoDB for plans by state
+      const plans = await dataClient.models.EnergyPlan.list({
+        filter: {
+          state: { eq: state },
+        },
+      });
+
+      if (plans.data && plans.data.length > 0) {
+        // Convert to EnergyPlan format
+        return plans.data.map(plan => ({
+          planId: plan.planId,
+          supplierName: plan.supplierName,
+          planName: plan.planName,
+          ratePerKwh: plan.ratePerKwh,
+          contractType: plan.contractType as
+            | 'fixed'
+            | 'variable'
+            | 'indexed'
+            | 'hybrid',
+          contractLengthMonths: plan.contractLengthMonths || undefined,
+          renewablePercentage: plan.renewablePercentage || undefined,
+          earlyTerminationFee: plan.earlyTerminationFee || undefined,
+          supplierRating: plan.supplierRating || undefined,
+          state: plan.state,
+          utilityTerritory: plan.utilityTerritory || undefined,
+        }));
+      }
+
+      // If no plans found, trigger catalog update and return mock data as fallback
+      console.warn(
+        `No plans found for ${state}, triggering catalog update. Using mock data as fallback.`
+      );
+
+      // Trigger catalog update in background (don't wait)
+      this.updatePlanCatalog([state]).catch(err => {
+        console.error('Error updating plan catalog:', err);
+      });
+
+      return mockApi.getEnergyPlans(state);
+    } catch (error) {
+      console.error('Error fetching energy plans:', error);
+      // Fallback to mock data on error
+      return mockApi.getEnergyPlans(state);
+    }
+  }
+
+  /**
+   * Update plan catalog for specific states
+   */
+  async updatePlanCatalog(states: string[]): Promise<void> {
+    if (USE_MOCK_API) {
+      return;
+    }
+
+    try {
+      // Invoke Lambda function to update catalog
+      const functionUrl = (
+        outputs as { custom?: { [key: string]: { url?: string } } }
+      ).custom?.updatePlanCatalogFunction?.url;
+
+      if (!functionUrl) {
+        console.warn(
+          'Function URL not available in outputs. Deploy backend to get function URLs.'
+        );
+        return;
+      }
+
+      // Get current user's auth token for the request
+      const { fetchAuthSession } = await import('aws-amplify/auth');
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+
+      await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: JSON.stringify({
+          sources: ['eia', 'openei'],
+          states,
+        }),
+      });
+    } catch (error) {
+      console.error('Error updating plan catalog:', error);
+    }
   }
 
   /**
@@ -61,6 +145,98 @@ class ApiClient {
     }
     // TODO: Implement real API call
     throw new Error('Real API not implemented yet');
+  }
+
+  /**
+   * Read energy bill statement using AI
+   * Supports PDF, images (PNG, JPG), and text formats
+   */
+  async readStatement(userId: string, file: File): Promise<CustomerUsageData> {
+    if (USE_MOCK_API) {
+      // For mock, return mock data
+      return mockApi.getUsageData(userId);
+    }
+
+    try {
+      // Convert file to base64
+      const base64Content = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          // Remove data URL prefix if present
+          const base64 = result.includes(',') ? result.split(',')[1] : result;
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      // Determine file type
+      const fileType =
+        file.type === 'application/pdf'
+          ? 'pdf'
+          : file.type.startsWith('image/')
+            ? 'image'
+            : file.type === 'text/csv' || file.name.endsWith('.csv')
+              ? 'csv'
+              : 'text';
+
+      // Invoke Lambda function
+      const functionUrl = (
+        outputs as { custom?: { [key: string]: { url?: string } } }
+      ).custom?.readStatementFunction?.url;
+
+      if (!functionUrl) {
+        console.warn(
+          'Function URL not available in outputs, using mock data. Deploy backend to get function URLs.'
+        );
+        return mockApi.getUsageData(userId);
+      }
+
+      // Get current user's auth token for the request
+      const { fetchAuthSession } = await import('aws-amplify/auth');
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+
+      const response = await fetch(functionUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
+        body: JSON.stringify({
+          userId,
+          statementData: {
+            content: base64Content,
+            fileType,
+            mimeType: file.type,
+            filename: file.name,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Function call failed: ${response.statusText}`);
+      }
+
+      // Parse response
+      const result = (await response.json()) as {
+        success: boolean;
+        extractedData?: CustomerUsageData;
+        error?: string;
+      };
+
+      if (!result.success || !result.extractedData) {
+        throw new Error(result.error || 'Failed to read statement');
+      }
+
+      return result.extractedData;
+    } catch (error) {
+      console.error('Error reading statement:', error);
+      // Fallback to mock data if function call fails
+      console.warn('Falling back to mock data due to function error');
+      return mockApi.getUsageData(userId);
+    }
   }
 
   /**

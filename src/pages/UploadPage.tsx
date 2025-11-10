@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
-import type { UsageDataPoint } from 'shared/types';
+import { apiClient } from '@/services/api/client';
 
 export function UploadPage() {
   const { user } = useAuth();
@@ -39,74 +39,58 @@ export function UploadPage() {
     }
 
     try {
-      // Parse CSV file (simplified - in production, use a proper CSV parser)
-      const text = await file.text();
-      const lines = text.split('\n').filter(line => line.trim());
-      const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+      setError(null);
+      setSuccess(false);
 
-      const usagePoints: UsageDataPoint[] = [];
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',');
-        const row: Record<string, string> = {};
-        headers.forEach((header, index) => {
-          row[header] = values[index]?.trim() || '';
-        });
+      // Check file type - all supported formats go through AI reader
+      const isCSV = file.type === 'text/csv' || file.name.endsWith('.csv');
+      const isPDF =
+        file.type === 'application/pdf' || file.name.endsWith('.pdf');
+      const isImage =
+        file.type.startsWith('image/') || /\.(png|jpg|jpeg)$/i.test(file.name);
+      const isText = file.type === 'text/plain' || file.name.endsWith('.txt');
 
-        // Try to find timestamp and kwh columns
-        const timestamp = row.timestamp || row.date || row.time || '';
-        const kwh = parseFloat(row.kwh || row.usage || row.consumption || '0');
-        const cost = row.cost ? parseFloat(row.cost) : undefined;
+      // Use AI statement reader for all file types (PDF, images, text, CSV)
+      // The AI can intelligently parse CSV files and extract structured data
+      // This follows AI bill analyzer best practices by using AI for all formats
+      if (isPDF || isImage || isText || isCSV) {
+        // Use AI statement reader for all supported formats
+        const usageData = await apiClient.readStatement(userId, file);
 
-        if (timestamp && kwh) {
-          usagePoints.push({
-            timestamp: new Date(timestamp).toISOString(),
-            kwh,
-            cost,
-          });
-        }
-      }
-
-      if (usagePoints.length === 0) {
-        setError('No valid data found in file. Please check the format.');
-        return;
-      }
-
-      // Calculate aggregated stats
-      const totalKwh = usagePoints.reduce((sum, point) => sum + point.kwh, 0);
-      const averageMonthlyKwh = totalKwh / 12;
-      const peakPoint = usagePoints.reduce((max, point) =>
-        point.kwh > max.kwh ? point : max
-      );
-
-      const usageData = {
-        userId,
-        usagePoints,
-        totalAnnualKwh: totalKwh,
-        averageMonthlyKwh,
-        peakMonthKwh: peakPoint.kwh,
-        peakMonth: new Date(peakPoint.timestamp).toLocaleString('default', {
-          month: 'long',
-        }),
-      };
-
-      uploadUsageData(
-        { userId, usageData },
-        {
-          onSuccess: () => {
-            setSuccess(true);
-            setTimeout(() => {
-              navigate('/dashboard');
-            }, 2000);
+        // Process and store the usage data
+        uploadUsageData(
+          {
+            userId,
+            usageData: {
+              userId,
+              usagePoints: usageData.usageDataPoints,
+              totalAnnualKwh: usageData.aggregatedStats.totalKwh,
+              averageMonthlyKwh: usageData.aggregatedStats.averageMonthlyKwh,
+              peakMonthKwh: usageData.aggregatedStats.peakMonthKwh,
+              peakMonth: usageData.aggregatedStats.peakMonth,
+            },
           },
-          onError: err => {
-            setError(
-              err instanceof Error ? err.message : 'Failed to upload data'
-            );
-          },
-        }
-      );
+          {
+            onSuccess: () => {
+              setSuccess(true);
+              setTimeout(() => {
+                navigate('/dashboard');
+              }, 2000);
+            },
+            onError: err => {
+              setError(
+                err instanceof Error ? err.message : 'Failed to upload data'
+              );
+            },
+          }
+        );
+      } else {
+        setError(
+          'Unsupported file type. Please upload PDF, image, CSV, or text file.'
+        );
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to parse file');
+      setError(err instanceof Error ? err.message : 'Failed to process file');
     }
   };
 
@@ -121,10 +105,10 @@ export function UploadPage() {
 
       <Card className="mx-auto max-w-2xl">
         <CardHeader>
-          <CardTitle>Upload CSV File</CardTitle>
+          <CardTitle>Upload Energy Bill</CardTitle>
           <CardDescription>
-            Upload a CSV file with your energy usage data. The file should
-            include columns for timestamp/date and kWh usage.
+            Upload your energy bill as PDF, image (PNG/JPG), CSV, or text file.
+            Our AI will automatically extract usage data from your bill.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -143,17 +127,17 @@ export function UploadPage() {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="file">CSV File</Label>
+            <Label htmlFor="file">Energy Bill File</Label>
             <Input
               id="file"
               type="file"
-              accept=".csv"
+              accept=".csv,.pdf,.png,.jpg,.jpeg,.txt"
               onChange={handleFileChange}
               disabled={isUploading}
             />
             <p className="text-xs text-muted-foreground">
-              Expected columns: timestamp (or date), kwh (or usage,
-              consumption), cost (optional)
+              Supported formats: PDF, PNG, JPG, CSV, TXT. Our AI will
+              automatically extract all relevant data from your energy bill.
             </p>
           </div>
 
@@ -162,7 +146,7 @@ export function UploadPage() {
             disabled={!file || isUploading || success}
             className="w-full"
           >
-            {isUploading ? 'Uploading...' : 'Upload'}
+            {isUploading ? 'Processing with AI...' : 'Read Bill with AI'}
           </Button>
         </CardContent>
       </Card>

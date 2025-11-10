@@ -35,14 +35,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
-      - name: Deploy to Amplify Preview
-        uses: aws-amplify/amplify-cli-action@v1
-        with:
-          amplify_command: publish
-          amplify_env: preview
-          amplify_app_id: ${{ secrets.AMPLIFY_APP_ID }}
+      # Note: Preview deployment requires Amplify Console setup
+      # For Amplify Gen 2, preview deployments are handled via Amplify Console
+      # This step is commented out until Amplify Hosting is configured
+      - name: Preview deployment
+        run: |
+          echo "Preview build completed. Configure Amplify Console for automatic preview deployments."
+          echo "Build artifacts are in the 'build' directory."
+          # Preview deployments are handled by Amplify Console when connected to GitHub
       
-      - name: Comment PR with preview URL
+      # Comment PR with build status (preview URL requires Amplify Console)
+      - name: Comment PR with build status
         uses: actions/github-script@v6
         with:
           script: |
@@ -50,6 +53,6 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `## Preview Deployment\n\nPreview URL: https://preview-${{ github.event.pull_request.number }}.amplifyapp.com`
+              body: `## Preview Build Complete ✅\n\nBuild artifacts are ready. Configure Amplify Console for automatic preview deployments.\n\nTo set up preview deployments:\n1. Connect your repository to Amplify Console\n2. Configure branch previews\n3. Preview URLs will be automatically generated`
             });
 
