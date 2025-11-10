@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/ui/Logo';
 import { useAuth } from '@/contexts/AuthContext';
 
 export function Header() {
@@ -15,7 +16,8 @@ export function Header() {
     <header className="border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link to="/" className="flex items-center space-x-2">
-          <h1 className="text-xl font-bold">Arbor AI Energy</h1>
+          <Logo size="sm" />
+          <h1 className="text-xl font-bold">SparkSave</h1>
         </Link>
         <nav className="flex items-center space-x-4">
           {loading ? (

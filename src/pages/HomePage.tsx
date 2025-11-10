@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/ui/Logo';
 import { useAuth } from '@/contexts/AuthContext';
 
 export function HomePage() {
@@ -15,13 +16,13 @@ export function HomePage() {
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold">
-          AI Energy Plan Recommendation Agent
-        </h1>
+        <div className="mb-6 flex justify-center">
+          <Logo size="lg" />
+        </div>
+        <h1 className="mb-4 text-5xl font-bold">SparkSave</h1>
         <p className="mx-auto max-w-2xl text-xl text-muted-foreground">
-          Get personalized energy plan recommendations based on your usage
-          patterns and preferences. Save money and find the perfect plan for
-          your needs.
+          Smart energy plan recommendations that save you money. Get
+          personalized suggestions based on your usage patterns and preferences.
         </p>
       </div>
 

@@ -92,9 +92,9 @@ class ApiClient {
       // In Amplify Gen 2, functions are accessed through outputs.custom
       // For now, we'll use fetch to call the function URL if available
       // Otherwise, fall back to mock data
-      const functionUrl =
-        (outputs as { custom?: { [key: string]: { url?: string } } }).custom
-          ?.generateRecommendationsFunction?.url;
+      const functionUrl = (
+        outputs as { custom?: { [key: string]: { url?: string } } }
+      ).custom?.generateRecommendationsFunction?.url;
 
       if (!functionUrl) {
         console.warn(
@@ -126,7 +126,8 @@ class ApiClient {
             renewableEnergyPreference: preferences.renewableEnergyPreference,
             supplierRatingPreference: preferences.supplierRatingPreference,
             contractTypePreference: preferences.contractTypePreference,
-            earlyTerminationFeeTolerance: preferences.earlyTerminationFeeTolerance,
+            earlyTerminationFeeTolerance:
+              preferences.earlyTerminationFeeTolerance,
             budgetConstraints: preferences.budgetConstraints,
           },
           availablePlans: plans.map(plan => ({

@@ -1,9 +1,9 @@
 {
-  "name": "arbor-ai-energy-plan-recommendation-agent",
+  "name": "sparksave",
   "version": "0.1.0",
   "private": true,
-  "description": "AI Energy Plan Recommendation Agent - Intelligent solution for energy plan recommendations",
-  "author": "Arbor",
+  "description": "SparkSave - Smart energy plan recommendations that save you money",
+  "author": "SparkSave",
   "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",

@@ -1,6 +1,8 @@
-# AI Energy Plan Recommendation Agent
+# SparkSave 💡
 
-An intelligent solution to assist customers in deregulated energy markets by analyzing usage patterns, preferences, and existing energy plans to recommend the top three optimal energy plans.
+**Smart energy plan recommendations that save you money**
+
+SparkSave is an intelligent solution that helps customers find the best energy plans by analyzing usage patterns, preferences, and available options to recommend personalized plans that maximize savings.
 
 ## Technology Stack
 
@@ -28,7 +30,7 @@ An intelligent solution to assist customers in deregulated energy markets by ana
 
 ```bash
 git clone <repository-url>
-cd arbor_ai_energy
+cd sparksave
 ```
 
 2. Install dependencies
@@ -68,7 +70,7 @@ npm run dev
 ## Project Structure
 
 ```
-arbor_ai_energy/
+sparksave/
 ├── .github/
 │   └── workflows/          # GitHub Actions workflows
 ├── planning/               # Planning documents

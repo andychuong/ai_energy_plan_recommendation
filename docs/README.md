@@ -61,6 +61,8 @@ Project status and progress reports:
 ### 📋 Planning (`planning/`)
 
 Planning documents, PRDs, and architecture:
+
+**Core Planning:**
 - **PRD_Arbor_AI_Energy_Plan_Recommendation_Agent.md** - Main product requirements document
 - **COMPLETE_PRD.md** - Complete PRD combining all planning documents
 - **ARCHITECTURE.md** - System architecture documentation
@@ -73,6 +75,14 @@ Planning documents, PRDs, and architecture:
 - **COMMON_USAGE_DATA_SCHEMA.md** - Common data schema definition
 - **PLAN_AI_Data_Normalization.md** - AI data normalization plan
 - **GITHUB_CI_CD.md** - CI/CD planning document
+
+**AI Bill Parser (NEW):**
+- **BILL_PARSER_INDEX.md** - 📍 START HERE - Complete documentation index
+- **BILL_PARSER_EXECUTIVE_SUMMARY.md** - Executive summary & recommendation
+- **BILL_PARSER_README.md** - Project overview and guide
+- **BILL_PARSER_QUICK_START.md** - Get started in 5 days
+- **AI_BILL_PARSER_IMPLEMENTATION_PLAN.md** - Complete 12-week implementation plan
+- **BILL_PARSER_COST_OPTIMIZATION.md** - Cost optimization strategies
 
 ## Quick Links
 
@@ -100,6 +110,18 @@ Planning documents, PRDs, and architecture:
 1. [Complete PRD](planning/COMPLETE_PRD.md)
 2. [Architecture](planning/ARCHITECTURE.md)
 3. [Implementation Plan](planning/IMPLEMENTATION_PLAN.md)
+
+### AI Bill Parser (New Feature)
+
+**📍 Start Here:** [Bill Parser Index](planning/BILL_PARSER_INDEX.md)
+
+**For Different Audiences:**
+- **Executives:** [Executive Summary](planning/BILL_PARSER_EXECUTIVE_SUMMARY.md) - Investment & ROI (10 min)
+- **Product/Project:** [Project Overview](planning/BILL_PARSER_README.md) - Complete guide (20 min)
+- **Developers:** [Quick Start](planning/BILL_PARSER_QUICK_START.md) → [Implementation Plan](planning/AI_BILL_PARSER_IMPLEMENTATION_PLAN.md)
+- **Finance/Ops:** [Cost Optimization](planning/BILL_PARSER_COST_OPTIMIZATION.md) - Budget & savings
+
+**Key Innovation:** Learning system that reduces costs 60% and speeds up extraction 10x over 6 months
 
 ### Current Status
 

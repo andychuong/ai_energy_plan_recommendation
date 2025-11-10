@@ -27,7 +27,8 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/auth/*" element={<SignIn />} />
+              <Route path="/auth" element={<SignIn />} />
+              <Route path="/auth/callback" element={<SignIn />} />
               <Route
                 path="/dashboard"
                 element={
