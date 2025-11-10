@@ -75,4 +75,4 @@ amplify/.amplify/
 *.tgz
 *.tar.gz
 
-/docs   
+docs/   
