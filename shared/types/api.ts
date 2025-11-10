@@ -4,7 +4,7 @@
  * These types define the API contracts between frontend and backend
  */
 
-import type { UserPreferences, UsageData, Recommendation, EnergyPlan, CurrentPlan } from './models';
+import type { UserPreferences, UsageData, Recommendation, CurrentPlan } from './models';
 
 // Request types
 export interface RecommendationRequest {

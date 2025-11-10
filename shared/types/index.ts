@@ -8,5 +8,19 @@
 // Re-export all shared types
 export * from './models';
 export * from './api';
-export * from './memory-bank';
+// Export memory-bank types (excluding UserPreferences which is in models)
+export type {
+  UsagePattern,
+  RecommendationHistory,
+  Feedback,
+  MemoryBankResponse,
+  CreateUserPreferencesRequest,
+  GetUserPreferencesResponse,
+  CreateUsagePatternRequest,
+  GetUsagePatternsResponse,
+  CreateRecommendationHistoryRequest,
+  GetRecommendationHistoryResponse,
+  CreateFeedbackRequest,
+  GetFeedbackResponse,
+} from './memory-bank';
 

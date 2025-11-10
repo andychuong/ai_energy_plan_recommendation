@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/services/api/client';
-import type { UserPreferences, CreateUserPreferencesRequest } from '../../../shared/types';
+import type { CreateUserPreferencesRequest } from 'shared/types';
 
 export function useUserPreferences(userId: string | undefined) {
   const queryClient = useQueryClient();

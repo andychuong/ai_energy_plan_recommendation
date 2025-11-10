@@ -4,6 +4,7 @@ dist
 coverage
 .aws-amplify
 amplify
+.amplify
 *.log
 .env
 .env.local

@@ -1,6 +1,6 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import type { UsageDataPoint } from '../../../../shared/types';
+import type { UsageDataPoint } from 'shared/types';
 import { format } from 'date-fns';
 
 interface UsageChartProps {

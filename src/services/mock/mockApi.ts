@@ -15,7 +15,7 @@ import type {
   CreateUsagePatternRequest,
   CreateRecommendationHistoryRequest,
   CreateFeedbackRequest,
-} from '../../../shared/types';
+} from 'shared/types';
 import {
   generateMockPlans,
   generateMockUsageData,
@@ -40,7 +40,7 @@ export class MockApiClient {
   /**
    * Get energy plans
    */
-  async getEnergyPlans(state: string): Promise<EnergyPlan[]> {
+  async getEnergyPlans(_state: string): Promise<EnergyPlan[]> {
     await delay(MOCK_DELAY);
     return generateMockPlans();
   }
@@ -48,7 +48,7 @@ export class MockApiClient {
   /**
    * Get customer usage data
    */
-  async getUsageData(userId: string): Promise<CustomerUsageData> {
+  async getUsageData(_userId: string): Promise<CustomerUsageData> {
     await delay(MOCK_DELAY);
     return generateMockUsageData();
   }
@@ -57,8 +57,8 @@ export class MockApiClient {
    * Generate recommendations
    */
   async generateRecommendations(
-    userId: string,
-    usageData: CustomerUsageData
+    _userId: string,
+    _usageData: CustomerUsageData
   ): Promise<Recommendation[]> {
     await delay(MOCK_DELAY * 2); // Simulate longer processing time
     return generateMockRecommendations();
@@ -67,7 +67,7 @@ export class MockApiClient {
   /**
    * Get user preferences
    */
-  async getUserPreferences(userId: string): Promise<UserPreferences | null> {
+  async getUserPreferences(_userId: string): Promise<UserPreferences | null> {
     await delay(MOCK_DELAY);
     return generateMockUserPreferences();
   }
@@ -90,7 +90,7 @@ export class MockApiClient {
   /**
    * Get usage patterns
    */
-  async getUsagePatterns(userId: string): Promise<UsagePattern[]> {
+  async getUsagePatterns(_userId: string): Promise<UsagePattern[]> {
     await delay(MOCK_DELAY);
     return [generateMockUsagePattern()];
   }
@@ -114,7 +114,7 @@ export class MockApiClient {
   /**
    * Get recommendation history
    */
-  async getRecommendationHistory(userId: string) {
+  async getRecommendationHistory(_userId: string) {
     await delay(MOCK_DELAY);
     return [];
   }
@@ -135,7 +135,7 @@ export class MockApiClient {
   /**
    * Get feedback
    */
-  async getFeedback(userId: string) {
+  async getFeedback(_userId: string) {
     await delay(MOCK_DELAY);
     return [];
   }

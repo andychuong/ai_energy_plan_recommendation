@@ -10,7 +10,9 @@ import OpenAI from 'openai';
  * Uses OpenRouter AI with GPT-3.5-turbo for cost efficiency
  */
 
-const client = generateClient<Schema>({
+// Client will be used when implementing data storage
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _client = generateClient<Schema>({
   authMode: 'iam',
 });
 

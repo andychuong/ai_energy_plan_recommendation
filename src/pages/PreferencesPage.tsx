@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUserPreferences } from '@/hooks/useUserPreferences';
-import type { UserPreferences } from '../../../shared/types';
+import type { UserPreferences } from 'shared/types';
 
 export function PreferencesPage() {
   const { user } = useAuth();

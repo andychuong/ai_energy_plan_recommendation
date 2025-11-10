@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import type { Recommendation, EnergyPlan } from '../../../../shared/types';
+import type { Recommendation, EnergyPlan } from 'shared/types';
 import { formatCurrency } from '@/lib/format';
 
 interface RecommendationCardProps {
@@ -79,9 +79,9 @@ export function RecommendationCard({ recommendation, plan, onSelect, onCompare }
               <div className="space-y-1">
                 <p className="font-medium">Risk Flags:</p>
                 <ul className="list-disc list-inside space-y-1">
-                  {recommendation.riskFlags.map((flag, index) => (
+                  {recommendation.riskFlags.map((flag: string, index: number) => (
                     <li key={index} className="text-sm">
-                      {flag.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
+                      {flag.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
                     </li>
                   ))}
                 </ul>

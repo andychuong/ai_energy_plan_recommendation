@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import type { UsageDataPoint } from '../../../../shared/types';
+import type { UsageDataPoint } from 'shared/types';
 import { format, parseISO } from 'date-fns';
 
 interface MonthlyUsageChartProps {
@@ -13,7 +13,7 @@ export function MonthlyUsageChart({ data, title = 'Monthly Energy Usage', descri
   // Group data by month
   const monthlyData = data.reduce((acc, point) => {
     const month = format(parseISO(point.timestamp), 'MMM yyyy');
-    const existing = acc.find((item) => item.month === month);
+    const existing = acc.find((item: { month: string; kwh: number; cost: number }) => item.month === month);
     if (existing) {
       existing.kwh += point.kwh;
       existing.cost += point.cost || 0;

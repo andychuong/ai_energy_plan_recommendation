@@ -18,7 +18,7 @@ import type {
   CreateUsagePatternRequest,
   CreateRecommendationHistoryRequest,
   CreateFeedbackRequest,
-} from '../../../shared/types';
+} from 'shared/types';
 
 /**
  * Check if we should use mock data
@@ -76,9 +76,10 @@ class ApiClient {
 
     try {
       // Get user preferences and available plans
-      const [preferences, plans] = await Promise.all([
+      const [preferences] = await Promise.all([
         this.getUserPreferences(userId),
-        this.getEnergyPlans('CA'), // TODO: Get state from user profile
+        // Plans will be fetched when needed
+        // this.getEnergyPlans('CA'), // TODO: Get state from user profile
       ]);
 
       if (!preferences) {
@@ -128,7 +129,7 @@ class ApiClient {
               maxAnnualCost: result.data.maxAnnualCost || undefined,
             }
           : undefined,
-        sustainabilityGoals: result.data.sustainabilityGoals || undefined,
+        sustainabilityGoals: result.data.sustainabilityGoals?.filter((s): s is string => s !== null) || undefined,
         createdAt: result.data.createdAt,
         updatedAt: result.data.updatedAt,
       };
@@ -184,7 +185,7 @@ class ApiClient {
               maxAnnualCost: result.data.maxAnnualCost || undefined,
             }
           : undefined,
-        sustainabilityGoals: result.data.sustainabilityGoals || undefined,
+        sustainabilityGoals: result.data.sustainabilityGoals?.filter((s): s is string => s !== null) || undefined,
         createdAt: result.data.createdAt,
         updatedAt: result.data.updatedAt,
       };
@@ -206,6 +207,7 @@ class ApiClient {
       const result = await dataClient.models.UsagePattern.list({
         filter: {
           userId: { eq: userId },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       });
 
@@ -223,8 +225,8 @@ class ApiClient {
           peakMonthKwh: pattern.peakMonthKwh,
           seasonalVariation: pattern.seasonalVariation,
           usageTrend: pattern.usageTrend as 'increasing' | 'decreasing' | 'stable',
-          peakUsageMonths: pattern.peakUsageMonths,
-          lowUsageMonths: pattern.lowUsageMonths,
+          peakUsageMonths: pattern.peakUsageMonths?.filter((m): m is string => m !== null) || [],
+          lowUsageMonths: pattern.lowUsageMonths?.filter((m): m is string => m !== null) || [],
         },
         createdAt: pattern.createdAt,
         updatedAt: pattern.updatedAt,
@@ -276,8 +278,8 @@ class ApiClient {
           peakMonthKwh: result.data.peakMonthKwh,
           seasonalVariation: result.data.seasonalVariation,
           usageTrend: result.data.usageTrend as 'increasing' | 'decreasing' | 'stable',
-          peakUsageMonths: result.data.peakUsageMonths,
-          lowUsageMonths: result.data.lowUsageMonths,
+          peakUsageMonths: result.data.peakUsageMonths?.filter((m): m is string => m !== null) || [],
+          lowUsageMonths: result.data.lowUsageMonths?.filter((m): m is string => m !== null) || [],
         },
         createdAt: result.data.createdAt,
         updatedAt: result.data.updatedAt,
@@ -300,6 +302,7 @@ class ApiClient {
       const result = await dataClient.models.RecommendationHistory.list({
         filter: {
           userId: { eq: userId },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       });
 
@@ -378,6 +381,7 @@ class ApiClient {
       const result = await dataClient.models.Feedback.list({
         filter: {
           userId: { eq: userId },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any,
       });
 

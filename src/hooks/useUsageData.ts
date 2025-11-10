@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/services/api/client';
-import type { UsageData } from '../../../shared/types';
+import type { UsageData } from 'shared/types';
 
 export function useUsageData(userId: string | undefined) {
   const queryClient = useQueryClient();

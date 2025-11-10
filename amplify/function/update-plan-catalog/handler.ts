@@ -25,7 +25,10 @@ export const handler: Handler<
   UpdatePlanCatalogResponse
 > = async (event) => {
   try {
-    const { sources = ['eia', 'openei', 'wattbuy'], states } = event;
+    // These will be used when implementing plan catalog update logic
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { sources = ['eia', 'openei', 'wattbuy'], states: _states } = event;
+    void sources;
 
     // TODO: Implement plan catalog update logic
     // 1. Fetch plans from each source API

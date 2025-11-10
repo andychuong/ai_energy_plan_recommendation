@@ -112,12 +112,14 @@ export const handler: Handler<
           client.models.UserPreferences.get({ id: userId }),
           client.models.UsagePattern.list({
             filter: {
-              userId: { eq: userId } as any, // Type assertion needed for filter
+              userId: { eq: userId },
             },
           }),
         ]);
 
-        const userPreferences = preferencesResult.data;
+        // userPreferences is available but not used in current implementation
+        // Will be used when implementing preference-based filtering
+        void preferencesResult.data;
         const usagePatterns = patternsResult.data || [];
 
         const prompt = `Generate top 3 energy plan recommendations based on:

@@ -70,3 +70,43 @@ export interface CurrentPlan {
   renewablePercentage?: number;
 }
 
+/**
+ * Customer Usage Data
+ * Extended usage data format for API responses
+ */
+export interface CustomerUsageData {
+  customerInfo: {
+    customerId: string;
+    address: {
+      street?: string;
+      city?: string;
+      state?: string;
+      zipCode?: string;
+    };
+  };
+  utilityInfo: {
+    utilityName: string;
+    utilityId?: string;
+  };
+  usageDataPoints: UsageDataPoint[];
+  aggregatedStats: {
+    totalKwh: number;
+    totalCost: number;
+    averageMonthlyKwh: number;
+    averageMonthlyCost: number;
+    peakMonth: string;
+    peakMonthKwh: number;
+  };
+  billingInfo?: {
+    currentPlan?: {
+      planId: string;
+      supplierName: string;
+      ratePerKwh: number;
+    };
+    billingPeriod?: {
+      start: string;
+      end: string;
+    };
+  };
+}
+

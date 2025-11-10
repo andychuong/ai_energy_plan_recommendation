@@ -40,6 +40,7 @@ function SignInHandler({
   refreshUser,
   navigate,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: any;
   refreshUser: () => Promise<void>;
   navigate: (path: string) => void;

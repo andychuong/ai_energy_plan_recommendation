@@ -9,23 +9,11 @@
 /**
  * User Preferences
  * Stores user preferences for personalized recommendations
+ * Note: This interface is defined in models.ts to avoid duplication
  */
-export interface UserPreferences {
-  userId: string;
-  costSavingsPriority: 'high' | 'medium' | 'low';
-  flexibilityPreference: number; // Contract length tolerance in months
-  renewableEnergyPreference: number; // Percentage desired (0-100)
-  supplierRatingPreference: number; // Minimum rating threshold (0-5)
-  contractTypePreference: 'fixed' | 'variable' | 'indexed' | 'hybrid' | null;
-  earlyTerminationFeeTolerance: number; // Maximum acceptable fee
-  budgetConstraints?: {
-    maxMonthlyCost?: number;
-    maxAnnualCost?: number;
-  };
-  sustainabilityGoals?: string[];
-  createdAt: string;
-  updatedAt: string;
-}
+// Re-export from models to maintain backward compatibility
+import type { UserPreferences } from './models';
+export type { UserPreferences };
 
 /**
  * Usage Patterns

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
-import type { UsageDataPoint } from '../../../shared/types';
+import type { UsageDataPoint } from 'shared/types';
 
 export function UploadPage() {
   const { user } = useAuth();

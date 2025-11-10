@@ -11,7 +11,7 @@ import type {
   Recommendation,
   UserPreferences,
   UsagePattern,
-} from '../../../shared/types';
+} from 'shared/types';
 
 /**
  * Generate mock energy plans
@@ -24,12 +24,10 @@ export function generateMockPlans(): EnergyPlan[] {
       planName: 'Green Saver Plus',
       ratePerKwh: 0.12,
       contractType: 'fixed',
-      contractLength: 12,
+      contractLengthMonths: 12,
       renewablePercentage: 100,
       earlyTerminationFee: 0,
-      monthlyFee: 9.99,
       state: 'CA',
-      availability: 'available',
     },
     {
       planId: 'plan-2',
@@ -37,12 +35,10 @@ export function generateMockPlans(): EnergyPlan[] {
       planName: 'Budget Basic',
       ratePerKwh: 0.10,
       contractType: 'fixed',
-      contractLength: 24,
+      contractLengthMonths: 24,
       renewablePercentage: 0,
       earlyTerminationFee: 150,
-      monthlyFee: 0,
       state: 'CA',
-      availability: 'available',
     },
     {
       planId: 'plan-3',
@@ -50,12 +46,10 @@ export function generateMockPlans(): EnergyPlan[] {
       planName: 'Eco Flex',
       ratePerKwh: 0.11,
       contractType: 'variable',
-      contractLength: 0,
+      contractLengthMonths: 0,
       renewablePercentage: 50,
       earlyTerminationFee: 0,
-      monthlyFee: 5.99,
       state: 'CA',
-      availability: 'available',
     },
   ];
 }
@@ -109,27 +103,34 @@ export function generateMockUsageData(): CustomerUsageData {
  * Generate mock recommendations
  */
 export function generateMockRecommendations(): Recommendation[] {
+  const now = new Date().toISOString();
   return [
     {
+      recommendationId: 'rec-1',
       planId: 'plan-1',
       rank: 1,
       projectedSavings: 120,
       explanation: 'Best match for your usage pattern with 100% renewable energy',
       riskFlags: [],
+      createdAt: now,
     },
     {
+      recommendationId: 'rec-2',
       planId: 'plan-2',
       rank: 2,
       projectedSavings: 180,
       explanation: 'Lowest cost option, but no renewable energy',
       riskFlags: ['high_termination_fee'],
+      createdAt: now,
     },
     {
+      recommendationId: 'rec-3',
       planId: 'plan-3',
       rank: 3,
       projectedSavings: 60,
       explanation: 'Flexible contract with 50% renewable energy',
       riskFlags: ['variable_rate'],
+      createdAt: now,
     },
   ];
 }

@@ -35,11 +35,11 @@ export function Dashboard() {
               <div className="space-y-2">
                 <p className="text-sm">
                   <span className="font-medium">Average Monthly:</span>{' '}
-                  {usageData.averageMonthlyKwh?.toFixed(0) || 'N/A'} kWh
+                  {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(0) || 'N/A'} kWh
                 </p>
                 <p className="text-sm">
                   <span className="font-medium">Total Annual:</span>{' '}
-                  {usageData.totalAnnualKwh?.toFixed(0) || 'N/A'} kWh
+                  {usageData?.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'} kWh
                 </p>
                 <Link to="/upload">
                   <Button variant="outline" className="mt-4 w-full">

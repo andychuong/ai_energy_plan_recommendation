@@ -10,7 +10,7 @@ import { useUserPreferences } from '@/hooks/useUserPreferences';
 import { RecommendationCard } from '@/components/features/RecommendationCard';
 import { UsageChart } from '@/components/charts/UsageChart';
 import { apiClient } from '@/services/api/client';
-import type { Recommendation } from '../../../shared/types';
+import type { Recommendation, EnergyPlan } from 'shared/types';
 
 export function RecommendationsPage() {
   const { user } = useAuth();
@@ -20,7 +20,7 @@ export function RecommendationsPage() {
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [plans, setPlans] = useState<Map<string, any>>(new Map());
+  const [plans, setPlans] = useState<Map<string, EnergyPlan>>(new Map());
 
   const { generateRecommendations } = useRecommendations(userId, usageData || null);
 
@@ -114,9 +114,9 @@ export function RecommendationsPage() {
         </Alert>
       )}
 
-      {usageData && usageData.usagePoints.length > 0 && (
+      {usageData && usageData.usageDataPoints.length > 0 && (
         <div className="mb-8">
-          <UsageChart data={usageData.usagePoints} />
+          <UsageChart data={usageData.usageDataPoints} />
         </div>
       )}
 
@@ -156,10 +156,12 @@ export function RecommendationsPage() {
                 plan={plans.get(recommendation.planId)}
                 onSelect={() => {
                   // TODO: Handle plan selection
+                  // eslint-disable-next-line no-console
                   console.log('Select plan:', recommendation.planId);
                 }}
                 onCompare={() => {
                   // TODO: Navigate to comparison page
+                  // eslint-disable-next-line no-console
                   console.log('Compare plan:', recommendation.planId);
                 }}
               />
