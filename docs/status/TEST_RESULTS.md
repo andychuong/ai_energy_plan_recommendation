@@ -35,8 +35,8 @@
   - Redirects to Google sign-in page
   - Cognito OAuth configuration correct
   - Redirect URI configured properly
-  - Client ID: `119289824215-krd696ja431s00jm9kl79g4f3uq5l0hh.apps.googleusercontent.com`
-  - Cognito domain: `fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com`
+  - Client ID: `YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com` (example format)
+  - Cognito domain: `YOUR_COGNITO_DOMAIN.auth.us-east-1.amazoncognito.com` (example format)
 
 #### 4. Backend Deployment
 - **Status**: ✅ Deployed

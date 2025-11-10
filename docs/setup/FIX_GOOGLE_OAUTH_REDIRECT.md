@@ -12,12 +12,12 @@ Cognito uses its own callback URL format, not the localhost URLs. You need to ad
 
 From your `amplify_outputs.json`, your Cognito domain is:
 ```
-fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com
+YOUR_COGNITO_DOMAIN.auth.us-east-1.amazoncognito.com
 ```
 
 The callback URL format for Cognito is:
 ```
-https://fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
+https://YOUR_COGNITO_DOMAIN.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
 ```
 
 ## Step 2: Add to Google Cloud Console
@@ -26,7 +26,7 @@ https://fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
 2. Click on your OAuth 2.0 Client ID (the one you created for this project)
 3. Under **"Authorized redirect URIs"**, add:
    ```
-   https://fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
+   https://YOUR_COGNITO_DOMAIN.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
    ```
 4. Click **"Save"**
 
@@ -35,13 +35,13 @@ https://fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com/oauth2/idpresponse
 Make sure you have these redirect URIs in Google Cloud Console:
 
 **Authorized redirect URIs:**
-- `https://fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com/oauth2/idpresponse` (Cognito callback - REQUIRED)
+- `https://YOUR_COGNITO_DOMAIN.auth.us-east-1.amazoncognito.com/oauth2/idpresponse` (Cognito callback - REQUIRED)
 - `http://localhost:3000/auth/callback` (Local development - optional)
 - `http://localhost:3000/` (Local development - optional)
 
 **Authorized JavaScript origins:**
 - `http://localhost:3000`
-- `https://fe131bf61ca30e7a73d7.auth.us-east-1.amazoncognito.com` (Cognito domain)
+- `https://YOUR_COGNITO_DOMAIN.auth.us-east-1.amazoncognito.com` (Cognito domain)
 
 ## Step 4: Test Again
 
