@@ -1,0 +1,3364 @@
+{
+  "version": "48.0.0",
+  "artifacts": {
+    "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "amplify:deployment-type": "sandbox",
+          "created-by": "amplify"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/da22a6084593ca79984f699a810663d67f8382e448a812fc5597bb2c7260491c.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24.assets"
+      ],
+      "metadata": {
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/deploymentType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentType"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/region": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "region"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResourceProviderLambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResourceProviderLambdaServiceRole3F02FB0D"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResourceProviderLambda/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResourceProviderLambdaServiceRoleDefaultPolicy080657DD"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResourceProviderLambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResourceProviderLambda27823B35"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResourceProvider/framework-onEvent/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResourceProviderframeworkonEventServiceRole0941C6B4"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResourceProvider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResourceProviderframeworkonEventServiceRoleDefaultPolicy749EBE05"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResourceProvider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResourceProviderframeworkonEventA62AE3A8"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/AmplifySecretFetcherResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifySecretFetcherResource"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPool4BA7F805"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/UserPool/UserPoolDomain/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolUserPoolDomain1F688B5B"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/GoogleIdP/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthGoogleIdPA9736819"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/UserPoolAppClient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolAppClient2626C6F8"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/IdentityPool": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPool3FDE84CC"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/authenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthauthenticatedUserRoleD8DA3689"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/unauthenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthunauthenticatedUserRole2B524D9E"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyAuth/IdentityPoolRoleAttachment": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPoolRoleAttachment045F17C8"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolFC2E3759Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolFC2E3759Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolAppClient34B262FFRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolAppClient34B262FFRef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolUserPoolDomain2429053CRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolUserPoolDomain2429053CRef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/auth.NestedStack/auth.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "auth179371D7"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/userPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userPoolId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/webClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webClientId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/identityPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "identityPoolId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/authRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "authRegion"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/allowUnauthenticatedIdentities": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "allowUnauthenticatedIdentities"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/signupAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "signupAttributes"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/usernameAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "usernameAttributes"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/verificationMechanisms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "verificationMechanisms"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/passwordPolicyMinLength": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyMinLength"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/passwordPolicyRequirements": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyRequirements"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/mfaConfiguration": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaConfiguration"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/mfaTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaTypes"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/socialProviders": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "socialProviders"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/oauthCognitoDomain": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthCognitoDomain"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/oauthScope": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthScope"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/oauthRedirectSignIn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignIn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/oauthRedirectSignOut": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignOut"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/oauthResponseType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthResponseType"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/oauthClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthClientId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/groups": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "groups"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/GraphQLAPI/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPI42A6FA33"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/GraphQLAPI/TransformerSchema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPITransformerSchemaFF50A789"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/GraphQLAPI/NONE_DS": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/GraphQLAPI/NONE_DS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataGraphQLAPINONEDS684BF699"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "NONE_DS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/AmplifyManagedTableIsCompleteRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableIsCompleteRoleF825222C"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleB4E71DEA"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/AmplifyManagedTableOnEventRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyManagedTableOnEventRoleDefaultPolicyF6DABCB6"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-onEvent/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkonEvent1DFC2ECC"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/TableManagerCustomProvider/framework-isComplete/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableManagerCustomProviderframeworkisComplete2E51021B"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRole470BE899"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachineRoleDefaultPolicy89F3836A"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/AmplifyTableWaiterStateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AmplifyTableWaiterStateMachine060600BC"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventB324C180Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventB324C180Arn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyTableManager.NestedStack/AmplifyTableManager.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource86290833"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPreferencesTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/CustomTableUserPreferencesTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/GetAttUserPreferencesTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttUserPreferencesTableStreamArn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/GetAttUserPreferencesTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttUserPreferencesTableName"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferencesIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPreferencesIAMRole33BAB33D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferencesIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferencesTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPreferencesDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferencesTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/QuerygetUserPreferencesauth0Function/QuerygetUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserPreferencesauth0FunctionQuerygetUserPreferencesauth0FunctionAppSyncFunctionC4597F9D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/QuerygetUserPreferencespostAuth0Function/QuerygetUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUserPreferencespostAuth0FunctionQuerygetUserPreferencespostAuth0FunctionAppSyncFunction5A4A20D8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/QueryGetUserPreferencesDataResolverFn/QueryGetUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetUserPreferencesDataResolverFnQueryGetUserPreferencesDataResolverFnAppSyncFunction990786AF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/queryGetUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/QuerylistUserPreferencesauth0Function/QuerylistUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserPreferencesauth0FunctionQuerylistUserPreferencesauth0FunctionAppSyncFunctionA11B8EAB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/QuerylistUserPreferencespostAuth0Function/QuerylistUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUserPreferencespostAuth0FunctionQuerylistUserPreferencespostAuth0FunctionAppSyncFunction0F69CCEE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/QueryListUserPreferencesDataResolverFn/QueryListUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListUserPreferencesDataResolverFnQueryListUserPreferencesDataResolverFnAppSyncFunctionD2642280"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/queryListUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationcreateUserPreferencesinit0Function/MutationcreateUserPreferencesinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserPreferencesinit0FunctionMutationcreateUserPreferencesinit0FunctionAppSyncFunctionF8A1C5AF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserPreferencesinit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationcreateUserPreferencesauth0Function/MutationcreateUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserPreferencesauth0FunctionMutationcreateUserPreferencesauth0FunctionAppSyncFunction87A26D8A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationcreateUserPreferencespostAuth0Function/MutationcreateUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUserPreferencespostAuth0FunctionMutationcreateUserPreferencespostAuth0FunctionAppSyncFunction429FA38E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationCreateUserPreferencesDataResolverFn/MutationCreateUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateUserPreferencesDataResolverFnMutationCreateUserPreferencesDataResolverFnAppSyncFunctionA5AF8E5B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/mutationCreateUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationupdateUserPreferencesinit0Function/MutationupdateUserPreferencesinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserPreferencesinit0FunctionMutationupdateUserPreferencesinit0FunctionAppSyncFunction7E83AFF1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserPreferencesinit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationupdateUserPreferencesauth0Function/MutationupdateUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserPreferencesauth0FunctionMutationupdateUserPreferencesauth0FunctionAppSyncFunction775ED4A8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationupdateUserPreferencespostAuth0Function/MutationupdateUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUserPreferencespostAuth0FunctionMutationupdateUserPreferencespostAuth0FunctionAppSyncFunction1AC68368"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationUpdateUserPreferencesDataResolverFn/MutationUpdateUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateUserPreferencesDataResolverFnMutationUpdateUserPreferencesDataResolverFnAppSyncFunction35D1DAF6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/mutationUpdateUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationdeleteUserPreferencesauth0Function/MutationdeleteUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUserPreferencesauth0FunctionMutationdeleteUserPreferencesauth0FunctionAppSyncFunctionE513F201"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationdeleteUserPreferencespostAuth0Function/MutationdeleteUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUserPreferencespostAuth0FunctionMutationdeleteUserPreferencespostAuth0FunctionAppSyncFunction6D7C2DB9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/MutationDeleteUserPreferencesDataResolverFn/MutationDeleteUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteUserPreferencesDataResolverFnMutationDeleteUserPreferencesDataResolverFnAppSyncFunction80CBCA93"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/mutationDeleteUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptiononCreateUserPreferencesauth0Function/SubscriptiononCreateUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUserPreferencesauth0FunctionSubscriptiononCreateUserPreferencesauth0FunctionAppSyncFunctionFEF2D774"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptiononCreateUserPreferencespostAuth0Function/SubscriptiononCreateUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUserPreferencespostAuth0FunctionSubscriptiononCreateUserPreferencespostAuth0FunctionAppSyncFunction3DA87C57"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptionOnCreateUserPreferencesDataResolverFn/SubscriptionOnCreateUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateUserPreferencesDataResolverFnSubscriptionOnCreateUserPreferencesDataResolverFnAppSyncFunction61E1DB71"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/subscriptionOnCreateUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptiononUpdateUserPreferencesauth0Function/SubscriptiononUpdateUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUserPreferencesauth0FunctionSubscriptiononUpdateUserPreferencesauth0FunctionAppSyncFunctionFB5A1BC0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptiononUpdateUserPreferencespostAuth0Function/SubscriptiononUpdateUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUserPreferencespostAuth0FunctionSubscriptiononUpdateUserPreferencespostAuth0FunctionAppSyncFunction6251EAC5"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptionOnUpdateUserPreferencesDataResolverFn/SubscriptionOnUpdateUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateUserPreferencesDataResolverFnSubscriptionOnUpdateUserPreferencesDataResolverFnAppSyncFunctionF5C6EE07"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/subscriptionOnUpdateUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptiononDeleteUserPreferencesauth0Function/SubscriptiononDeleteUserPreferencesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUserPreferencesauth0FunctionSubscriptiononDeleteUserPreferencesauth0FunctionAppSyncFunction244868D2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteUserPreferencesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptiononDeleteUserPreferencespostAuth0Function/SubscriptiononDeleteUserPreferencespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUserPreferencespostAuth0FunctionSubscriptiononDeleteUserPreferencespostAuth0FunctionAppSyncFunctionE2B1376D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteUserPreferencespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/SubscriptionOnDeleteUserPreferencesDataResolverFn/SubscriptionOnDeleteUserPreferencesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteUserPreferencesDataResolverFnSubscriptionOnDeleteUserPreferencesDataResolverFnAppSyncFunction1C5CBB69"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteUserPreferencesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/subscriptionOnDeleteUserPreferencesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUserPreferencesResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteUserPreferences"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/UserPreferencesOwnerDataResolverFn/UserPreferencesOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPreferencesOwnerDataResolverFnUserPreferencesOwnerDataResolverFnAppSyncFunction45777C18"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferencesOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/userPreferencesOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UserPreferencesownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UserPreferences.owner"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventB324C180Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputsamplifyarboraienergyplanrecommendationagentandychuongsandboxe7D8DD145"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UserPreferences.NestedStack/UserPreferences.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataUserPreferencesNestedStackUserPreferencesNestedStackResource62693304"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UsagePatternTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/CustomTableUsagePatternTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/GetAttUsagePatternTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttUsagePatternTableStreamArn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/GetAttUsagePatternTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttUsagePatternTableName"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePatternIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UsagePatternIAMRole7523E872"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePatternIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePatternTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UsagePatternDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePatternTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/QuerygetUsagePatternauth0Function/QuerygetUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUsagePatternauth0FunctionQuerygetUsagePatternauth0FunctionAppSyncFunctionBC95E4BE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/QuerygetUsagePatternpostAuth0Function/QuerygetUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetUsagePatternpostAuth0FunctionQuerygetUsagePatternpostAuth0FunctionAppSyncFunction90314C2B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/QueryGetUsagePatternDataResolverFn/QueryGetUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetUsagePatternDataResolverFnQueryGetUsagePatternDataResolverFnAppSyncFunction12B780DA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/queryGetUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/QuerylistUsagePatternsauth0Function/QuerylistUsagePatternsauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUsagePatternsauth0FunctionQuerylistUsagePatternsauth0FunctionAppSyncFunctionAB373601"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUsagePatternsauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/QuerylistUsagePatternspostAuth0Function/QuerylistUsagePatternspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistUsagePatternspostAuth0FunctionQuerylistUsagePatternspostAuth0FunctionAppSyncFunction48D2A95E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistUsagePatternspostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/QueryListUsagePatternsDataResolverFn/QueryListUsagePatternsDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListUsagePatternsDataResolverFnQueryListUsagePatternsDataResolverFnAppSyncFunctionFA3CBAF9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListUsagePatternsDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/queryListUsagePatternsResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listUsagePatterns"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationcreateUsagePatterninit0Function/MutationcreateUsagePatterninit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUsagePatterninit0FunctionMutationcreateUsagePatterninit0FunctionAppSyncFunctionEB711C06"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUsagePatterninit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationcreateUsagePatternauth0Function/MutationcreateUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUsagePatternauth0FunctionMutationcreateUsagePatternauth0FunctionAppSyncFunction13B77DBC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationcreateUsagePatternpostAuth0Function/MutationcreateUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateUsagePatternpostAuth0FunctionMutationcreateUsagePatternpostAuth0FunctionAppSyncFunction98CC6C80"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationCreateUsagePatternDataResolverFn/MutationCreateUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateUsagePatternDataResolverFnMutationCreateUsagePatternDataResolverFnAppSyncFunction766BDFA2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/mutationCreateUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationupdateUsagePatterninit0Function/MutationupdateUsagePatterninit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUsagePatterninit0FunctionMutationupdateUsagePatterninit0FunctionAppSyncFunction4B420A4B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUsagePatterninit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationupdateUsagePatternauth0Function/MutationupdateUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUsagePatternauth0FunctionMutationupdateUsagePatternauth0FunctionAppSyncFunction68B29CF9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationupdateUsagePatternpostAuth0Function/MutationupdateUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateUsagePatternpostAuth0FunctionMutationupdateUsagePatternpostAuth0FunctionAppSyncFunction16F27DFC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationUpdateUsagePatternDataResolverFn/MutationUpdateUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateUsagePatternDataResolverFnMutationUpdateUsagePatternDataResolverFnAppSyncFunctionF98256A4"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/mutationUpdateUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationdeleteUsagePatternauth0Function/MutationdeleteUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUsagePatternauth0FunctionMutationdeleteUsagePatternauth0FunctionAppSyncFunction0586FB59"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationdeleteUsagePatternpostAuth0Function/MutationdeleteUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteUsagePatternpostAuth0FunctionMutationdeleteUsagePatternpostAuth0FunctionAppSyncFunction5E1AEEEF"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/MutationDeleteUsagePatternDataResolverFn/MutationDeleteUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteUsagePatternDataResolverFnMutationDeleteUsagePatternDataResolverFnAppSyncFunctionAA5CC16C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/mutationDeleteUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptiononCreateUsagePatternauth0Function/SubscriptiononCreateUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUsagePatternauth0FunctionSubscriptiononCreateUsagePatternauth0FunctionAppSyncFunction35EB3EE9"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptiononCreateUsagePatternpostAuth0Function/SubscriptiononCreateUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUsagePatternpostAuth0FunctionSubscriptiononCreateUsagePatternpostAuth0FunctionAppSyncFunction104820C3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptionOnCreateUsagePatternDataResolverFn/SubscriptionOnCreateUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateUsagePatternDataResolverFnSubscriptionOnCreateUsagePatternDataResolverFnAppSyncFunction0A34666B"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/subscriptionOnCreateUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptiononUpdateUsagePatternauth0Function/SubscriptiononUpdateUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUsagePatternauth0FunctionSubscriptiononUpdateUsagePatternauth0FunctionAppSyncFunction04F0EA99"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptiononUpdateUsagePatternpostAuth0Function/SubscriptiononUpdateUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUsagePatternpostAuth0FunctionSubscriptiononUpdateUsagePatternpostAuth0FunctionAppSyncFunction54DB4801"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptionOnUpdateUsagePatternDataResolverFn/SubscriptionOnUpdateUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateUsagePatternDataResolverFnSubscriptionOnUpdateUsagePatternDataResolverFnAppSyncFunctionCF945F9D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/subscriptionOnUpdateUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptiononDeleteUsagePatternauth0Function/SubscriptiononDeleteUsagePatternauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUsagePatternauth0FunctionSubscriptiononDeleteUsagePatternauth0FunctionAppSyncFunction3235712A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteUsagePatternauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptiononDeleteUsagePatternpostAuth0Function/SubscriptiononDeleteUsagePatternpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUsagePatternpostAuth0FunctionSubscriptiononDeleteUsagePatternpostAuth0FunctionAppSyncFunctionBABE27C2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteUsagePatternpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/SubscriptionOnDeleteUsagePatternDataResolverFn/SubscriptionOnDeleteUsagePatternDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteUsagePatternDataResolverFnSubscriptionOnDeleteUsagePatternDataResolverFnAppSyncFunctionC2E90863"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteUsagePatternDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/subscriptionOnDeleteUsagePatternResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteUsagePatternResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteUsagePattern"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/UsagePatternOwnerDataResolverFn/UsagePatternOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UsagePatternOwnerDataResolverFnUsagePatternOwnerDataResolverFnAppSyncFunction7BD287AC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePatternOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/usagePatternOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UsagePatternownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "UsagePattern.owner"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventB324C180Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputsamplifyarboraienergyplanrecommendationagentandychuongsandboxe7D8DD145"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/UsagePattern.NestedStack/UsagePattern.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataUsagePatternNestedStackUsagePatternNestedStackResource6A42A21A"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RecommendationHistoryTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/CustomTableRecommendationHistoryTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/GetAttRecommendationHistoryTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttRecommendationHistoryTableStreamArn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/GetAttRecommendationHistoryTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttRecommendationHistoryTableName"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistoryIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RecommendationHistoryIAMRole09D3C56E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistoryIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistoryTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RecommendationHistoryDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistoryTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerygetRecommendationHistoryauth0Function/QuerygetRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetRecommendationHistoryauth0FunctionQuerygetRecommendationHistoryauth0FunctionAppSyncFunction869DA090"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerygetRecommendationHistorypostAuth0Function/QuerygetRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetRecommendationHistorypostAuth0FunctionQuerygetRecommendationHistorypostAuth0FunctionAppSyncFunctionCDC0FD0D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QueryGetRecommendationHistoryDataResolverFn/QueryGetRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetRecommendationHistoryDataResolverFnQueryGetRecommendationHistoryDataResolverFnAppSyncFunctionAF3E31B6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/queryGetRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerylistRecommendationHistoriesauth0Function/QuerylistRecommendationHistoriesauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRecommendationHistoriesauth0FunctionQuerylistRecommendationHistoriesauth0FunctionAppSyncFunctionC066A384"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistRecommendationHistoriesauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerylistRecommendationHistoriespostAuth0Function/QuerylistRecommendationHistoriespostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistRecommendationHistoriespostAuth0FunctionQuerylistRecommendationHistoriespostAuth0FunctionAppSyncFunctionEF8618B3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistRecommendationHistoriespostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QueryListRecommendationHistoriesDataResolverFn/QueryListRecommendationHistoriesDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListRecommendationHistoriesDataResolverFnQueryListRecommendationHistoriesDataResolverFnAppSyncFunction56127C6E"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListRecommendationHistoriesDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/queryListRecommendationHistoriesResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listRecommendationHistories"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationcreateRecommendationHistoryinit0Function/MutationcreateRecommendationHistoryinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateRecommendationHistoryinit0FunctionMutationcreateRecommendationHistoryinit0FunctionAppSyncFunction85D36273"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateRecommendationHistoryinit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationcreateRecommendationHistoryauth0Function/MutationcreateRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateRecommendationHistoryauth0FunctionMutationcreateRecommendationHistoryauth0FunctionAppSyncFunction08FE8796"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationcreateRecommendationHistorypostAuth0Function/MutationcreateRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateRecommendationHistorypostAuth0FunctionMutationcreateRecommendationHistorypostAuth0FunctionAppSyncFunction8E5FC672"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationCreateRecommendationHistoryDataResolverFn/MutationCreateRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateRecommendationHistoryDataResolverFnMutationCreateRecommendationHistoryDataResolverFnAppSyncFunction49655D3D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/mutationCreateRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationupdateRecommendationHistoryinit0Function/MutationupdateRecommendationHistoryinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateRecommendationHistoryinit0FunctionMutationupdateRecommendationHistoryinit0FunctionAppSyncFunction313D2B3A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateRecommendationHistoryinit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationupdateRecommendationHistoryauth0Function/MutationupdateRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateRecommendationHistoryauth0FunctionMutationupdateRecommendationHistoryauth0FunctionAppSyncFunction22FE44D3"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationupdateRecommendationHistorypostAuth0Function/MutationupdateRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateRecommendationHistorypostAuth0FunctionMutationupdateRecommendationHistorypostAuth0FunctionAppSyncFunction14F3BD6F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationUpdateRecommendationHistoryDataResolverFn/MutationUpdateRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateRecommendationHistoryDataResolverFnMutationUpdateRecommendationHistoryDataResolverFnAppSyncFunction81B3A69A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/mutationUpdateRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationdeleteRecommendationHistoryauth0Function/MutationdeleteRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteRecommendationHistoryauth0FunctionMutationdeleteRecommendationHistoryauth0FunctionAppSyncFunction79AA7A8F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationdeleteRecommendationHistorypostAuth0Function/MutationdeleteRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteRecommendationHistorypostAuth0FunctionMutationdeleteRecommendationHistorypostAuth0FunctionAppSyncFunctionC935B6DC"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationDeleteRecommendationHistoryDataResolverFn/MutationDeleteRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteRecommendationHistoryDataResolverFnMutationDeleteRecommendationHistoryDataResolverFnAppSyncFunction493D5184"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/mutationDeleteRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononCreateRecommendationHistoryauth0Function/SubscriptiononCreateRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateRecommendationHistoryauth0FunctionSubscriptiononCreateRecommendationHistoryauth0FunctionAppSyncFunction129B7042"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononCreateRecommendationHistorypostAuth0Function/SubscriptiononCreateRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateRecommendationHistorypostAuth0FunctionSubscriptiononCreateRecommendationHistorypostAuth0FunctionAppSyncFunction6A4239BA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptionOnCreateRecommendationHistoryDataResolverFn/SubscriptionOnCreateRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateRecommendationHistoryDataResolverFnSubscriptionOnCreateRecommendationHistoryDataResolverFnAppSyncFunction1ED69FC8"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/subscriptionOnCreateRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononUpdateRecommendationHistoryauth0Function/SubscriptiononUpdateRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateRecommendationHistoryauth0FunctionSubscriptiononUpdateRecommendationHistoryauth0FunctionAppSyncFunctionDC0E9CD2"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononUpdateRecommendationHistorypostAuth0Function/SubscriptiononUpdateRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateRecommendationHistorypostAuth0FunctionSubscriptiononUpdateRecommendationHistorypostAuth0FunctionAppSyncFunction6BB9103C"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptionOnUpdateRecommendationHistoryDataResolverFn/SubscriptionOnUpdateRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateRecommendationHistoryDataResolverFnSubscriptionOnUpdateRecommendationHistoryDataResolverFnAppSyncFunction651FBF4D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/subscriptionOnUpdateRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononDeleteRecommendationHistoryauth0Function/SubscriptiononDeleteRecommendationHistoryauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteRecommendationHistoryauth0FunctionSubscriptiononDeleteRecommendationHistoryauth0FunctionAppSyncFunction9622B59D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteRecommendationHistoryauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononDeleteRecommendationHistorypostAuth0Function/SubscriptiononDeleteRecommendationHistorypostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteRecommendationHistorypostAuth0FunctionSubscriptiononDeleteRecommendationHistorypostAuth0FunctionAppSyncFunctionEC334712"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteRecommendationHistorypostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptionOnDeleteRecommendationHistoryDataResolverFn/SubscriptionOnDeleteRecommendationHistoryDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteRecommendationHistoryDataResolverFnSubscriptionOnDeleteRecommendationHistoryDataResolverFnAppSyncFunction5DBA2E34"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteRecommendationHistoryDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/subscriptionOnDeleteRecommendationHistoryResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteRecommendationHistoryResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteRecommendationHistory"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryOwnerDataResolverFn/RecommendationHistoryOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RecommendationHistoryOwnerDataResolverFnRecommendationHistoryOwnerDataResolverFnAppSyncFunctionB359EE00"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistoryOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/recommendationHistoryOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RecommendationHistoryownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "RecommendationHistory.owner"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventB324C180Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputsamplifyarboraienergyplanrecommendationagentandychuongsandboxe7D8DD145"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory.NestedStack/RecommendationHistory.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataRecommendationHistoryNestedStackRecommendationHistoryNestedStackResource414290F4"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/HasEnvironmentParameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "HasEnvironmentParameter"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/ShouldUsePayPerRequestBilling": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePayPerRequestBilling"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/ShouldUsePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ShouldUsePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Feedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackTable/Default/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FeedbackTable"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Feedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/CustomTableFeedbackTable": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Feedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/GetAttFeedbackTableStreamArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttFeedbackTableStreamArn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/GetAttFeedbackTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAttFeedbackTableName"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackIAMRole": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FeedbackIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackIAMRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FeedbackIAMRole450A878A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FeedbackIAMRole"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackDataSource": [
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FeedbackTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FeedbackDataSource"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FeedbackTable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/QuerygetFeedbackauth0Function/QuerygetFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetFeedbackauth0FunctionQuerygetFeedbackauth0FunctionAppSyncFunction34FE05D0"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/QuerygetFeedbackpostAuth0Function/QuerygetFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerygetFeedbackpostAuth0FunctionQuerygetFeedbackpostAuth0FunctionAppSyncFunctionEF2A332A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerygetFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/QueryGetFeedbackDataResolverFn/QueryGetFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryGetFeedbackDataResolverFnQueryGetFeedbackDataResolverFnAppSyncFunction18E56B96"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryGetFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/queryGetFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.getFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/QuerylistFeedbacksauth0Function/QuerylistFeedbacksauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistFeedbacksauth0FunctionQuerylistFeedbacksauth0FunctionAppSyncFunction968396B7"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistFeedbacksauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/QuerylistFeedbackspostAuth0Function/QuerylistFeedbackspostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QuerylistFeedbackspostAuth0FunctionQuerylistFeedbackspostAuth0FunctionAppSyncFunction28CD12C1"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QuerylistFeedbackspostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/QueryListFeedbacksDataResolverFn/QueryListFeedbacksDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QueryListFeedbacksDataResolverFnQueryListFeedbacksDataResolverFnAppSyncFunctionB3037CEE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "QueryListFeedbacksDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/queryListFeedbacksResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ListFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Query.listFeedbacks"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationcreateFeedbackinit0Function/MutationcreateFeedbackinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateFeedbackinit0FunctionMutationcreateFeedbackinit0FunctionAppSyncFunctionDDD7AE2A"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateFeedbackinit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationcreateFeedbackauth0Function/MutationcreateFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateFeedbackauth0FunctionMutationcreateFeedbackauth0FunctionAppSyncFunction0674A650"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationcreateFeedbackpostAuth0Function/MutationcreateFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationcreateFeedbackpostAuth0FunctionMutationcreateFeedbackpostAuth0FunctionAppSyncFunction3683A1EA"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationcreateFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationCreateFeedbackDataResolverFn/MutationCreateFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationCreateFeedbackDataResolverFnMutationCreateFeedbackDataResolverFnAppSyncFunction092A4904"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationCreateFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/mutationCreateFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreateFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.createFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationupdateFeedbackinit0Function/MutationupdateFeedbackinit0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateFeedbackinit0FunctionMutationupdateFeedbackinit0FunctionAppSyncFunction7FBCB332"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateFeedbackinit0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationupdateFeedbackauth0Function/MutationupdateFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateFeedbackauth0FunctionMutationupdateFeedbackauth0FunctionAppSyncFunction5D6971DD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationupdateFeedbackpostAuth0Function/MutationupdateFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationupdateFeedbackpostAuth0FunctionMutationupdateFeedbackpostAuth0FunctionAppSyncFunction2F53608D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationupdateFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationUpdateFeedbackDataResolverFn/MutationUpdateFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationUpdateFeedbackDataResolverFnMutationUpdateFeedbackDataResolverFnAppSyncFunction6263D95D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationUpdateFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/mutationUpdateFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.updateFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationdeleteFeedbackauth0Function/MutationdeleteFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteFeedbackauth0FunctionMutationdeleteFeedbackauth0FunctionAppSyncFunctionF76BA2BD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationdeleteFeedbackpostAuth0Function/MutationdeleteFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationdeleteFeedbackpostAuth0FunctionMutationdeleteFeedbackpostAuth0FunctionAppSyncFunction49A3EF69"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationdeleteFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/MutationDeleteFeedbackDataResolverFn/MutationDeleteFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "MutationDeleteFeedbackDataResolverFnMutationDeleteFeedbackDataResolverFnAppSyncFunction0132D9A6"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "MutationDeleteFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/mutationDeleteFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeleteFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Mutation.deleteFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptiononCreateFeedbackauth0Function/SubscriptiononCreateFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateFeedbackauth0FunctionSubscriptiononCreateFeedbackauth0FunctionAppSyncFunction166A1391"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptiononCreateFeedbackpostAuth0Function/SubscriptiononCreateFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateFeedbackpostAuth0FunctionSubscriptiononCreateFeedbackpostAuth0FunctionAppSyncFunctionB3E45429"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononCreateFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptionOnCreateFeedbackDataResolverFn/SubscriptionOnCreateFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnCreateFeedbackDataResolverFnSubscriptionOnCreateFeedbackDataResolverFnAppSyncFunctionB108B7BB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnCreateFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/subscriptionOnCreateFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononCreateFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onCreateFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptiononUpdateFeedbackauth0Function/SubscriptiononUpdateFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateFeedbackauth0FunctionSubscriptiononUpdateFeedbackauth0FunctionAppSyncFunctionAF73EF49"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptiononUpdateFeedbackpostAuth0Function/SubscriptiononUpdateFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateFeedbackpostAuth0FunctionSubscriptiononUpdateFeedbackpostAuth0FunctionAppSyncFunction152C97EB"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononUpdateFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptionOnUpdateFeedbackDataResolverFn/SubscriptionOnUpdateFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnUpdateFeedbackDataResolverFnSubscriptionOnUpdateFeedbackDataResolverFnAppSyncFunctionEC261EAE"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnUpdateFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/subscriptionOnUpdateFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononUpdateFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onUpdateFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptiononDeleteFeedbackauth0Function/SubscriptiononDeleteFeedbackauth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteFeedbackauth0FunctionSubscriptiononDeleteFeedbackauth0FunctionAppSyncFunction2C9EFE2F"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteFeedbackauth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptiononDeleteFeedbackpostAuth0Function/SubscriptiononDeleteFeedbackpostAuth0Function.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteFeedbackpostAuth0FunctionSubscriptiononDeleteFeedbackpostAuth0FunctionAppSyncFunction029DA92D"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptiononDeleteFeedbackpostAuth0Function"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/SubscriptionOnDeleteFeedbackDataResolverFn/SubscriptionOnDeleteFeedbackDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptionOnDeleteFeedbackDataResolverFnSubscriptionOnDeleteFeedbackDataResolverFnAppSyncFunctionDE485A95"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "SubscriptionOnDeleteFeedbackDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/subscriptionOnDeleteFeedbackResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SubscriptiononDeleteFeedbackResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Subscription.onDeleteFeedback"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/FeedbackOwnerDataResolverFn/FeedbackOwnerDataResolverFn.AppSyncFunction": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FeedbackOwnerDataResolverFnFeedbackOwnerDataResolverFnAppSyncFunction5487A7AD"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "FeedbackOwnerDataResolverFn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/feedbackOwnerResolver": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "FeedbackownerResolver"
+          },
+          {
+            "type": "graphqltransformer:resourceName",
+            "data": "Feedback.owner"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerTableManagerCustomProviderframeworkonEventB324C180Arn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputsamplifyarboraienergyplanrecommendationagentandychuongsandboxe7D8DD145"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/Feedback.NestedStack/Feedback.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataFeedbackNestedStackFeedbackNestedStackResourceED7135D1"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucket9CCB4ACA"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketPolicyF1C1C548"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsBucketAutoDeleteObjectsCustomResource437F26F5"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentAwsCliLayerE322F905"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/AmplifyCodegenAssets/AmplifyCodegenAssetsDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB21775929"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/DynamoDBModelTableReadIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableReadIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/DynamoDBModelTableWriteIOPS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBModelTableWriteIOPS"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/DynamoDBBillingMode": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBBillingMode"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/DynamoDBEnablePointInTimeRecovery": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnablePointInTimeRecovery"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/DynamoDBEnableServerSideEncryption": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DynamoDBEnableServerSideEncryption"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-singleton",
+            "data": true
+          },
+          {
+            "type": "aws:cdk:is-custom-resource-handler-runtime-family",
+            "data": 2
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleA41FC8C2"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBServiceRoleDefaultPolicyFF1C635B"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C1536MiBC5D8AB21"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/modelIntrospectionSchemaBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketF566B665"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/modelIntrospectionSchemaBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketPolicy4DAB0D15"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/modelIntrospectionSchemaBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketAutoDeleteObjectsCustomResourceFE57309F"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/modelIntrospectionSchemaBucketDeployment/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentAwsCliLayer13C432F7"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/modelIntrospectionSchemaBucketDeployment/CustomResource-1536MiB/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "modelIntrospectionSchemaBucketDeploymentCustomResource1536MiB104B97EC"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/AMPLIFY_DATA_GRAPHQL_ENDPOINTParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAGRAPHQLENDPOINTParameter1C2CBB16"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMABUCKETNAMEParameter47BF4F44"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEYParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATAMODELINTROSPECTIONSCHEMAKEYParameterB6AEAE8A"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/AMPLIFY_DATA_DEFAULT_NAMEParameter/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AMPLIFYDATADEFAULTNAMEParameterE7C23CC4"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolFC2E3759Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthUserPoolFC2E3759Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/reference-to-amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputs.amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFGraphQLUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFGraphQLUrl"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB120D11BADestinationBucketArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyCodegenAssetsAmplifyCodegenAssetsDeploymentCustomResource1536MiB120D11BADestinationBucketArn"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data.NestedStack/data.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "data7552DF31"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/awsAppsyncApiId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiId"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/awsAppsyncApiEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncApiEndpoint"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/awsAppsyncAuthenticationType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAuthenticationType"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/awsAppsyncRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncRegion"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/amplifyApiModelSchemaS3Uri": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyApiModelSchemaS3Uri"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/awsAppsyncAdditionalAuthenticationTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "awsAppsyncAdditionalAuthenticationTypes"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/normalize-data-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "normalizedatalambdaServiceRole1B2A5FFD"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/normalize-data-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "normalizedatalambdaF6EB3A09"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/generate-recommendations-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "generaterecommendationslambdaServiceRoleB316D9C8"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/generate-recommendations-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "generaterecommendationslambda2312FCCB"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/update-plan-catalog-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "updateplancataloglambdaServiceRole12B95F2A"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/update-plan-catalog-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "updateplancataloglambda104EA566"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/process-usage-data-lambda/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "processusagedatalambdaServiceRoleD42A8C63"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/process-usage-data-lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "processusagedatalambda34C65399"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functionnormalizedatalambda1C12D4D1Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functionnormalizedatalambda1C12D4D1Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functiongeneraterecommendationslambda1F768DAFRef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functiongeneraterecommendationslambda1F768DAFRef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functionupdateplancataloglambdaCD437BB2Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functionupdateplancataloglambdaCD437BB2Ref"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function/amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functionprocessusagedatalambdaBBDF56AARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24functionprocessusagedatalambdaBBDF56AARef"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/function.NestedStack/function.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "function1351588B"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/definedFunctions": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "definedFunctions"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "aws-cdk-lib/feature-flag-report": {
+      "type": "cdk:feature-flag-report",
+      "properties": {
+        "module": "aws-cdk-lib",
+        "flags": {
+          "@aws-cdk/aws-signer:signingProfileNamePassedToCfn": {
+            "recommendedValue": true,
+            "explanation": "Pass signingProfileName to CfnSigningProfile"
+          },
+          "@aws-cdk/core:newStyleStackSynthesis": {
+            "recommendedValue": true,
+            "explanation": "Switch to new stack synthesis method which enables CI/CD",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:stackRelativeExports": {
+            "recommendedValue": true,
+            "explanation": "Name exports based on the construct paths relative to the stack, rather than the global construct path",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:secGroupsDisablesImplicitOpenListener": {
+            "recommendedValue": true,
+            "explanation": "Disable implicit openListener when custom security groups are provided"
+          },
+          "@aws-cdk/aws-rds:lowercaseDbIdentifier": {
+            "recommendedValue": true,
+            "explanation": "Force lowercasing of RDS Cluster names in CDK",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": {
+            "recommendedValue": true,
+            "explanation": "Allow adding/removing multiple UsagePlanKeys independently",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeVersionProps": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the  `fn.currentVersion`.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-lambda:recognizeLayerVersion": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to opt in to the updated logical id calculation for Lambda Version created using the `fn.currentVersion`."
+          },
+          "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have cloudfront distributions use the security policy TLSv1.2_2021 by default.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:checkSecretUsage": {
+            "recommendedValue": true,
+            "explanation": "Enable this flag to make it impossible to accidentally use SecretValues in unsafe locations"
+          },
+          "@aws-cdk/core:target-partitions": {
+            "recommendedValue": [
+              "aws",
+              "aws-cn"
+            ],
+            "explanation": "What regions to include in lookup tables of environment agnostic stacks"
+          },
+          "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": {
+            "recommendedValue": true,
+            "explanation": "ECS extensions will automatically add an `awslogs` driver if no logging is specified"
+          },
+          "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to have Launch Templates generated by the `InstanceRequireImdsv2Aspect` use unique names."
+          },
+          "@aws-cdk/aws-ecs:arnFormatIncludesClusterName": {
+            "recommendedValue": true,
+            "explanation": "ARN format used by ECS. In the new ARN format, the cluster name is part of the resource ID."
+          },
+          "@aws-cdk/aws-iam:minimizePolicies": {
+            "recommendedValue": true,
+            "explanation": "Minimize IAM policies by combining Statements"
+          },
+          "@aws-cdk/core:validateSnapshotRemovalPolicy": {
+            "recommendedValue": true,
+            "explanation": "Error on snapshot removal policies on resources that do not support it."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeyAliasStackSafeResourceName": {
+            "recommendedValue": true,
+            "explanation": "Generate key aliases that include the stack name"
+          },
+          "@aws-cdk/aws-s3:createDefaultLoggingPolicy": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature flag to create an S3 bucket policy by default in cases where an AWS service would automatically create the Policy if one does not exist."
+          },
+          "@aws-cdk/aws-sns-subscriptions:restrictSqsDescryption": {
+            "recommendedValue": true,
+            "explanation": "Restrict KMS key policy for encrypted Queues a bit more"
+          },
+          "@aws-cdk/aws-apigateway:disableCloudWatchRole": {
+            "recommendedValue": true,
+            "explanation": "Make default CloudWatch Role behavior safe for multiple API Gateways in one environment"
+          },
+          "@aws-cdk/core:enablePartitionLiterals": {
+            "recommendedValue": true,
+            "explanation": "Make ARNs concrete if AWS partition is known"
+          },
+          "@aws-cdk/aws-events:eventsTargetQueueSameAccount": {
+            "recommendedValue": true,
+            "explanation": "Event Rules may only push to encrypted SQS queues in the same account"
+          },
+          "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": {
+            "recommendedValue": true,
+            "explanation": "Avoid setting the \"ECS\" deployment controller when adding a circuit breaker"
+          },
+          "@aws-cdk/aws-iam:importedRoleStackSafeDefaultPolicyName": {
+            "recommendedValue": true,
+            "explanation": "Enable this feature to create default policy names for imported roles that depend on the stack the role is in."
+          },
+          "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": {
+            "recommendedValue": true,
+            "explanation": "Use S3 Bucket Policy instead of ACLs for Server Access Logging"
+          },
+          "@aws-cdk/aws-route53-patters:useCertificate": {
+            "recommendedValue": true,
+            "explanation": "Use the official `Certificate` resource instead of `DnsValidatedCertificate`"
+          },
+          "@aws-cdk/customresources:installLatestAwsSdkDefault": {
+            "recommendedValue": false,
+            "explanation": "Whether to install the latest SDK by default in AwsCustomResource"
+          },
+          "@aws-cdk/aws-rds:databaseProxyUniqueResourceName": {
+            "recommendedValue": true,
+            "explanation": "Use unique resource name for Database Proxy"
+          },
+          "@aws-cdk/aws-codedeploy:removeAlarmsFromDeploymentGroup": {
+            "recommendedValue": true,
+            "explanation": "Remove CloudWatch alarms from deployment group"
+          },
+          "@aws-cdk/aws-apigateway:authorizerChangeDeploymentLogicalId": {
+            "recommendedValue": true,
+            "explanation": "Include authorizer configuration in the calculation of the API deployment logical ID."
+          },
+          "@aws-cdk/aws-ec2:launchTemplateDefaultUserData": {
+            "recommendedValue": true,
+            "explanation": "Define user data for a launch template by default when a machine image is provided."
+          },
+          "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": {
+            "recommendedValue": true,
+            "explanation": "SecretTargetAttachments uses the ResourcePolicy of the attached Secret."
+          },
+          "@aws-cdk/aws-redshift:columnId": {
+            "recommendedValue": true,
+            "explanation": "Whether to use an ID to track Redshift column changes"
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:enableEmrServicePolicyV2": {
+            "recommendedValue": true,
+            "explanation": "Enable AmazonEMRServicePolicy_v2 managed policies"
+          },
+          "@aws-cdk/aws-ec2:restrictDefaultSecurityGroup": {
+            "recommendedValue": true,
+            "explanation": "Restrict access to the VPC default security group"
+          },
+          "@aws-cdk/aws-apigateway:requestValidatorUniqueId": {
+            "recommendedValue": true,
+            "explanation": "Generate a unique id for each RequestValidator added to a method"
+          },
+          "@aws-cdk/aws-kms:aliasNameRef": {
+            "recommendedValue": true,
+            "explanation": "KMS Alias name and keyArn will have implicit reference to KMS Key"
+          },
+          "@aws-cdk/aws-kms:applyImportedAliasPermissionsToPrincipal": {
+            "recommendedValue": true,
+            "explanation": "Enable grant methods on Aliases imported by name to use kms:ResourceAliases condition"
+          },
+          "@aws-cdk/aws-autoscaling:generateLaunchTemplateInsteadOfLaunchConfig": {
+            "recommendedValue": true,
+            "explanation": "Generate a launch template when creating an AutoScalingGroup"
+          },
+          "@aws-cdk/core:includePrefixInUniqueNameGeneration": {
+            "recommendedValue": true,
+            "explanation": "Include the stack prefix in the stack name generation process"
+          },
+          "@aws-cdk/aws-efs:denyAnonymousAccess": {
+            "recommendedValue": true,
+            "explanation": "EFS denies anonymous clients accesses"
+          },
+          "@aws-cdk/aws-opensearchservice:enableOpensearchMultiAzWithStandby": {
+            "recommendedValue": true,
+            "explanation": "Enables support for Multi-AZ with Standby deployment for opensearch domains"
+          },
+          "@aws-cdk/aws-lambda-nodejs:useLatestRuntimeVersion": {
+            "recommendedValue": true,
+            "explanation": "Enables aws-lambda-nodejs.Function to use the latest available NodeJs runtime as the default"
+          },
+          "@aws-cdk/aws-efs:mountTargetOrderInsensitiveLogicalId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, mount targets will have a stable logicalId that is linked to the associated subnet."
+          },
+          "@aws-cdk/aws-rds:auroraClusterChangeScopeOfInstanceParameterGroupWithEachParameters": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a scope of InstanceParameterGroup for AuroraClusterInstance with each parameters will change."
+          },
+          "@aws-cdk/aws-appsync:useArnForSourceApiAssociationIdentifier": {
+            "recommendedValue": true,
+            "explanation": "When enabled, will always use the arn for identifiers for CfnSourceApiAssociation in the GraphqlApi construct rather than id."
+          },
+          "@aws-cdk/aws-rds:preventRenderingDeprecatedCredentials": {
+            "recommendedValue": true,
+            "explanation": "When enabled, creating an RDS database cluster from a snapshot will only render credentials for snapshot credentials."
+          },
+          "@aws-cdk/aws-codepipeline-actions:useNewDefaultBranchForCodeCommitSource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the CodeCommit source action is using the default branch name 'main'."
+          },
+          "@aws-cdk/aws-cloudwatch-actions:changeLambdaPermissionLogicalIdForLambdaAction": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the logical ID of a Lambda permission for a Lambda action includes an alarm ID."
+          },
+          "@aws-cdk/aws-codepipeline:crossAccountKeysDefaultValueToFalse": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default value for crossAccountKeys to false."
+          },
+          "@aws-cdk/aws-codepipeline:defaultPipelineTypeToV2": {
+            "recommendedValue": true,
+            "explanation": "Enables Pipeline to set the default pipeline type to V2."
+          },
+          "@aws-cdk/aws-kms:reduceCrossAccountRegionPolicyScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, IAM Policy created from KMS key grant will reduce the resource scope to this key only."
+          },
+          "@aws-cdk/pipelines:reduceAssetRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from PipelineAssetsFileRole trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-eks:nodegroupNameAttribute": {
+            "recommendedValue": true,
+            "explanation": "When enabled, nodegroupName attribute of the provisioned EKS NodeGroup will not have the cluster name prefix."
+          },
+          "@aws-cdk/aws-ec2:ebsDefaultGp3Volume": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default volume type of the EBS volume will be GP3"
+          },
+          "@aws-cdk/aws-ecs:removeDefaultDeploymentAlarm": {
+            "recommendedValue": true,
+            "explanation": "When enabled, remove default deployment alarm settings"
+          },
+          "@aws-cdk/custom-resources:logApiResponseDataPropertyTrueDefault": {
+            "recommendedValue": false,
+            "explanation": "When enabled, the custom resource used for `AwsCustomResource` will configure the `logApiResponseData` property as true by default"
+          },
+          "@aws-cdk/aws-s3:keepNotificationInImportedBucket": {
+            "recommendedValue": false,
+            "explanation": "When enabled, Adding notifications to a bucket in the current stack will not remove notification from imported stack."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:useNewS3UriParametersForBedrockInvokeModelTask": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use new props for S3 URI field in task definition of state machine for bedrock invoke model.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/core:explicitStackTags": {
+            "recommendedValue": true,
+            "explanation": "When enabled, stack tags need to be assigned explicitly on a Stack."
+          },
+          "@aws-cdk/aws-ecs:enableImdsBlockingDeprecatedFeature": {
+            "recommendedValue": false,
+            "explanation": "When set to true along with canContainersAccessInstanceRole=false in ECS cluster, new updated commands will be added to UserData to block container accessing IMDS. **Applicable to Linux only. IMPORTANT: See [details.](#aws-cdkaws-ecsenableImdsBlockingDeprecatedFeature)**"
+          },
+          "@aws-cdk/aws-ecs:disableEcsImdsBlocking": {
+            "recommendedValue": true,
+            "explanation": "When set to true, CDK synth will throw exception if canContainersAccessInstanceRole is false. **IMPORTANT: See [details.](#aws-cdkaws-ecsdisableEcsImdsBlocking)**"
+          },
+          "@aws-cdk/aws-ecs:reduceEc2FargateCloudWatchPermissions": {
+            "recommendedValue": true,
+            "explanation": "When enabled, we will only grant the necessary permissions when users specify cloudwatch log group through logConfiguration"
+          },
+          "@aws-cdk/aws-dynamodb:resourcePolicyPerReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled will allow you to specify a resource policy per replica, and not copy the source table policy to all replicas"
+          },
+          "@aws-cdk/aws-ec2:ec2SumTImeoutEnabled": {
+            "recommendedValue": true,
+            "explanation": "When enabled, initOptions.timeout and resourceSignalTimeout values will be summed together."
+          },
+          "@aws-cdk/aws-appsync:appSyncGraphQLAPIScopeLambdaPermission": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a Lambda authorizer Permission created when using GraphqlApi will be properly scoped with a SourceArn."
+          },
+          "@aws-cdk/aws-rds:setCorrectValueForDatabaseInstanceReadReplicaInstanceResourceId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the value of property `instanceResourceId` in construct `DatabaseInstanceReadReplica` will be set to the correct value which is `DbiResourceId` instead of currently `DbInstanceArn`"
+          },
+          "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CFN templates added with `cfn-include` will error if the template contains Resource Update or Create policies with CFN Intrinsics that include non-primitive values."
+          },
+          "@aws-cdk/aws-lambda-nodejs:sdkV3ExcludeSmithyPackages": {
+            "recommendedValue": true,
+            "explanation": "When enabled, both `@aws-sdk` and `@smithy` packages will be excluded from the Lambda Node.js 18.x runtime to prevent version mismatches in bundled applications."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:fixRunEcsTaskPolicy": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resource of IAM Run Ecs policy generated by SFN EcsRunTask will reference the definition, instead of constructing ARN."
+          },
+          "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the BastionHost construct will use the latest Amazon Linux 2023 AMI, instead of Amazon Linux 2."
+          },
+          "@aws-cdk/core:aspectStabilization": {
+            "recommendedValue": true,
+            "explanation": "When enabled, a stabilization loop will be run when invoking Aspects during synthesis.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-route53-targets:userPoolDomainNameMethodWithoutCustomResource": {
+            "recommendedValue": true,
+            "explanation": "When enabled, use a new method for DNS Name of user pool domain target without creating a custom resource."
+          },
+          "@aws-cdk/aws-elasticloadbalancingV2:albDualstackWithoutPublicIpv4SecurityGroupRulesDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default security group ingress rules will allow IPv6 ingress from anywhere"
+          },
+          "@aws-cdk/aws-iam:oidcRejectUnauthorizedConnections": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the default behaviour of OIDC provider will reject unauthorized connections"
+          },
+          "@aws-cdk/core:enableAdditionalMetadataCollection": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will expand the scope of usage data collected to better inform CDK development and improve communication for security concerns and emerging issues."
+          },
+          "@aws-cdk/aws-lambda:createNewPoliciesWithAddToRolePolicy": {
+            "recommendedValue": false,
+            "explanation": "[Deprecated] When enabled, Lambda will create new inline policies with AddToRolePolicy instead of adding to the Default Policy Statement"
+          },
+          "@aws-cdk/aws-s3:setUniqueReplicationRoleName": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK will automatically generate a unique role name that is used for s3 object replication."
+          },
+          "@aws-cdk/pipelines:reduceStageRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "Remove the root account principal from Stage addActions trust policy",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-events:requireEventBusPolicySid": {
+            "recommendedValue": true,
+            "explanation": "When enabled, grantPutEventsTo() will use resource policies with Statement IDs for service principals."
+          },
+          "@aws-cdk/core:aspectPrioritiesMutating": {
+            "recommendedValue": true,
+            "explanation": "When set to true, Aspects added by the construct library on your behalf will be given a priority of MUTATING."
+          },
+          "@aws-cdk/aws-dynamodb:retainTableReplica": {
+            "recommendedValue": true,
+            "explanation": "When enabled, table replica will be default to the removal policy of source table unless specified otherwise."
+          },
+          "@aws-cdk/cognito:logUserPoolClientSecretValue": {
+            "recommendedValue": false,
+            "explanation": "When disabled, the value of the user pool client secret will not be logged in the custom resource lambda function logs."
+          },
+          "@aws-cdk/pipelines:reduceCrossAccountActionRoleTrustScope": {
+            "recommendedValue": true,
+            "explanation": "When enabled, scopes down the trust policy for the cross-account action role",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-stepfunctions:useDistributedMapResultWriterV2": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the resultWriterV2 property of DistributedMap will be used insted of resultWriter"
+          },
+          "@aws-cdk/s3-notifications:addS3TrustKeyPolicyForSnsSubscriptions": {
+            "recommendedValue": true,
+            "explanation": "Add an S3 trust policy to a KMS key resource policy for SNS subscriptions."
+          },
+          "@aws-cdk/aws-ec2:requirePrivateSubnetsForEgressOnlyInternetGateway": {
+            "recommendedValue": true,
+            "explanation": "When enabled, the EgressOnlyGateway resource is only created if private subnets are defined in the dual-stack VPC."
+          },
+          "@aws-cdk/aws-ec2-alpha:useResourceIdForVpcV2Migration": {
+            "recommendedValue": false,
+            "explanation": "When enabled, use resource IDs for VPC V2 migration"
+          },
+          "@aws-cdk/aws-s3:publicAccessBlockedByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, setting any combination of options for BlockPublicAccess will automatically set true for any options not defined."
+          },
+          "@aws-cdk/aws-lambda:useCdkManagedLogGroup": {
+            "recommendedValue": true,
+            "explanation": "When enabled, CDK creates and manages loggroup for the lambda function"
+          },
+          "@aws-cdk/aws-elasticloadbalancingv2:networkLoadBalancerWithSecurityGroupByDefault": {
+            "recommendedValue": true,
+            "explanation": "When enabled, Network Load Balancer will be created with a security group by default."
+          },
+          "@aws-cdk/aws-stepfunctions-tasks:httpInvokeDynamicJsonPathEndpoint": {
+            "recommendedValue": true,
+            "explanation": "When enabled, allows using a dynamic apiEndpoint with JSONPath format in HttpInvoke tasks.",
+            "unconfiguredBehavesLike": {
+              "v2": true
+            }
+          },
+          "@aws-cdk/aws-ecs-patterns:uniqueTargetGroupId": {
+            "recommendedValue": true,
+            "explanation": "When enabled, ECS patterns will generate unique target group IDs to prevent conflicts during load balancer replacement"
+          }
+        }
+      }
+    }
+  },
+  "minimumCliVersion": "2.1031.2"
+}

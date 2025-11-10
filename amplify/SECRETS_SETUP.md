@@ -1,0 +1,119 @@
+# Amplify Secrets Setup
+
+## Overview
+
+Amplify Gen 2 uses secrets for sensitive configuration like OAuth credentials. This guide shows how to set up secrets.
+
+## Setting Secrets
+
+### Using Amplify CLI
+
+```bash
+# Set a secret
+npx ampx sandbox secret set GOOGLE_CLIENT_ID
+
+# You'll be prompted to enter the secret value
+```
+
+### Setting Multiple Secrets
+
+```bash
+# Set Google OAuth secrets
+npx ampx sandbox secret set GOOGLE_CLIENT_ID
+npx ampx sandbox secret set GOOGLE_CLIENT_SECRET
+
+# Set Facebook OAuth secrets
+npx ampx sandbox secret set FACEBOOK_CLIENT_ID
+npx ampx sandbox secret set FACEBOOK_CLIENT_SECRET
+```
+
+### Listing Secrets
+
+```bash
+# List all secrets
+npx ampx sandbox secret list
+```
+
+### Removing Secrets
+
+```bash
+# Remove a secret
+npx ampx sandbox secret remove GOOGLE_CLIENT_ID
+```
+
+## Using Secrets in Code
+
+In your `amplify/auth/resource.ts`:
+
+```typescript
+import { secret } from '@aws-amplify/backend';
+
+export const auth = defineAuth({
+  loginWith: {
+    email: true,
+    externalProviders: {
+      google: {
+        clientId: secret('GOOGLE_CLIENT_ID'),
+        clientSecret: secret('GOOGLE_CLIENT_SECRET'),
+      },
+    },
+  },
+});
+```
+
+## Current Setup
+
+The auth configuration is set up to work with email/password only. OAuth providers are commented out.
+
+To enable OAuth:
+
+1. Set up OAuth apps in Google/Facebook developer consoles
+2. Set secrets using `npx ampx sandbox secret set`
+3. Uncomment the `externalProviders` section in `amplify/auth/resource.ts`
+
+## OAuth Setup Instructions
+
+### Google OAuth
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add authorized redirect URIs:
+   - `http://localhost:3000/auth/callback`
+   - Your production callback URL
+6. Copy Client ID and Client Secret
+7. Set secrets:
+   ```bash
+   npx ampx sandbox secret set GOOGLE_CLIENT_ID
+   npx ampx sandbox secret set GOOGLE_CLIENT_SECRET
+   ```
+
+### Facebook OAuth
+
+1. Go to [Facebook Developers](https://developers.facebook.com/)
+2. Create a new app
+3. Add Facebook Login product
+4. Configure OAuth redirect URIs:
+   - `http://localhost:3000/auth/callback`
+   - Your production callback URL
+5. Copy App ID and App Secret
+6. Set secrets:
+   ```bash
+   npx ampx sandbox secret set FACEBOOK_CLIENT_ID
+   npx ampx sandbox secret set FACEBOOK_CLIENT_SECRET
+   ```
+
+## Security Best Practices
+
+- Never commit secrets to repository
+- Use Amplify secrets for all sensitive data
+- Rotate secrets regularly
+- Use different secrets for different environments
+- Never log secrets in application code
+
+---
+
+**Version**: 1.0  
+**Last Updated**: 2025
+

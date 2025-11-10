@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+coverage
+.aws-amplify
+amplify
+*.log
+.env
+.env.local
+package-lock.json
+yarn.lock
+

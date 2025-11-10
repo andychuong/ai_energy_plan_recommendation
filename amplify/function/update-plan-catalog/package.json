@@ -1,0 +1,14 @@
+{
+  "name": "update-plan-catalog",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@aws-amplify/backend": "^1.17.0",
+    "aws-amplify": "^6.15.8"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.0",
+    "typescript": "^5.2.2"
+  }
+}
+

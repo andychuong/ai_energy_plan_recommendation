@@ -1,0 +1,48 @@
+name: Preview Deployment
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  preview-deploy:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build preview
+        run: npm run build
+        env:
+          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+          REACT_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.REACT_APP_GOOGLE_MAPS_API_KEY }}
+      
+      - name: Deploy to Amplify Preview
+        uses: aws-amplify/amplify-cli-action@v1
+        with:
+          amplify_command: publish
+          amplify_env: preview
+          amplify_app_id: ${{ secrets.AMPLIFY_APP_ID }}
+      
+      - name: Comment PR with preview URL
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Preview Deployment\n\nPreview URL: https://preview-${{ github.event.pull_request.number }}.amplifyapp.com`
+            });
+

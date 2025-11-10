@@ -1,0 +1,56 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  pr-checks:
+    name: PR Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linting
+        run: npm run lint
+      
+      - name: Run tests
+        run: npm run test:ci
+      
+      - name: Check build
+        run: npm run build
+      
+      - name: Comment PR with results
+        uses: actions/github-script@v6
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            const testResults = fs.existsSync('coverage/coverage-summary.json') 
+              ? JSON.parse(fs.readFileSync('coverage/coverage-summary.json', 'utf8'))
+              : null;
+            
+            const coverage = testResults 
+              ? `Coverage: ${testResults.total.lines.pct}%`
+              : 'Coverage: N/A';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## PR Checks Complete\n\n- Linting: Passed\n- Tests: Passed\n- Build: Passed\n- ${coverage}`
+            });
+

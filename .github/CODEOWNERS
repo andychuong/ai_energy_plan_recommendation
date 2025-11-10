@@ -1,0 +1,27 @@
+# Code Owners
+# This file defines code ownership for different parts of the repository
+
+# Frontend
+/src/ @frontend-team
+
+# Backend (Amplify)
+/amplify/ @backend-team
+
+# Shared types
+/shared/ @frontend-team @backend-team
+
+# Configuration files
+package.json @frontend-team @backend-team
+tsconfig.json @frontend-team @backend-team
+vite.config.ts @frontend-team
+
+# CI/CD
+/.github/workflows/ @devops-team
+
+# Documentation
+/planning/ @product-team
+
+# Root files
+README.md @product-team
+*.md @product-team
+

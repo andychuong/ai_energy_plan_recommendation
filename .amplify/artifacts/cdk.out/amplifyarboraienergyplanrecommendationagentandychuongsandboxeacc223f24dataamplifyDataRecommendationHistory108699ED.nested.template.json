@@ -1,0 +1,2171 @@
+{
+ "Parameters": {
+  "DynamoDBModelTableReadIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of read IOPS the table should support."
+  },
+  "DynamoDBModelTableWriteIOPS": {
+   "Type": "Number",
+   "Default": 5,
+   "Description": "The number of write IOPS the table should support."
+  },
+  "DynamoDBBillingMode": {
+   "Type": "String",
+   "Default": "PAY_PER_REQUEST",
+   "AllowedValues": [
+    "PAY_PER_REQUEST",
+    "PROVISIONED"
+   ],
+   "Description": "Configure @model types to create DynamoDB tables with PAY_PER_REQUEST or PROVISIONED billing modes."
+  },
+  "DynamoDBEnablePointInTimeRecovery": {
+   "Type": "String",
+   "Default": "false",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Whether to enable Point in Time Recovery on the table."
+  },
+  "DynamoDBEnableServerSideEncryption": {
+   "Type": "String",
+   "Default": "true",
+   "AllowedValues": [
+    "true",
+    "false"
+   ],
+   "Description": "Enable server side encryption powered by KMS."
+  },
+  "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputsamplifyarboraienergyplanrecommendationagentandychuongsandboxe7D8DD145": {
+   "Type": "String"
+  },
+  "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId": {
+   "Type": "String"
+  },
+  "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name": {
+   "Type": "String"
+  },
+  "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef": {
+   "Type": "String"
+  },
+  "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref": {
+   "Type": "String"
+  },
+  "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref": {
+   "Type": "String"
+  }
+ },
+ "Conditions": {
+  "HasEnvironmentParameter": {
+   "Fn::Not": [
+    {
+     "Fn::Equals": [
+      "NONE",
+      "NONE"
+     ]
+    }
+   ]
+  },
+  "ShouldUsePayPerRequestBilling": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBBillingMode"
+    },
+    "PAY_PER_REQUEST"
+   ]
+  },
+  "ShouldUsePointInTimeRecovery": {
+   "Fn::Equals": [
+    {
+     "Ref": "DynamoDBEnablePointInTimeRecovery"
+    },
+    "true"
+   ]
+  },
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-3"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-4"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Equals": [
+      {
+       "Ref": "AWS::Region"
+      },
+      "us-west-2"
+     ]
+    }
+   ]
+  }
+ },
+ "Resources": {
+  "RecommendationHistoryTable": {
+   "Type": "Custom::AmplifyDynamoDBTable",
+   "Properties": {
+    "ServiceToken": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataAmplifyTableManagerNestedStackAmplifyTableManagerNestedStackResource72B7A773Outputsamplifyarboraienergyplanrecommendationagentandychuongsandboxe7D8DD145"
+    },
+    "tableName": {
+     "Fn::Join": [
+      "",
+      [
+       "RecommendationHistory-",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "attributeDefinitions": [
+     {
+      "attributeName": "id",
+      "attributeType": "S"
+     }
+    ],
+    "keySchema": [
+     {
+      "attributeName": "id",
+      "keyType": "HASH"
+     }
+    ],
+    "provisionedThroughput": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      {
+       "Ref": "AWS::NoValue"
+      },
+      {
+       "ReadCapacityUnits": {
+        "Ref": "DynamoDBModelTableReadIOPS"
+       },
+       "WriteCapacityUnits": {
+        "Ref": "DynamoDBModelTableWriteIOPS"
+       }
+      }
+     ]
+    },
+    "sseSpecification": {
+     "sseEnabled": false
+    },
+    "streamSpecification": {
+     "streamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "deletionProtectionEnabled": false,
+    "allowDestructiveGraphqlSchemaUpdates": true,
+    "replaceTableUponGsiUpdate": true,
+    "pointInTimeRecoverySpecification": {
+     "Fn::If": [
+      "ShouldUsePointInTimeRecovery",
+      {
+       "PointInTimeRecoveryEnabled": true
+      },
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    },
+    "billingMode": {
+     "Fn::If": [
+      "ShouldUsePayPerRequestBilling",
+      "PAY_PER_REQUEST",
+      {
+       "Ref": "AWS::NoValue"
+      }
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryTable/Default/Default"
+   }
+  },
+  "RecommendationHistoryIAMRole09D3C56E": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "appsync.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Policies": [
+     {
+      "PolicyDocument": {
+       "Statement": [
+        {
+         "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:GetRecords",
+          "dynamodb:GetShardIterator"
+         ],
+         "Effect": "Allow",
+         "Resource": [
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "RecommendationHistory-",
+                {
+                 "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          },
+          {
+           "Fn::Sub": [
+            "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
+            {
+             "tablename": {
+              "Fn::Join": [
+               "",
+               [
+                "RecommendationHistory-",
+                {
+                 "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+                },
+                "-NONE"
+               ]
+              ]
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ],
+       "Version": "2012-10-17"
+      },
+      "PolicyName": "DynamoDBAccess"
+     }
+    ],
+    "RoleName": {
+     "Fn::Join": [
+      "",
+      [
+       "RecommendationHistora1b3a1-",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "-NONE"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "amplifyData"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryIAMRole/Resource"
+   }
+  },
+  "RecommendationHistoryDataSource": {
+   "Type": "AWS::AppSync::DataSource",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DynamoDBConfig": {
+     "AwsRegion": {
+      "Ref": "AWS::Region"
+     },
+     "TableName": {
+      "Fn::Select": [
+       1,
+       {
+        "Fn::Split": [
+         "/",
+         {
+          "Fn::Select": [
+           5,
+           {
+            "Fn::Split": [
+             ":",
+             {
+              "Fn::GetAtt": [
+               "RecommendationHistoryTable",
+               "TableArn"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    },
+    "Name": "RecommendationHistoryTable",
+    "ServiceRoleArn": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryIAMRole09D3C56E",
+      "Arn"
+     ]
+    },
+    "Type": "AMAZON_DYNAMODB"
+   },
+   "DependsOn": [
+    "RecommendationHistoryIAMRole09D3C56E"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryDataSource/Resource"
+   }
+  },
+  "QuerygetRecommendationHistoryauth0FunctionQuerygetRecommendationHistoryauth0FunctionAppSyncFunction869DA090": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b25c9b572c67e0f7ad41cb8019a90825f3db4b02a0a15b837c7a82dcb302060.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerygetRecommendationHistoryauth0Function/QuerygetRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerygetRecommendationHistorypostAuth0FunctionQuerygetRecommendationHistorypostAuth0FunctionAppSyncFunctionCDC0FD0D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerygetRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerygetRecommendationHistorypostAuth0Function/QuerygetRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryGetRecommendationHistoryDataResolverFnQueryGetRecommendationHistoryDataResolverFnAppSyncFunctionAF3E31B6": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryGetRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/08f4d557693d96c1a4efba0f9dc91330e4b19772fd5477c156468843e3d9cb5e.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c6a2d29f01c6091bd1d9afe16e5849d456c96f17c3b215938c8067399532719.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QueryGetRecommendationHistoryDataResolverFn/QueryGetRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "GetRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "getRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerygetRecommendationHistoryauth0FunctionQuerygetRecommendationHistoryauth0FunctionAppSyncFunction869DA090",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerygetRecommendationHistorypostAuth0FunctionQuerygetRecommendationHistorypostAuth0FunctionAppSyncFunctionCDC0FD0D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryGetRecommendationHistoryDataResolverFnQueryGetRecommendationHistoryDataResolverFnAppSyncFunctionAF3E31B6",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"getRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "RecommendationHistoryTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/queryGetRecommendationHistoryResolver"
+   }
+  },
+  "QuerylistRecommendationHistoriesauth0FunctionQuerylistRecommendationHistoriesauth0FunctionAppSyncFunctionC066A384": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistRecommendationHistoriesauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6b25c9b572c67e0f7ad41cb8019a90825f3db4b02a0a15b837c7a82dcb302060.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerylistRecommendationHistoriesauth0Function/QuerylistRecommendationHistoriesauth0Function.AppSyncFunction"
+   }
+  },
+  "QuerylistRecommendationHistoriespostAuth0FunctionQuerylistRecommendationHistoriespostAuth0FunctionAppSyncFunctionEF8618B3": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QuerylistRecommendationHistoriespostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QuerylistRecommendationHistoriespostAuth0Function/QuerylistRecommendationHistoriespostAuth0Function.AppSyncFunction"
+   }
+  },
+  "QueryListRecommendationHistoriesDataResolverFnQueryListRecommendationHistoriesDataResolverFnAppSyncFunction56127C6E": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "QueryListRecommendationHistoriesDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/9fcbe070ecd3023c5bf5b966fa9584757db9762eef123bad0820bd87591b2174.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cc01911d0269d4080ea57505dc445dfc315ef7ad85d3d9d4ea1357858bff451d.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/QueryListRecommendationHistoriesDataResolverFn/QueryListRecommendationHistoriesDataResolverFn.AppSyncFunction"
+   }
+  },
+  "ListRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "listRecommendationHistories",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "QuerylistRecommendationHistoriesauth0FunctionQuerylistRecommendationHistoriesauth0FunctionAppSyncFunctionC066A384",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QuerylistRecommendationHistoriespostAuth0FunctionQuerylistRecommendationHistoriespostAuth0FunctionAppSyncFunctionEF8618B3",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "QueryListRecommendationHistoriesDataResolverFnQueryListRecommendationHistoriesDataResolverFnAppSyncFunction56127C6E",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Query\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"listRecommendationHistories\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "RecommendationHistoryTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Query"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/queryListRecommendationHistoriesResolver"
+   }
+  },
+  "MutationcreateRecommendationHistoryinit0FunctionMutationcreateRecommendationHistoryinit0FunctionAppSyncFunction85D36273": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateRecommendationHistoryinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a183ddccbd956316c38ef97177b8f088ef0826f62023323f5ae6053d348ccffc.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationcreateRecommendationHistoryinit0Function/MutationcreateRecommendationHistoryinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateRecommendationHistoryauth0FunctionMutationcreateRecommendationHistoryauth0FunctionAppSyncFunction08FE8796": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/54247734fe7c1142f2ffdad2cda46cc74c5d4142e8e085e7a047ac8026b62608.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationcreateRecommendationHistoryauth0Function/MutationcreateRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationcreateRecommendationHistorypostAuth0FunctionMutationcreateRecommendationHistorypostAuth0FunctionAppSyncFunction8E5FC672": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationcreateRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationcreateRecommendationHistorypostAuth0Function/MutationcreateRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationCreateRecommendationHistoryDataResolverFnMutationCreateRecommendationHistoryDataResolverFnAppSyncFunction49655D3D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationCreateRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/6bba85ee40547ba52375921f74336339395f7bae78fd90276c7f46728f661490.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationCreateRecommendationHistoryDataResolverFn/MutationCreateRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "CreateRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "createRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationcreateRecommendationHistoryinit0FunctionMutationcreateRecommendationHistoryinit0FunctionAppSyncFunction85D36273",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateRecommendationHistoryauth0FunctionMutationcreateRecommendationHistoryauth0FunctionAppSyncFunction08FE8796",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationcreateRecommendationHistorypostAuth0FunctionMutationcreateRecommendationHistorypostAuth0FunctionAppSyncFunction8E5FC672",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationCreateRecommendationHistoryDataResolverFnMutationCreateRecommendationHistoryDataResolverFnAppSyncFunction49655D3D",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"createRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "RecommendationHistoryTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/mutationCreateRecommendationHistoryResolver"
+   }
+  },
+  "MutationupdateRecommendationHistoryinit0FunctionMutationupdateRecommendationHistoryinit0FunctionAppSyncFunction313D2B3A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateRecommendationHistoryinit0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/06db846fd14e6fc371f22b12b5545ba8e2dbfeda85d8c8d586c71c282166657b.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationupdateRecommendationHistoryinit0Function/MutationupdateRecommendationHistoryinit0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateRecommendationHistoryauth0FunctionMutationupdateRecommendationHistoryauth0FunctionAppSyncFunction22FE44D3": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cdc29ff555a8981a66ec119b369c27e6a6082e5bca96e9a57b215b998f5c1bd1.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationupdateRecommendationHistoryauth0Function/MutationupdateRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationupdateRecommendationHistorypostAuth0FunctionMutationupdateRecommendationHistorypostAuth0FunctionAppSyncFunction14F3BD6F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationupdateRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationupdateRecommendationHistorypostAuth0Function/MutationupdateRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationUpdateRecommendationHistoryDataResolverFnMutationUpdateRecommendationHistoryDataResolverFnAppSyncFunction81B3A69A": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationUpdateRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/474bf0776ec2164a13191d1a0a9e057154931e4918fea5086f49850d02a5371b.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationUpdateRecommendationHistoryDataResolverFn/MutationUpdateRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "UpdateRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "updateRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationupdateRecommendationHistoryinit0FunctionMutationupdateRecommendationHistoryinit0FunctionAppSyncFunction313D2B3A",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateRecommendationHistoryauth0FunctionMutationupdateRecommendationHistoryauth0FunctionAppSyncFunction22FE44D3",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationupdateRecommendationHistorypostAuth0FunctionMutationupdateRecommendationHistorypostAuth0FunctionAppSyncFunction14F3BD6F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationUpdateRecommendationHistoryDataResolverFnMutationUpdateRecommendationHistoryDataResolverFnAppSyncFunction81B3A69A",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"updateRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "RecommendationHistoryTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/mutationUpdateRecommendationHistoryResolver"
+   }
+  },
+  "MutationdeleteRecommendationHistoryauth0FunctionMutationdeleteRecommendationHistoryauth0FunctionAppSyncFunction79AA7A8F": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/1f5fed297da9c32ae3af922bf3a38ccf23b956078887d16891ec06c20c64722c.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/867fb7d7eb8e4127b6d0136b82c5c3f74a52eb410297086859986f8e7e4b02aa.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationdeleteRecommendationHistoryauth0Function/MutationdeleteRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "MutationdeleteRecommendationHistorypostAuth0FunctionMutationdeleteRecommendationHistorypostAuth0FunctionAppSyncFunctionC935B6DC": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationdeleteRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationdeleteRecommendationHistorypostAuth0Function/MutationdeleteRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "MutationDeleteRecommendationHistoryDataResolverFnMutationDeleteRecommendationHistoryDataResolverFnAppSyncFunction493D5184": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Fn::GetAtt": [
+      "RecommendationHistoryDataSource",
+      "Name"
+     ]
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "MutationDeleteRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4f7907d1209a2c9953a0c053df402c634e359546d70c7cc5c2e8e21ea734880f.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f4a52b72209a9dfa197b5e7367a5c378c5bb86de6e29ddd9e48b49a3fe54b249.vtl"
+    }
+   },
+   "DependsOn": [
+    "RecommendationHistoryDataSource"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/MutationDeleteRecommendationHistoryDataResolverFn/MutationDeleteRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "DeleteRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "deleteRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteRecommendationHistoryauth0FunctionMutationdeleteRecommendationHistoryauth0FunctionAppSyncFunction79AA7A8F",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationdeleteRecommendationHistorypostAuth0FunctionMutationdeleteRecommendationHistorypostAuth0FunctionAppSyncFunctionC935B6DC",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "MutationDeleteRecommendationHistoryDataResolverFnMutationDeleteRecommendationHistoryDataResolverFnAppSyncFunction493D5184",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Mutation\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"deleteRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+       {
+        "Fn::Select": [
+         1,
+         {
+          "Fn::Split": [
+           "/",
+           {
+            "Fn::Select": [
+             5,
+             {
+              "Fn::Split": [
+               ":",
+               {
+                "Fn::GetAtt": [
+                 "RecommendationHistoryTable",
+                 "TableArn"
+                ]
+               }
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Mutation"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/mutationDeleteRecommendationHistoryResolver"
+   }
+  },
+  "SubscriptiononCreateRecommendationHistoryauth0FunctionSubscriptiononCreateRecommendationHistoryauth0FunctionAppSyncFunction129B7042": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3b6d810ef43cdbd93ef462c40b0df0328b89e04f1473a4f82f1178da1f1d5aa0.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononCreateRecommendationHistoryauth0Function/SubscriptiononCreateRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateRecommendationHistorypostAuth0FunctionSubscriptiononCreateRecommendationHistorypostAuth0FunctionAppSyncFunction6A4239BA": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononCreateRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononCreateRecommendationHistorypostAuth0Function/SubscriptiononCreateRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnCreateRecommendationHistoryDataResolverFnSubscriptionOnCreateRecommendationHistoryDataResolverFnAppSyncFunction1ED69FC8": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnCreateRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptionOnCreateRecommendationHistoryDataResolverFn/SubscriptionOnCreateRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononCreateRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "onCreateRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateRecommendationHistoryauth0FunctionSubscriptiononCreateRecommendationHistoryauth0FunctionAppSyncFunction129B7042",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononCreateRecommendationHistorypostAuth0FunctionSubscriptiononCreateRecommendationHistorypostAuth0FunctionAppSyncFunction6A4239BA",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnCreateRecommendationHistoryDataResolverFnSubscriptionOnCreateRecommendationHistoryDataResolverFnAppSyncFunction1ED69FC8",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onCreateRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/subscriptionOnCreateRecommendationHistoryResolver"
+   }
+  },
+  "SubscriptiononUpdateRecommendationHistoryauth0FunctionSubscriptiononUpdateRecommendationHistoryauth0FunctionAppSyncFunctionDC0E9CD2": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3b6d810ef43cdbd93ef462c40b0df0328b89e04f1473a4f82f1178da1f1d5aa0.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononUpdateRecommendationHistoryauth0Function/SubscriptiononUpdateRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateRecommendationHistorypostAuth0FunctionSubscriptiononUpdateRecommendationHistorypostAuth0FunctionAppSyncFunction6BB9103C": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononUpdateRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononUpdateRecommendationHistorypostAuth0Function/SubscriptiononUpdateRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnUpdateRecommendationHistoryDataResolverFnSubscriptionOnUpdateRecommendationHistoryDataResolverFnAppSyncFunction651FBF4D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnUpdateRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptionOnUpdateRecommendationHistoryDataResolverFn/SubscriptionOnUpdateRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononUpdateRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "onUpdateRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateRecommendationHistoryauth0FunctionSubscriptiononUpdateRecommendationHistoryauth0FunctionAppSyncFunctionDC0E9CD2",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononUpdateRecommendationHistorypostAuth0FunctionSubscriptiononUpdateRecommendationHistorypostAuth0FunctionAppSyncFunction6BB9103C",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnUpdateRecommendationHistoryDataResolverFnSubscriptionOnUpdateRecommendationHistoryDataResolverFnAppSyncFunction651FBF4D",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onUpdateRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/subscriptionOnUpdateRecommendationHistoryResolver"
+   }
+  },
+  "SubscriptiononDeleteRecommendationHistoryauth0FunctionSubscriptiononDeleteRecommendationHistoryauth0FunctionAppSyncFunction9622B59D": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteRecommendationHistoryauth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/3b6d810ef43cdbd93ef462c40b0df0328b89e04f1473a4f82f1178da1f1d5aa0.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononDeleteRecommendationHistoryauth0Function/SubscriptiononDeleteRecommendationHistoryauth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteRecommendationHistorypostAuth0FunctionSubscriptiononDeleteRecommendationHistorypostAuth0FunctionAppSyncFunctionEC334712": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptiononDeleteRecommendationHistorypostAuth0Function",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c1721bcd774e27c514d3454b5be4f9bdd094c0161b57ddf053d618e3b0086a77.vtl"
+    },
+    "ResponseMappingTemplate": "$util.toJson({})"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptiononDeleteRecommendationHistorypostAuth0Function/SubscriptiononDeleteRecommendationHistorypostAuth0Function.AppSyncFunction"
+   }
+  },
+  "SubscriptionOnDeleteRecommendationHistoryDataResolverFnSubscriptionOnDeleteRecommendationHistoryDataResolverFnAppSyncFunction5DBA2E34": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "SubscriptionOnDeleteRecommendationHistoryDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/fe3c43ada4b9d681a5e2312663ef7a73386424d73b73e51f8e2e9d4b50f7c502.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e0cff47fb007f0bbf2a4e43ca256d6aa7ec109821769fd79fa7c5e83f0e7f9fc.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/SubscriptionOnDeleteRecommendationHistoryDataResolverFn/SubscriptionOnDeleteRecommendationHistoryDataResolverFn.AppSyncFunction"
+   }
+  },
+  "SubscriptiononDeleteRecommendationHistoryResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "onDeleteRecommendationHistory",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteRecommendationHistoryauth0FunctionSubscriptiononDeleteRecommendationHistoryauth0FunctionAppSyncFunction9622B59D",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptiononDeleteRecommendationHistorypostAuth0FunctionSubscriptiononDeleteRecommendationHistorypostAuth0FunctionAppSyncFunctionEC334712",
+        "FunctionId"
+       ]
+      },
+      {
+       "Fn::GetAtt": [
+        "SubscriptionOnDeleteRecommendationHistoryDataResolverFnSubscriptionOnDeleteRecommendationHistoryDataResolverFnAppSyncFunction5DBA2E34",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"Subscription\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"onDeleteRecommendationHistory\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "Subscription"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/subscriptionOnDeleteRecommendationHistoryResolver"
+   }
+  },
+  "RecommendationHistoryOwnerDataResolverFnRecommendationHistoryOwnerDataResolverFnAppSyncFunctionB359EE00": {
+   "Type": "AWS::AppSync::FunctionConfiguration",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "DataSourceName": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPINONEDSF4925499Name"
+    },
+    "FunctionVersion": "2018-05-29",
+    "Name": "RecommendationHistoryOwnerDataResolverFn",
+    "RequestMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/041534e5fd916595f752318f161512d7c7f83b9f2cf32d0f0be381c12253ff68.vtl"
+    },
+    "ResponseMappingTemplateS3Location": {
+     "Fn::Sub": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/064303962e481067b44300212516363b99aaee539b6bafaf756fdd83ff0b60f0.vtl"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/RecommendationHistoryOwnerDataResolverFn/RecommendationHistoryOwnerDataResolverFn.AppSyncFunction"
+   }
+  },
+  "RecommendationHistoryownerResolver": {
+   "Type": "AWS::AppSync::Resolver",
+   "Properties": {
+    "ApiId": {
+     "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+    },
+    "FieldName": "owner",
+    "Kind": "PIPELINE",
+    "PipelineConfig": {
+     "Functions": [
+      {
+       "Fn::GetAtt": [
+        "RecommendationHistoryOwnerDataResolverFnRecommendationHistoryOwnerDataResolverFnAppSyncFunctionB359EE00",
+        "FunctionId"
+       ]
+      }
+     ]
+    },
+    "RequestMappingTemplate": {
+     "Fn::Join": [
+      "",
+      [
+       "$util.qr($ctx.stash.put(\"typeName\", \"RecommendationHistory\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"owner\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"NONE\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"connectionAttributes\", {}))\n\n$util.qr($ctx.stash.put(\"authRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthauthenticatedUserRole22D1B6AERef"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":sts::",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":assumed-role/",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthunauthenticatedUserRoleDC220F00Ref"
+       },
+       "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"identityPoolId\", \"",
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authNestedStackauthNestedStackResourceD0A1AD5COutputsamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24authamplifyAuthIdentityPool4D6F33B3Ref"
+       },
+       "\"))\n$util.qr($ctx.stash.put(\"adminRoles\", []))\n$util.toJson({})"
+      ]
+     ]
+    },
+    "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)",
+    "TypeName": "RecommendationHistory"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/recommendationHistoryOwnerResolver"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1WQ0W6DMAxFv2XvwevofmAF7bGb6N4rkxiUQhIUO50qxL8v0KnTnq6PfGVfu4Sy3MPuCb+50GYoRtvCfCQWMidBPaiq858Y0ZFQXKEK3lixwauGOKSoSVWJJbg/7PyjzmPPs7l5dMG08IXtSAdkUhYdzE0Y7+6si8Jp4pvXMNebvW5rFDw9Rv6n9+T1GiKn6WyfIm6JfjePV4qL4v0ZmUkY3lbJDIekB5I1wLJ6P5JMSdTWzsf21veL8sEQXPj5Wr7Cyy5/5sLWFjF5sY6guesPE9mbhjYBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-arboraienergyplanrecommendationagent-andychuong-sandbox-eacc223f24/data/amplifyData/RecommendationHistory/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "GetAttRecommendationHistoryTableStreamArn": {
+   "Description": "Your DynamoDB table StreamArn.",
+   "Value": {
+    "Fn::GetAtt": [
+     "RecommendationHistoryTable",
+     "TableStreamArn"
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "GetAtt:RecommendationHistoryTable:StreamArn"
+      ]
+     ]
+    }
+   }
+  },
+  "GetAttRecommendationHistoryTableName": {
+   "Description": "Your DynamoDB table name.",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "RecommendationHistory-",
+      {
+       "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+      },
+      "-NONE"
+     ]
+    ]
+   },
+   "Export": {
+    "Name": {
+     "Fn::Join": [
+      ":",
+      [
+       {
+        "Ref": "referencetoamplifyarboraienergyplanrecommendationagentandychuongsandboxeacc223f24dataamplifyDataGraphQLAPI6DF408CFApiId"
+       },
+       "GetAtt:RecommendationHistoryTable:Name"
+      ]
+     ]
+    }
+   }
+  }
+ }
+}

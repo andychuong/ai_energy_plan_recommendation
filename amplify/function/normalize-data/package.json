@@ -1,0 +1,15 @@
+{
+  "name": "normalize-data",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@aws-amplify/backend": "^1.17.0",
+    "aws-amplify": "^6.15.8",
+    "openai": "^4.104.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.0",
+    "typescript": "^5.2.2"
+  },
+  "description": "Uses OpenRouter AI (GPT-3.5-turbo) for cost-efficient data normalization"
+}
