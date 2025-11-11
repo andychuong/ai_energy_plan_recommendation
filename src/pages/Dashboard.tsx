@@ -16,18 +16,24 @@ import { UsageChart } from '@/components/charts/UsageChart';
 export function Dashboard() {
   const { user } = useAuth();
   const userId = user?.userId || user?.username;
-  const { usageData, isLoading: isLoadingUsage, refetch: refetchUsageData } = useUsageData(userId);
+  const {
+    usageData,
+    isLoading: isLoadingUsage,
+    refetch: refetchUsageData,
+  } = useUsageData(userId);
   const { preferences, isLoading: isLoadingPrefs } = useUserPreferences(userId);
 
   // Refetch usage data when component mounts or becomes visible
   // Also refetch when window regains focus (user navigates back to tab)
   React.useEffect(() => {
     if (userId) {
+      // eslint-disable-next-line no-console
       console.log('[Dashboard] Component mounted, refetching usage data');
       refetchUsageData();
-      
+
       // Refetch when window regains focus
       const handleFocus = () => {
+        // eslint-disable-next-line no-console
         console.log('[Dashboard] Window focused, refetching usage data');
         refetchUsageData();
       };
@@ -39,6 +45,7 @@ export function Dashboard() {
   // Log usage data for debugging
   React.useEffect(() => {
     if (usageData) {
+      // eslint-disable-next-line no-console
       console.log('[Dashboard] Usage data loaded:', {
         averageMonthlyKwh: usageData.aggregatedStats?.averageMonthlyKwh,
         averageMonthlyCost: usageData.aggregatedStats?.averageMonthlyCost,
@@ -58,15 +65,17 @@ export function Dashboard() {
       </div>
 
       {/* Usage Data Summary Section */}
-      {usageData && usageData.usagePoints && usageData.usagePoints.length > 0 && (
-        <div className="mb-8">
-          <UsageChart
-            data={usageData.usagePoints}
-            title="Your Energy Usage"
-            description="Monthly energy consumption over time"
-          />
-        </div>
-      )}
+      {usageData &&
+        usageData.usagePoints &&
+        usageData.usagePoints.length > 0 && (
+          <div className="mb-8">
+            <UsageChart
+              data={usageData.usagePoints}
+              title="Your Energy Usage"
+              description="Monthly energy consumption over time"
+            />
+          </div>
+        )}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
@@ -87,30 +96,41 @@ export function Dashboard() {
                   <div>
                     <p className="text-muted-foreground">Average Monthly</p>
                     <p className="text-lg font-semibold">
-                      {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(0) ||
-                        'N/A'}{' '}
+                      {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(
+                        0
+                      ) || 'N/A'}{' '}
                       kWh
                     </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Total Annual</p>
                     <p className="text-lg font-semibold">
-                      {usageData?.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'}{' '}
+                      {usageData?.aggregatedStats?.totalKwh?.toFixed(0) ||
+                        'N/A'}{' '}
                       kWh
                     </p>
                   </div>
                   {usageData?.aggregatedStats?.averageMonthlyCost && (
                     <>
                       <div>
-                        <p className="text-muted-foreground">Avg Monthly Cost</p>
+                        <p className="text-muted-foreground">
+                          Avg Monthly Cost
+                        </p>
                         <p className="text-lg font-semibold">
-                          ${usageData.aggregatedStats.averageMonthlyCost.toFixed(2)}
+                          $
+                          {usageData.aggregatedStats.averageMonthlyCost.toFixed(
+                            2
+                          )}
                         </p>
                       </div>
                       <div>
-                        <p className="text-muted-foreground">Total Annual Cost</p>
+                        <p className="text-muted-foreground">
+                          Total Annual Cost
+                        </p>
                         <p className="text-lg font-semibold">
-                          ${usageData.aggregatedStats.totalCost?.toFixed(2) || 'N/A'}
+                          $
+                          {usageData.aggregatedStats.totalCost?.toFixed(2) ||
+                            'N/A'}
                         </p>
                       </div>
                     </>
@@ -126,7 +146,8 @@ export function Dashboard() {
                       <div>
                         <p className="text-muted-foreground">Peak Usage</p>
                         <p className="text-lg font-semibold">
-                          {usageData.aggregatedStats.peakMonthKwh?.toFixed(0) || 'N/A'}{' '}
+                          {usageData.aggregatedStats.peakMonthKwh?.toFixed(0) ||
+                            'N/A'}{' '}
                           kWh
                         </p>
                       </div>

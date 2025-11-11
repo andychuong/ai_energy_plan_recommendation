@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { Handler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
@@ -504,7 +505,6 @@ export const handler: Handler<
       const stored = await storePlans(allPlans);
       totalPlansStored += stored;
 
-      // eslint-disable-next-line no-console
       console.log(
         `Generated ${allPlans.length} plans for ${state}, stored ${stored}`
       );

@@ -33,9 +33,7 @@ export function RecommendationCard({
   return (
     <Card
       className={`relative ${
-        isSelectedForComparison
-          ? 'ring-2 ring-primary ring-offset-2'
-          : ''
+        isSelectedForComparison ? 'ring-2 ring-primary ring-offset-2' : ''
       }`}
     >
       <CardHeader>

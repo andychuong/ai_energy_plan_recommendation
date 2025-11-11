@@ -11,8 +11,10 @@ export function useUsageData(userId: string | undefined) {
       if (!userId) {
         throw new Error('User ID is required');
       }
+      // eslint-disable-next-line no-console
       console.log('[useUsageData] Fetching usage data for userId:', userId);
       const data = await apiClient.getUsageData(userId);
+      // eslint-disable-next-line no-console
       console.log('[useUsageData] Fetched usage data:', {
         averageMonthlyKwh: data.aggregatedStats?.averageMonthlyKwh,
         averageMonthlyCost: data.aggregatedStats?.averageMonthlyCost,
@@ -41,7 +43,9 @@ export function useUsageData(userId: string | undefined) {
     },
     onSuccess: (_, variables) => {
       // Invalidate queries for this specific user
-      queryClient.invalidateQueries({ queryKey: ['usageData', variables.userId] });
+      queryClient.invalidateQueries({
+        queryKey: ['usageData', variables.userId],
+      });
       // Also invalidate all usage data queries
       queryClient.invalidateQueries({ queryKey: ['usageData'] });
     },

@@ -154,11 +154,9 @@ jobs:
         run: npm install -g @aws-amplify/backend-cli
       
       - name: Deploy backend to Amplify Gen 2
-        run: npx ampx sandbox --once
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        run: npx ampx pipeline-deploy --branch main --app-id d2rn94kbvpfx34
+        # Note: Secrets are now stored in AWS Parameter Store, not GitHub secrets
+        # The pipeline-deploy command will automatically read from Parameter Store
 
   # Deploy Frontend to AWS Amplify Hosting (Main branch only)
   deploy-frontend:

@@ -171,9 +171,10 @@ class ApiClient {
       const useCustomAverages = profile?.useCustomAverages || false;
       const customAverageKwh = profile?.customAverageKwh;
       const customAverageCost = profile?.customAverageCost;
-      console.log('[getUsageData] User profile:', { 
-        useCustomAverages, 
-        customAverageKwh, 
+      // eslint-disable-next-line no-console
+      console.log('[getUsageData] User profile:', {
+        useCustomAverages,
+        customAverageKwh,
         customAverageCost,
         useCustomAveragesType: typeof useCustomAverages,
         customAverageKwhType: typeof customAverageKwh,
@@ -188,14 +189,16 @@ class ApiClient {
 
       if (result.data && result.data.length > 0) {
         // Sort by createdAt descending and get the most recent
-        const sorted = result.data.sort((a, b) => 
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        const sorted = result.data.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         const latest = sorted[0];
 
         // Convert to CustomerUsageData format
-        const usagePoints = (latest.usagePoints as any) || [];
-        const billingInfo = (latest.billingInfo as any) || {};
+        const usagePoints = (latest.usagePoints as UsageDataPoint[]) || [];
+        const billingInfo =
+          (latest.billingInfo as Record<string, unknown>) || {};
 
         // If user wants to use custom averages, use those instead of calculated values
         let averageMonthlyKwh: number;
@@ -203,28 +206,39 @@ class ApiClient {
         let totalKwh: number;
         let totalCost: number;
 
-        console.log('[getUsageData] Checking custom averages condition:', { 
-          useCustomAverages, 
-          customAverageKwh, 
-          condition: useCustomAverages && customAverageKwh 
+        // eslint-disable-next-line no-console
+        console.log('[getUsageData] Checking custom averages condition:', {
+          useCustomAverages,
+          customAverageKwh,
+          condition: useCustomAverages && customAverageKwh,
         });
 
         if (useCustomAverages && customAverageKwh) {
           // Use custom averages
-          console.log('[getUsageData] Using custom averages:', { customAverageKwh, customAverageCost });
+          // eslint-disable-next-line no-console
+          console.log('[getUsageData] Using custom averages:', {
+            customAverageKwh,
+            customAverageCost,
+          });
           averageMonthlyKwh = customAverageKwh;
           averageMonthlyCost = customAverageCost || 0;
           totalKwh = averageMonthlyKwh * 12;
           totalCost = averageMonthlyCost * 12;
         } else {
-          console.log('[getUsageData] NOT using custom averages, using calculated values');
+          // eslint-disable-next-line no-console
+          console.log(
+            '[getUsageData] NOT using custom averages, using calculated values'
+          );
           // Use calculated averages from usage data
           averageMonthlyKwh = latest.averageMonthlyKwh || 0;
           totalKwh = latest.totalAnnualKwh || 0;
 
           // Calculate totalCost and averageMonthlyCost from usage points if available
           if (usagePoints.length > 0) {
-            totalCost = usagePoints.reduce((sum: number, point: any) => sum + (point.cost || 0), 0);
+            totalCost = usagePoints.reduce(
+              (sum: number, point: UsageDataPoint) => sum + (point.cost || 0),
+              0
+            );
             averageMonthlyCost = totalCost / usagePoints.length;
           } else {
             // Fallback to stored values or calculate from annual kWh if we have a rate
@@ -259,21 +273,29 @@ class ApiClient {
           },
           billingInfo: billingInfo,
         };
-        
-        console.log('[getUsageData] Returning result with aggregatedStats:', result.aggregatedStats);
+
+        // eslint-disable-next-line no-console
+        console.log(
+          '[getUsageData] Returning result with aggregatedStats:',
+          result.aggregatedStats
+        );
         return result;
       }
 
       // No usage data found - check if user wants to use custom averages
       if (useCustomAverages && customAverageKwh) {
-        console.log('[getUsageData] No usage data, but using custom averages:', { customAverageKwh, customAverageCost });
+        // eslint-disable-next-line no-console
+        console.log(
+          '[getUsageData] No usage data, but using custom averages:',
+          { customAverageKwh, customAverageCost }
+        );
         const averageMonthlyKwh = customAverageKwh;
         const averageMonthlyCost = customAverageCost || 0;
         const totalKwh = averageMonthlyKwh * 12;
         const totalCost = averageMonthlyCost * 12;
-        
+
         // Generate usage points from custom averages
-        const usagePoints: any[] = [];
+        const usagePoints: UsageDataPoint[] = [];
         const now = new Date();
         for (let i = 11; i >= 0; i--) {
           const date = new Date(now.getFullYear(), now.getMonth() - 1 - i, 1);
@@ -283,7 +305,7 @@ class ApiClient {
             cost: averageMonthlyCost || undefined,
           });
         }
-        
+
         const result = {
           customerInfo: {
             customerId: userId,
@@ -302,11 +324,15 @@ class ApiClient {
             peakMonthKwh: averageMonthlyKwh,
           },
         };
-        
-        console.log('[getUsageData] Returning result with custom averages (no usage data):', result.aggregatedStats);
+
+        // eslint-disable-next-line no-console
+        console.log(
+          '[getUsageData] Returning result with custom averages (no usage data):',
+          result.aggregatedStats
+        );
         return result;
       }
-      
+
       // No data found and no custom averages, return empty structure
       return {
         customerInfo: {
@@ -458,7 +484,7 @@ class ApiClient {
       // In Amplify Gen 2, functions are accessed through outputs.custom
       // For now, we'll use fetch to call the function URL if available
       // Otherwise, fall back to mock data
-      let functionUrl = (
+      const functionUrl = (
         outputs as { custom?: { [key: string]: { url?: string } } }
       ).custom?.generateRecommendationsFunction?.url;
 
@@ -516,7 +542,9 @@ class ApiClient {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Function call failed: ${response.statusText} - ${errorText}`);
+        throw new Error(
+          `Function call failed: ${response.statusText} - ${errorText}`
+        );
       }
 
       // Parse response - Lambda Function URL returns the body directly as JSON
@@ -560,7 +588,11 @@ class ApiClient {
       });
 
       if (!result.data || result.data.length === 0) {
-        console.log('[getUserPreferences] No preferences found for userId:', userId);
+        // eslint-disable-next-line no-console
+        console.log(
+          '[getUserPreferences] No preferences found for userId:',
+          userId
+        );
         return null;
       }
 
@@ -568,6 +600,7 @@ class ApiClient {
       const preferences = result.data[0];
 
       // Map from Amplify model to shared type
+      // eslint-disable-next-line no-console
       console.log('[getUserPreferences] Found preferences:', {
         userId: preferences.userId,
         costSavingsPriority: preferences.costSavingsPriority,
@@ -953,14 +986,17 @@ class ApiClient {
   /**
    * Save current plan
    */
-  async saveCurrentPlan(userId: string, currentPlan: {
-    supplierName: string;
-    planName?: string;
-    contractStartDate?: string;
-    contractEndDate?: string;
-    earlyTerminationFee?: number;
-    contractType?: string;
-  }): Promise<void> {
+  async saveCurrentPlan(
+    userId: string,
+    currentPlan: {
+      supplierName: string;
+      planName?: string;
+      contractStartDate?: string;
+      contractEndDate?: string;
+      earlyTerminationFee?: number;
+      contractType?: string;
+    }
+  ): Promise<void> {
     if (USE_MOCK_API) {
       return Promise.resolve();
     }
@@ -1034,23 +1070,26 @@ class ApiClient {
   /**
    * Save usage data
    */
-  async saveUsageData(userId: string, usageData: {
-    usagePoints: Array<{ timestamp: string; kwh: number; cost?: number }>;
-    totalAnnualKwh?: number;
-    averageMonthlyKwh?: number;
-    peakMonthKwh?: number;
-    peakMonth?: string;
-    billingInfo?: {
-      currentPlan?: {
-        supplierName?: string;
-        planName?: string;
-        contractStartDate?: string;
-        contractEndDate?: string;
-        earlyTerminationFee?: number;
-        contractType?: string;
+  async saveUsageData(
+    userId: string,
+    usageData: {
+      usagePoints: Array<{ timestamp: string; kwh: number; cost?: number }>;
+      totalAnnualKwh?: number;
+      averageMonthlyKwh?: number;
+      peakMonthKwh?: number;
+      peakMonth?: string;
+      billingInfo?: {
+        currentPlan?: {
+          supplierName?: string;
+          planName?: string;
+          contractStartDate?: string;
+          contractEndDate?: string;
+          earlyTerminationFee?: number;
+          contractType?: string;
+        };
       };
-    };
-  }): Promise<void> {
+    }
+  ): Promise<void> {
     if (USE_MOCK_API) {
       return Promise.resolve();
     }
@@ -1063,7 +1102,7 @@ class ApiClient {
       if (!functionUrl) {
         // Fallback to direct data client - update existing or create new
         const now = new Date().toISOString();
-        
+
         // Check if there's existing usage data for this user
         const existingData = await dataClient.models.CustomerUsageData.list({
           filter: { userId: { eq: userId } },
@@ -1071,44 +1110,58 @@ class ApiClient {
 
         if (existingData.data && existingData.data.length > 0) {
           // Get the most recent record
-          const sorted = existingData.data.sort((a, b) => 
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          const sorted = existingData.data.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
           const latest = sorted[0];
 
           // Merge usage points: combine existing and new, removing duplicates by timestamp
-          const existingPoints = (latest.usagePoints as any) || [];
+          const existingPoints = (latest.usagePoints as UsageDataPoint[]) || [];
           const newPoints = usageData.usagePoints;
-          
+
           // Create a map of existing points by timestamp (month/year)
-          const pointsMap = new Map<string, { timestamp: string; kwh: number; cost?: number }>();
-          existingPoints.forEach((point: { timestamp: string; kwh: number; cost?: number }) => {
-            const date = new Date(point.timestamp);
-            const key = `${date.getFullYear()}-${date.getMonth()}`;
-            pointsMap.set(key, point);
-          });
+          const pointsMap = new Map<
+            string,
+            { timestamp: string; kwh: number; cost?: number }
+          >();
+          existingPoints.forEach(
+            (point: { timestamp: string; kwh: number; cost?: number }) => {
+              const date = new Date(point.timestamp);
+              const key = `${date.getFullYear()}-${date.getMonth()}`;
+              pointsMap.set(key, point);
+            }
+          );
 
           // Overwrite with new points (they take precedence)
-          newPoints.forEach((point: { timestamp: string; kwh: number; cost?: number }) => {
-            const date = new Date(point.timestamp);
-            const key = `${date.getFullYear()}-${date.getMonth()}`;
-            pointsMap.set(key, point);
-          });
+          newPoints.forEach(
+            (point: { timestamp: string; kwh: number; cost?: number }) => {
+              const date = new Date(point.timestamp);
+              const key = `${date.getFullYear()}-${date.getMonth()}`;
+              pointsMap.set(key, point);
+            }
+          );
 
           // Convert map back to array and sort by timestamp
           const mergedPoints = Array.from(pointsMap.values()).sort(
-            (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+            (a, b) =>
+              new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
           );
 
           // Update the existing record
           await dataClient.models.CustomerUsageData.update({
             id: latest.id,
-            usagePoints: mergedPoints as any,
-            totalAnnualKwh: usageData.totalAnnualKwh || latest.totalAnnualKwh || null,
-            averageMonthlyKwh: usageData.averageMonthlyKwh || latest.averageMonthlyKwh || null,
+            usagePoints: mergedPoints as UsageDataPoint[],
+            totalAnnualKwh:
+              usageData.totalAnnualKwh || latest.totalAnnualKwh || null,
+            averageMonthlyKwh:
+              usageData.averageMonthlyKwh || latest.averageMonthlyKwh || null,
             peakMonthKwh: usageData.peakMonthKwh || latest.peakMonthKwh || null,
             peakMonth: usageData.peakMonth || latest.peakMonth || null,
-            billingInfo: usageData.billingInfo as any || latest.billingInfo || null,
+            billingInfo:
+              (usageData.billingInfo as Record<string, unknown>) ||
+              latest.billingInfo ||
+              null,
             updatedAt: now,
           });
         } else {
@@ -1117,12 +1170,13 @@ class ApiClient {
           await dataClient.models.CustomerUsageData.create({
             userId,
             usageDataId,
-            usagePoints: usageData.usagePoints as any,
+            usagePoints: usageData.usagePoints as UsageDataPoint[],
             totalAnnualKwh: usageData.totalAnnualKwh || null,
             averageMonthlyKwh: usageData.averageMonthlyKwh || null,
             peakMonthKwh: usageData.peakMonthKwh || null,
             peakMonth: usageData.peakMonth || null,
-            billingInfo: usageData.billingInfo as any || null,
+            billingInfo:
+              (usageData.billingInfo as Record<string, unknown>) || null,
             createdAt: now,
             updatedAt: now,
           });
@@ -1199,9 +1253,9 @@ class ApiClient {
   /**
    * Get user profile
    */
-  async getUserProfile(userId: string): Promise<{ 
-    state?: string; 
-    address?: any;
+  async getUserProfile(userId: string): Promise<{
+    state?: string;
+    address?: Record<string, unknown>;
     useCustomAverages?: boolean;
     customAverageKwh?: number;
     customAverageCost?: number;
@@ -1236,13 +1290,16 @@ class ApiClient {
   /**
    * Save user profile
    */
-  async saveUserProfile(userId: string, profile: { 
-    state?: string; 
-    address?: any;
-    useCustomAverages?: boolean;
-    customAverageKwh?: number;
-    customAverageCost?: number;
-  }): Promise<void> {
+  async saveUserProfile(
+    userId: string,
+    profile: {
+      state?: string;
+      address?: Record<string, unknown>;
+      useCustomAverages?: boolean;
+      customAverageKwh?: number;
+      customAverageCost?: number;
+    }
+  ): Promise<void> {
     if (USE_MOCK_API) {
       return Promise.resolve();
     }
@@ -1256,18 +1313,33 @@ class ApiClient {
       if (existing.data && existing.data.length > 0) {
         await dataClient.models.UserProfile.update({
           id: existing.data[0].id,
-          state: profile.state !== undefined ? (profile.state || null) : undefined,
-          address: profile.address !== undefined ? (profile.address || null) : undefined,
-          useCustomAverages: profile.useCustomAverages !== undefined ? profile.useCustomAverages : undefined,
-          customAverageKwh: profile.customAverageKwh !== undefined ? (profile.customAverageKwh || null) : undefined,
-          customAverageCost: profile.customAverageCost !== undefined ? (profile.customAverageCost || null) : undefined,
+          state:
+            profile.state !== undefined ? profile.state || null : undefined,
+          address:
+            profile.address !== undefined ? profile.address || null : undefined,
+          useCustomAverages:
+            profile.useCustomAverages !== undefined
+              ? profile.useCustomAverages
+              : undefined,
+          customAverageKwh:
+            profile.customAverageKwh !== undefined
+              ? profile.customAverageKwh || null
+              : undefined,
+          customAverageCost:
+            profile.customAverageCost !== undefined
+              ? profile.customAverageCost || null
+              : undefined,
           updatedAt: now,
         });
-        console.log('[saveUserProfile] Updated user profile with custom averages:', { 
-          useCustomAverages: profile.useCustomAverages, 
-          customAverageKwh: profile.customAverageKwh, 
-          customAverageCost: profile.customAverageCost 
-        });
+        // eslint-disable-next-line no-console
+        console.log(
+          '[saveUserProfile] Updated user profile with custom averages:',
+          {
+            useCustomAverages: profile.useCustomAverages,
+            customAverageKwh: profile.customAverageKwh,
+            customAverageCost: profile.customAverageCost,
+          }
+        );
       } else {
         await dataClient.models.UserProfile.create({
           userId,
@@ -1279,11 +1351,15 @@ class ApiClient {
           createdAt: now,
           updatedAt: now,
         });
-        console.log('[saveUserProfile] Created new user profile with custom averages:', { 
-          useCustomAverages: profile.useCustomAverages, 
-          customAverageKwh: profile.customAverageKwh, 
-          customAverageCost: profile.customAverageCost 
-        });
+        // eslint-disable-next-line no-console
+        console.log(
+          '[saveUserProfile] Created new user profile with custom averages:',
+          {
+            useCustomAverages: profile.useCustomAverages,
+            customAverageKwh: profile.customAverageKwh,
+            customAverageCost: profile.customAverageCost,
+          }
+        );
       }
     } catch (error) {
       console.error('Error saving user profile:', error);

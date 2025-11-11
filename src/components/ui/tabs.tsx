@@ -6,7 +6,9 @@ interface TabsContextValue {
   onValueChange: (value: string) => void;
 }
 
-const TabsContext = React.createContext<TabsContextValue | undefined>(undefined);
+const TabsContext = React.createContext<TabsContextValue | undefined>(
+  undefined
+);
 
 const Tabs = React.forwardRef<
   HTMLDivElement,
@@ -92,4 +94,3 @@ const TabsContent = React.forwardRef<
 TabsContent.displayName = 'TabsContent';
 
 export { Tabs, TabsList, TabsTrigger, TabsContent };
-

@@ -35,13 +35,17 @@ async function checkPlans() {
         console.log(`✅ ${state}: ${count} plans found`);
         if (plans.data && plans.data.length > 0) {
           const sample = plans.data[0];
-          console.log(`   Sample: ${sample.planName} by ${sample.supplierName} - $${sample.ratePerKwh}/kWh`);
+          console.log(
+            `   Sample: ${sample.planName} by ${sample.supplierName} - $${sample.ratePerKwh}/kWh`
+          );
         }
       } else {
         console.log(`⚠️  ${state}: No plans found`);
       }
     } catch (error) {
-      console.log(`❌ ${state}: Error - ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.log(
+        `❌ ${state}: Error - ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -51,7 +55,9 @@ async function checkPlans() {
     const total = allPlans.data?.length || 0;
     console.log(`\n📊 Total plans in database: ${total}`);
   } catch (error) {
-    console.log(`\n❌ Error getting total count: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    console.log(
+      `\n❌ Error getting total count: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
 }
 
@@ -64,4 +70,3 @@ checkPlans()
     console.error('\n❌ Check failed:', error);
     process.exit(1);
   });
-

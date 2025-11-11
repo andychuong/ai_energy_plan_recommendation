@@ -2,7 +2,6 @@ import { defineBackend } from '@aws-amplify/backend';
 import { PolicyStatement, Effect, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { CfnUserPool } from 'aws-cdk-lib/aws-cognito';
 import { FunctionUrlAuthType } from 'aws-cdk-lib/aws-lambda';
-import { Stack } from 'aws-cdk-lib';
 import { auth } from './auth/resource';
 import { data } from './data/resource';
 import {
@@ -131,8 +130,6 @@ backend.generateRecommendationsFunction.resources.lambda.addToRolePolicy(
 // This avoids hardcoding the table name and makes it work across different deployments
 
 // Add Function URLs to Lambda functions and expose them in custom outputs
-const stack = Stack.of(backend.generateRecommendationsFunction.resources.lambda);
-
 // Create Function URLs for functions that need to be called from the frontend
 // Using NONE auth type - CORS is handled in Lambda function handlers
 // Note: Functions should validate Cognito tokens in their handlers for security

@@ -22,7 +22,11 @@ export function PreferencesPage() {
   const userId = user?.userId || user?.username;
   const { preferences, isLoading, updatePreferences, isUpdating } =
     useUserPreferences(userId);
-  const { profile, saveUserProfile, isSaving: isSavingProfile } = useUserProfile(userId);
+  const {
+    profile,
+    saveUserProfile,
+    isSaving: isSavingProfile,
+  } = useUserProfile(userId);
   const navigate = useNavigate();
   const [formData, setFormData] = useState<Partial<UserPreferences>>({
     costSavingsPriority: 'medium',
@@ -149,7 +153,7 @@ export function PreferencesPage() {
               <select
                 id="state"
                 value={userState}
-                onChange={(e) => setUserState(e.target.value)}
+                onChange={e => setUserState(e.target.value)}
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <option value="">Select your state...</option>
@@ -362,7 +366,9 @@ export function PreferencesPage() {
                 disabled={isUpdating || success}
                 className="flex-1"
               >
-                {isUpdating || isSavingProfile ? 'Saving...' : 'Save Preferences'}
+                {isUpdating || isSavingProfile
+                  ? 'Saving...'
+                  : 'Save Preferences'}
               </Button>
               <Button
                 type="button"

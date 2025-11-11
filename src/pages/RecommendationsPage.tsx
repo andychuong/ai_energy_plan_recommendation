@@ -198,7 +198,9 @@ export function RecommendationsPage() {
                   key={recommendation.recommendationId || recommendation.planId}
                   recommendation={recommendation}
                   plan={plans.get(recommendation.planId)}
-                  isSelectedForComparison={selectedPlans.has(recommendation.planId)}
+                  isSelectedForComparison={selectedPlans.has(
+                    recommendation.planId
+                  )}
                   onSelect={async () => {
                     if (!userId) {
                       setError('User ID is required');
@@ -223,7 +225,11 @@ export function RecommendationsPage() {
                       alert(`Plan "${plan.planName}" selected successfully!`);
                       navigate('/dashboard');
                     } catch (err) {
-                      setError(err instanceof Error ? err.message : 'Failed to select plan');
+                      setError(
+                        err instanceof Error
+                          ? err.message
+                          : 'Failed to select plan'
+                      );
                     }
                   }}
                   onCompare={() => {
@@ -254,7 +260,9 @@ export function RecommendationsPage() {
                   variant="outline"
                   onClick={() => {
                     const firstRec = recommendations[0];
-                    setShowFeedbackFor(firstRec.recommendationId || firstRec.planId);
+                    setShowFeedbackFor(
+                      firstRec.recommendationId || firstRec.planId
+                    );
                   }}
                 >
                   Provide Feedback

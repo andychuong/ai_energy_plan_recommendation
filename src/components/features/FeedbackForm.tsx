@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { apiClient } from '@/services/api/client';
 
@@ -12,7 +18,11 @@ interface FeedbackFormProps {
   onSubmitted?: () => void;
 }
 
-export function FeedbackForm({ userId, recommendationId, onSubmitted }: FeedbackFormProps) {
+export function FeedbackForm({
+  userId,
+  recommendationId,
+  onSubmitted,
+}: FeedbackFormProps) {
   const [rating, setRating] = useState<number>(0);
   const [accuracyRating, setAccuracyRating] = useState<number>(0);
   const [clarityRating, setClarityRating] = useState<number>(0);
@@ -51,22 +61,32 @@ export function FeedbackForm({ userId, recommendationId, onSubmitted }: Feedback
         }
       }, 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to submit feedback');
+      setError(
+        err instanceof Error ? err.message : 'Failed to submit feedback'
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const StarRating = ({ value, onChange, label }: { value: number; onChange: (v: number) => void; label: string }) => (
+  const StarRating = ({
+    value,
+    onChange,
+    label,
+  }: {
+    value: number;
+    onChange: (v: number) => void;
+    label: string;
+  }) => (
     <div className="space-y-2">
       <Label>{label}</Label>
       <div className="flex gap-1">
-        {[1, 2, 3, 4, 5].map((star) => (
+        {[1, 2, 3, 4, 5].map(star => (
           <button
             key={star}
             type="button"
             onClick={() => onChange(star)}
-            className={`text-2xl ${star <= value ? 'text-yellow-400' : 'text-gray-300'} hover:text-yellow-300 transition-colors`}
+            className={`text-2xl ${star <= value ? 'text-yellow-400' : 'text-gray-300'} transition-colors hover:text-yellow-300`}
           >
             ★
           </button>
@@ -95,10 +115,26 @@ export function FeedbackForm({ userId, recommendationId, onSubmitted }: Feedback
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <StarRating value={rating} onChange={setRating} label="Overall Rating *" />
-          <StarRating value={accuracyRating} onChange={setAccuracyRating} label="Accuracy Rating" />
-          <StarRating value={clarityRating} onChange={setClarityRating} label="Clarity Rating" />
-          <StarRating value={overallSatisfaction} onChange={setOverallSatisfaction} label="Overall Satisfaction" />
+          <StarRating
+            value={rating}
+            onChange={setRating}
+            label="Overall Rating *"
+          />
+          <StarRating
+            value={accuracyRating}
+            onChange={setAccuracyRating}
+            label="Accuracy Rating"
+          />
+          <StarRating
+            value={clarityRating}
+            onChange={setClarityRating}
+            label="Clarity Rating"
+          />
+          <StarRating
+            value={overallSatisfaction}
+            onChange={setOverallSatisfaction}
+            label="Overall Satisfaction"
+          />
 
           <div className="space-y-2">
             <Label htmlFor="comments">Comments (Optional)</Label>
@@ -106,7 +142,7 @@ export function FeedbackForm({ userId, recommendationId, onSubmitted }: Feedback
               id="comments"
               type="text"
               value={comments}
-              onChange={(e) => setComments(e.target.value)}
+              onChange={e => setComments(e.target.value)}
               placeholder="Share your thoughts..."
             />
           </div>
@@ -125,4 +161,3 @@ export function FeedbackForm({ userId, recommendationId, onSubmitted }: Feedback
     </Card>
   );
 }
-

@@ -23,7 +23,9 @@ export function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [extractedData, setExtractedData] = useState<any>(null);
+  const [extractedData, setExtractedData] = useState<CustomerUsageData | null>(
+    null
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -57,7 +59,7 @@ export function UploadPage() {
       if (isPDF || isImage || isText || isCSV) {
         // Use AI statement reader for all supported formats
         const usageData = await apiClient.readStatement(userId, file);
-        
+
         // Store extracted data for preview
         setExtractedData(usageData);
 
@@ -125,25 +127,38 @@ export function UploadPage() {
           {success && extractedData && (
             <Alert>
               <AlertDescription className="space-y-3">
-                <p className="font-semibold">✓ Data extracted and uploaded successfully!</p>
+                <p className="font-semibold">
+                  ✓ Data extracted and uploaded successfully!
+                </p>
                 <div className="mt-2 rounded-md bg-muted p-3 text-sm">
-                  <p className="font-medium mb-2">Extracted Summary:</p>
+                  <p className="mb-2 font-medium">Extracted Summary:</p>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
-                      <span className="text-muted-foreground">Total Annual:</span>{' '}
+                      <span className="text-muted-foreground">
+                        Total Annual:
+                      </span>{' '}
                       <span className="font-semibold">
-                        {extractedData.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'} kWh
+                        {extractedData.aggregatedStats?.totalKwh?.toFixed(0) ||
+                          'N/A'}{' '}
+                        kWh
                       </span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Avg Monthly:</span>{' '}
+                      <span className="text-muted-foreground">
+                        Avg Monthly:
+                      </span>{' '}
                       <span className="font-semibold">
-                        {extractedData.aggregatedStats?.averageMonthlyKwh?.toFixed(0) || 'N/A'} kWh
+                        {extractedData.aggregatedStats?.averageMonthlyKwh?.toFixed(
+                          0
+                        ) || 'N/A'}{' '}
+                        kWh
                       </span>
                     </div>
                     {extractedData.aggregatedStats?.totalCost && (
                       <div>
-                        <span className="text-muted-foreground">Annual Cost:</span>{' '}
+                        <span className="text-muted-foreground">
+                          Annual Cost:
+                        </span>{' '}
                         <span className="font-semibold">
                           ${extractedData.aggregatedStats.totalCost.toFixed(2)}
                         </span>
@@ -151,7 +166,9 @@ export function UploadPage() {
                     )}
                     {extractedData.aggregatedStats?.peakMonth && (
                       <div>
-                        <span className="text-muted-foreground">Peak Month:</span>{' '}
+                        <span className="text-muted-foreground">
+                          Peak Month:
+                        </span>{' '}
                         <span className="font-semibold">
                           {extractedData.aggregatedStats.peakMonth}
                         </span>
@@ -159,7 +176,9 @@ export function UploadPage() {
                     )}
                     {extractedData.usageDataPoints && (
                       <div className="col-span-2">
-                        <span className="text-muted-foreground">Data Points:</span>{' '}
+                        <span className="text-muted-foreground">
+                          Data Points:
+                        </span>{' '}
                         <span className="font-semibold">
                           {extractedData.usageDataPoints.length} months
                         </span>
@@ -184,7 +203,7 @@ export function UploadPage() {
                   accept=".csv,.pdf,.png,.jpg,.jpeg,.txt"
                   onChange={handleFileChange}
                   disabled={isUploading}
-                  className="flex-1 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                  className="flex-1 cursor-pointer file:mr-4 file:rounded-md file:border-0 file:bg-primary file:px-4 file:py-2 file:text-sm file:font-semibold file:text-primary-foreground hover:file:bg-primary/90"
                 />
                 <Button
                   type="button"

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Handler } from 'aws-lambda';
 import { generateClient } from 'aws-amplify/data';
 import type { Schema } from '../../data/resource';

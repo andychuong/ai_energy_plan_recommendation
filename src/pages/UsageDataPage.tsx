@@ -33,16 +33,23 @@ interface MonthData {
 export function UsageDataPage() {
   const { user } = useAuth();
   const userId = user?.userId || user?.username;
-  const { usageData, uploadUsageData, isUploading, refetch: refetchUsageData } = useUsageData(userId);
+  const {
+    usageData,
+    uploadUsageData,
+    isUploading,
+    refetch: refetchUsageData,
+  } = useUsageData(userId);
   const { saveUserProfileAsync } = useUserProfile(userId);
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const [extractedData, setExtractedData] = useState<any>(null);
+  const [extractedData, setExtractedData] = useState<CustomerUsageData | null>(
+    null
+  );
   const [isDragging, setIsDragging] = useState(false);
   const [activeTab, setActiveTab] = useState<'upload' | 'manual'>('upload');
-  
+
   // Manual entry state
   const [selectedMonth, setSelectedMonth] = useState<string>('');
   const [selectedYear, setSelectedYear] = useState<number>(0);
@@ -50,10 +57,17 @@ export function UsageDataPage() {
   const [manualCost, setManualCost] = useState<string>('');
   const [isSubmittingManual, setIsSubmittingManual] = useState(false);
   const [showDuplicateDialog, setShowDuplicateDialog] = useState(false);
-  const [pendingManualEntry, setPendingManualEntry] = useState<{ month: string; year: number; kwh: number; cost: number } | null>(null);
-  
+  const [pendingManualEntry, setPendingManualEntry] = useState<{
+    month: string;
+    year: number;
+    kwh: number;
+    cost: number;
+  } | null>(null);
+
   // Current plan state
-  const [currentPlan, setCurrentPlan] = useState<Partial<CurrentPlan & { contractStartDate?: string }>>({
+  const [currentPlan, setCurrentPlan] = useState<
+    Partial<CurrentPlan & { contractStartDate?: string }>
+  >({
     ratePerKwh: 0,
     contractStartDate: '',
     contractEndDate: '',
@@ -65,9 +79,8 @@ export function UsageDataPage() {
 
   // Override mode state
   const [isOverrideMode, setIsOverrideMode] = useState(false);
-  const [overrideAverage, setOverrideAverage] = useState<string>('');
   const [isSaving, setIsSaving] = useState(false);
-  
+
   // Editable average state
   const [editableAverageKwh, setEditableAverageKwh] = useState<string>('');
   const [editableAverageCost, setEditableAverageCost] = useState<string>('');
@@ -84,10 +97,16 @@ export function UsageDataPage() {
           if (profile.useCustomAverages !== undefined) {
             setIsOverrideMode(profile.useCustomAverages);
           }
-          if (profile.customAverageKwh !== undefined && profile.customAverageKwh !== null) {
+          if (
+            profile.customAverageKwh !== undefined &&
+            profile.customAverageKwh !== null
+          ) {
             setEditableAverageKwh(profile.customAverageKwh.toString());
           }
-          if (profile.customAverageCost !== undefined && profile.customAverageCost !== null) {
+          if (
+            profile.customAverageCost !== undefined &&
+            profile.customAverageCost !== null
+          ) {
             setEditableAverageCost(profile.customAverageCost.toString());
           }
         }
@@ -102,7 +121,7 @@ export function UsageDataPage() {
   // Save override mode preference when toggle changes
   const handleOverrideModeChange = async (checked: boolean) => {
     setIsOverrideMode(checked);
-    
+
     if (!userId) return;
 
     try {
@@ -134,7 +153,12 @@ export function UsageDataPage() {
             contractStartDate: result.contractStartDate || '',
             contractEndDate: result.contractEndDate || '',
             earlyTerminationFee: result.earlyTerminationFee || 0,
-            contractType: (result.contractType as any) || 'fixed',
+            contractType:
+              (result.contractType as
+                | 'fixed'
+                | 'variable'
+                | 'indexed'
+                | 'hybrid') || 'fixed',
           });
           return;
         }
@@ -147,40 +171,46 @@ export function UsageDataPage() {
         setCurrentPlan({
           supplierName: usageData.billingInfo.currentPlan.supplierName || '',
           planName: usageData.billingInfo.currentPlan.planName || '',
-          contractEndDate: usageData.billingInfo.currentPlan.contractEndDate || '',
-          earlyTerminationFee: usageData.billingInfo.currentPlan.earlyTerminationFee || 0,
-          contractType: usageData.billingInfo.currentPlan.contractType || 'fixed',
+          contractEndDate:
+            usageData.billingInfo.currentPlan.contractEndDate || '',
+          earlyTerminationFee:
+            usageData.billingInfo.currentPlan.earlyTerminationFee || 0,
+          contractType:
+            usageData.billingInfo.currentPlan.contractType || 'fixed',
         });
       }
     };
 
     loadCurrentPlan();
   }, [usageData, userId]);
-  
+
   // Calculate past 12 months (from month before current month going back)
   const [monthlyData, setMonthlyData] = useState<MonthData[]>([]);
 
   useEffect(() => {
     const now = new Date();
     const months: MonthData[] = [];
-    
+
     // Start from the month before current month, going back 12 months
     // Most recent first (i=0 is most recent, i=11 is oldest)
     for (let i = 0; i < 12; i++) {
       const date = new Date(now.getFullYear(), now.getMonth() - 1 - i, 1);
       const monthName = date.toLocaleString('default', { month: 'long' });
       const year = date.getFullYear();
-      
+
       // Find matching usage data point
       let usagePoint: UsageDataPoint | null = null;
       if (usageData?.usagePoints) {
-        usagePoint = usageData.usagePoints.find(point => {
-          const pointDate = new Date(point.timestamp);
-          return pointDate.getMonth() === date.getMonth() && 
-                 pointDate.getFullYear() === date.getFullYear();
-        }) || null;
+        usagePoint =
+          usageData.usagePoints.find(point => {
+            const pointDate = new Date(point.timestamp);
+            return (
+              pointDate.getMonth() === date.getMonth() &&
+              pointDate.getFullYear() === date.getFullYear()
+            );
+          }) || null;
       }
-      
+
       months.push({
         month: monthName,
         year,
@@ -192,7 +222,7 @@ export function UsageDataPage() {
         editedCost: usagePoint?.cost?.toString() || '',
       });
     }
-    
+
     setMonthlyData(months);
   }, [usageData]);
 
@@ -212,58 +242,91 @@ export function UsageDataPage() {
   }, [monthlyData]);
 
   // Use editable averages if override mode is on, otherwise use calculated
-  const averageKwh = isOverrideMode && editableAverageKwh 
-    ? parseFloat(editableAverageKwh) || calculatedAverageKwh
-    : calculatedAverageKwh;
-  
-  const averageCost = isOverrideMode && editableAverageCost
-    ? parseFloat(editableAverageCost) || calculatedAverageCost
-    : calculatedAverageCost;
+  const averageKwh =
+    isOverrideMode && editableAverageKwh
+      ? parseFloat(editableAverageKwh) || calculatedAverageKwh
+      : calculatedAverageKwh;
+
+  const averageCost =
+    isOverrideMode && editableAverageCost
+      ? parseFloat(editableAverageCost) || calculatedAverageCost
+      : calculatedAverageCost;
 
   // Initialize editable averages when override mode is turned on
   // Use saved custom averages if available, otherwise use calculated averages
   useEffect(() => {
     if (isOverrideMode) {
       // Only initialize if we don't already have values (from user profile)
-      if (!editableAverageKwh || editableAverageKwh === '0' || editableAverageKwh === '0.00') {
-        setEditableAverageKwh(calculatedAverageKwh > 0 ? calculatedAverageKwh.toFixed(2) : '');
+      if (
+        !editableAverageKwh ||
+        editableAverageKwh === '0' ||
+        editableAverageKwh === '0.00'
+      ) {
+        setEditableAverageKwh(
+          calculatedAverageKwh > 0 ? calculatedAverageKwh.toFixed(2) : ''
+        );
       }
-      if (!editableAverageCost || editableAverageCost === '0' || editableAverageCost === '0.00') {
-        setEditableAverageCost(calculatedAverageCost > 0 ? calculatedAverageCost.toFixed(2) : '');
+      if (
+        !editableAverageCost ||
+        editableAverageCost === '0' ||
+        editableAverageCost === '0.00'
+      ) {
+        setEditableAverageCost(
+          calculatedAverageCost > 0 ? calculatedAverageCost.toFixed(2) : ''
+        );
       }
     }
+    // Note: We intentionally only depend on isOverrideMode and calculated averages
+    // to avoid re-initializing when editable values change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOverrideMode, calculatedAverageKwh, calculatedAverageCost]);
 
   // Update monthlyData when editable averages change in override mode (for immediate UI update)
   // Use a ref to track previous values and avoid unnecessary updates
-  const prevEditableValuesRef = React.useRef<{ kwh: string; cost: string }>({ kwh: '', cost: '' });
-  
+  const prevEditableValuesRef = React.useRef<{ kwh: string; cost: string }>({
+    kwh: '',
+    cost: '',
+  });
+
   useEffect(() => {
     if (isOverrideMode && editableAverageKwh) {
       const avgKwh = parseFloat(editableAverageKwh);
-      const avgCost = editableAverageCost ? parseFloat(editableAverageCost) : null;
-      
+      const avgCost = editableAverageCost
+        ? parseFloat(editableAverageCost)
+        : null;
+
       // Only update if values changed and are valid
-      const valuesChanged = 
+      const valuesChanged =
         prevEditableValuesRef.current.kwh !== editableAverageKwh ||
         prevEditableValuesRef.current.cost !== (editableAverageCost || '');
-      
+
       if (avgKwh > 0 && !isNaN(avgKwh) && valuesChanged) {
-        prevEditableValuesRef.current = { 
-          kwh: editableAverageKwh, 
-          cost: editableAverageCost || '' 
+        prevEditableValuesRef.current = {
+          kwh: editableAverageKwh,
+          cost: editableAverageCost || '',
         };
-        
-        setMonthlyData(prev => prev.map(m => ({
-          ...m,
-          kwh: avgKwh,
-          cost: avgCost || (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : null),
-          editedKwh: avgKwh.toString(),
-          editedCost: (avgCost || (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : 0)).toString(),
-        })));
+
+        setMonthlyData(prev =>
+          prev.map(m => ({
+            ...m,
+            kwh: avgKwh,
+            cost:
+              avgCost ||
+              (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : null),
+            editedKwh: avgKwh.toString(),
+            editedCost: (
+              avgCost ||
+              (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : 0)
+            ).toString(),
+          }))
+        );
       }
     }
-  }, [isOverrideMode, editableAverageKwh, editableAverageCost, currentPlan.ratePerKwh]);
+    // Note: We intentionally don't include editableAverageKwh and editableAverageCost
+    // in the dependency array to avoid infinite loops. The effect only runs when
+    // isOverrideMode changes or when the calculated averages change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOverrideMode, currentPlan.ratePerKwh]);
 
   const handleFileChange = (selectedFile: File) => {
     setFile(selectedFile);
@@ -282,21 +345,21 @@ export function UsageDataPage() {
     setIsDragging(false);
   }, []);
 
-  const handleDrop = useCallback(
-    (e: React.DragEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
 
-      const droppedFile = e.dataTransfer.files[0];
-      if (droppedFile) {
-        handleFileChange(droppedFile);
-      }
-    },
-    []
-  );
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile) {
+      handleFileChange(droppedFile);
+    }
+  }, []);
 
-  const processFile = async (fileToProcess: File, overrideDuplicates: boolean = false) => {
+  const processFile = async (
+    fileToProcess: File,
+    overrideDuplicates: boolean = false
+  ) => {
     if (!fileToProcess || !userId) {
       setError('Please select a file and ensure you are logged in');
       return;
@@ -307,12 +370,18 @@ export function UsageDataPage() {
       setSuccess(false);
 
       // Check file type
-      const isCSV = fileToProcess.type === 'text/csv' || fileToProcess.name.endsWith('.csv');
+      const isCSV =
+        fileToProcess.type === 'text/csv' ||
+        fileToProcess.name.endsWith('.csv');
       const isPDF =
-        fileToProcess.type === 'application/pdf' || fileToProcess.name.endsWith('.pdf');
+        fileToProcess.type === 'application/pdf' ||
+        fileToProcess.name.endsWith('.pdf');
       const isImage =
-        fileToProcess.type.startsWith('image/') || /\.(png|jpg|jpeg)$/i.test(fileToProcess.name);
-      const isText = fileToProcess.type === 'text/plain' || fileToProcess.name.endsWith('.txt');
+        fileToProcess.type.startsWith('image/') ||
+        /\.(png|jpg|jpeg)$/i.test(fileToProcess.name);
+      const isText =
+        fileToProcess.type === 'text/plain' ||
+        fileToProcess.name.endsWith('.txt');
 
       if (isPDF || isImage || isText || isCSV) {
         const usageData = await apiClient.readStatement(userId, fileToProcess);
@@ -323,7 +392,9 @@ export function UsageDataPage() {
           const duplicates: Array<{ month: string; year: number }> = [];
           usageData.usageDataPoints.forEach(point => {
             const pointDate = new Date(point.timestamp);
-            const monthName = pointDate.toLocaleString('default', { month: 'long' });
+            const monthName = pointDate.toLocaleString('default', {
+              month: 'long',
+            });
             const year = pointDate.getFullYear();
             if (hasExistingData(monthName, year)) {
               duplicates.push({ month: monthName, year });
@@ -331,10 +402,12 @@ export function UsageDataPage() {
           });
 
           if (duplicates.length > 0) {
-            const duplicateMonths = duplicates.map(d => `${d.month} ${d.year}`).join(', ');
+            const duplicateMonths = duplicates
+              .map(d => `${d.month} ${d.year}`)
+              .join(', ');
             const shouldOverride = window.confirm(
               `Data already exists for the following months: ${duplicateMonths}\n\n` +
-              `Do you want to override the existing data?`
+                `Do you want to override the existing data?`
             );
             if (!shouldOverride) {
               setError('Upload cancelled. Existing data was not overwritten.');
@@ -393,7 +466,10 @@ export function UsageDataPage() {
   // Check if a month/year already has data
   const hasExistingData = (month: string, year: number): boolean => {
     return monthlyData.some(
-      m => m.month === month && m.year === year && (m.kwh !== null || m.cost !== null)
+      m =>
+        m.month === month &&
+        m.year === year &&
+        (m.kwh !== null || m.cost !== null)
     );
   };
 
@@ -448,14 +524,21 @@ export function UsageDataPage() {
     if (cost > 0 && kwh > 0) {
       const ratePerKwh = cost / kwh;
       if (ratePerKwh < 0.01 || ratePerKwh > 2.0) {
-        setError(`Cost per kWh ($${ratePerKwh.toFixed(3)}) seems unusual. Please verify your values.`);
+        setError(
+          `Cost per kWh ($${ratePerKwh.toFixed(3)}) seems unusual. Please verify your values.`
+        );
         return;
       }
     }
 
     // Check for duplicate
     if (hasExistingData(selectedMonth, selectedYear)) {
-      setPendingManualEntry({ month: selectedMonth, year: selectedYear, kwh, cost });
+      setPendingManualEntry({
+        month: selectedMonth,
+        year: selectedYear,
+        kwh,
+        cost,
+      });
       setShowDuplicateDialog(true);
       return;
     }
@@ -464,7 +547,12 @@ export function UsageDataPage() {
     await addManualEntry(selectedMonth, selectedYear, kwh, cost);
   };
 
-  const addManualEntry = async (month: string, year: number, kwh: number, cost: number) => {
+  const addManualEntry = async (
+    month: string,
+    year: number,
+    kwh: number,
+    cost: number
+  ) => {
     if (!userId) return;
 
     setIsSubmittingManual(true);
@@ -510,22 +598,28 @@ export function UsageDataPage() {
       const updatedPoints = [...existingPoints, usagePoint];
 
       // Update the monthly data state
-      setMonthlyData(prev => prev.map((m, i) => 
-        i === monthIndex 
-          ? {
-              ...m,
-              kwh,
-              cost: cost || null,
-              editedKwh: kwh.toString(),
-              editedCost: cost ? cost.toString() : '',
-            }
-          : m
-      ));
+      setMonthlyData(prev =>
+        prev.map((m, i) =>
+          i === monthIndex
+            ? {
+                ...m,
+                kwh,
+                cost: cost || null,
+                editedKwh: kwh.toString(),
+                editedCost: cost ? cost.toString() : '',
+              }
+            : m
+        )
+      );
 
       // Calculate aggregated stats
       const totalKwh = updatedPoints.reduce((sum, p) => sum + p.kwh, 0);
-      const avgMonthlyKwh = updatedPoints.length > 0 ? totalKwh / updatedPoints.length : 0;
-      const peakPoint = updatedPoints.reduce((max, p) => p.kwh > max.kwh ? p : max, updatedPoints[0]);
+      const avgMonthlyKwh =
+        updatedPoints.length > 0 ? totalKwh / updatedPoints.length : 0;
+      const peakPoint = updatedPoints.reduce(
+        (max, p) => (p.kwh > max.kwh ? p : max),
+        updatedPoints[0]
+      );
       const peakDate = new Date(peakPoint.timestamp);
       const peakMonth = peakDate.toLocaleString('default', { month: 'long' });
       const peakMonthKwh = peakPoint.kwh;
@@ -557,7 +651,9 @@ export function UsageDataPage() {
             }, 3000);
           },
           onError: err => {
-            setError(err instanceof Error ? err.message : 'Failed to save data');
+            setError(
+              err instanceof Error ? err.message : 'Failed to save data'
+            );
             setIsSubmittingManual(false);
           },
         }
@@ -569,8 +665,20 @@ export function UsageDataPage() {
   };
 
   const getMonthIndex = (monthName: string): number => {
-    const months = ['january', 'february', 'march', 'april', 'may', 'june', 
-                    'july', 'august', 'september', 'october', 'november', 'december'];
+    const months = [
+      'january',
+      'february',
+      'march',
+      'april',
+      'may',
+      'june',
+      'july',
+      'august',
+      'september',
+      'october',
+      'november',
+      'december',
+    ];
     return months.indexOf(monthName.toLowerCase());
   };
 
@@ -621,72 +729,65 @@ export function UsageDataPage() {
         setSuccess(false);
       }, 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save current plan');
+      setError(
+        err instanceof Error ? err.message : 'Failed to save current plan'
+      );
     } finally {
       setIsSaving(false);
     }
   };
 
   const toggleEditRow = (index: number) => {
-    setMonthlyData(prev => prev.map((m, i) => 
-      i === index 
-        ? { ...m, isEditing: !m.isEditing }
-        : { ...m, isEditing: false }
-    ));
+    setMonthlyData(prev =>
+      prev.map((m, i) =>
+        i === index
+          ? { ...m, isEditing: !m.isEditing }
+          : { ...m, isEditing: false }
+      )
+    );
   };
 
-  const updateRowField = (index: number, field: 'editedKwh' | 'editedCost', value: string) => {
-    setMonthlyData(prev => prev.map((m, i) => 
-      i === index ? { ...m, [field]: value } : m
-    ));
+  const updateRowField = (
+    index: number,
+    field: 'editedKwh' | 'editedCost',
+    value: string
+  ) => {
+    setMonthlyData(prev =>
+      prev.map((m, i) => (i === index ? { ...m, [field]: value } : m))
+    );
   };
 
   const saveRow = (index: number) => {
-    setMonthlyData(prev => prev.map((m, i) => {
-      if (i === index) {
-        const kwh = parseFloat(m.editedKwh) || null;
-        const cost = parseFloat(m.editedCost) || null;
-        return {
-          ...m,
-          kwh,
-          cost,
-          isEditing: false,
-        };
-      }
-      return m;
-    }));
+    setMonthlyData(prev =>
+      prev.map((m, i) => {
+        if (i === index) {
+          const kwh = parseFloat(m.editedKwh) || null;
+          const cost = parseFloat(m.editedCost) || null;
+          return {
+            ...m,
+            kwh,
+            cost,
+            isEditing: false,
+          };
+        }
+        return m;
+      })
+    );
   };
 
   const cancelEditRow = (index: number) => {
-    setMonthlyData(prev => prev.map((m, i) => 
-      i === index 
-        ? { 
-            ...m, 
-            isEditing: false,
-            editedKwh: m.kwh?.toString() || '',
-            editedCost: m.cost?.toString() || '',
-          }
-        : m
-    ));
-  };
-
-  const handleApplyOverride = () => {
-    const avg = parseFloat(overrideAverage);
-    if (!avg || avg <= 0) {
-      setError('Please enter a valid average kWh');
-      return;
-    }
-
-    setMonthlyData(prev => prev.map(m => ({
-      ...m,
-      kwh: avg,
-      cost: currentPlan.ratePerKwh ? avg * currentPlan.ratePerKwh : m.cost,
-      editedKwh: avg.toString(),
-      editedCost: currentPlan.ratePerKwh ? (avg * currentPlan.ratePerKwh).toString() : m.editedCost,
-    })));
-    
-    setIsOverrideMode(false);
-    setOverrideAverage('');
+    setMonthlyData(prev =>
+      prev.map((m, i) =>
+        i === index
+          ? {
+              ...m,
+              isEditing: false,
+              editedKwh: m.kwh?.toString() || '',
+              editedCost: m.cost?.toString() || '',
+            }
+          : m
+      )
+    );
   };
 
   // Save editable averages and apply to all months
@@ -706,7 +807,11 @@ export function UsageDataPage() {
 
     try {
       // Save custom averages to user profile
-      console.log('[UsageDataPage] Saving custom averages:', { avgKwh, avgCost });
+      // eslint-disable-next-line no-console
+      console.log('[UsageDataPage] Saving custom averages:', {
+        avgKwh,
+        avgCost,
+      });
       await saveUserProfileAsync({
         userId,
         profile: {
@@ -714,16 +819,24 @@ export function UsageDataPage() {
           customAverageCost: avgCost || undefined,
         },
       });
+      // eslint-disable-next-line no-console
       console.log('[UsageDataPage] Custom averages saved to user profile');
 
       // Update all months with the average values
-      setMonthlyData(prev => prev.map(m => ({
-        ...m,
-        kwh: avgKwh,
-        cost: avgCost || (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : null),
-        editedKwh: avgKwh.toString(),
-        editedCost: (avgCost || (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : 0)).toString(),
-      })));
+      setMonthlyData(prev =>
+        prev.map(m => ({
+          ...m,
+          kwh: avgKwh,
+          cost:
+            avgCost ||
+            (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : null),
+          editedKwh: avgKwh.toString(),
+          editedCost: (
+            avgCost ||
+            (currentPlan.ratePerKwh ? avgKwh * currentPlan.ratePerKwh : 0)
+          ).toString(),
+        }))
+      );
 
       // Save to backend
       const now = new Date();
@@ -738,7 +851,6 @@ export function UsageDataPage() {
       }
 
       const totalKwh = avgKwh * 12;
-      const totalCost = (avgCost || 0) * 12;
 
       uploadUsageData(
         {
@@ -761,7 +873,9 @@ export function UsageDataPage() {
             setTimeout(() => setSuccess(false), 3000);
           },
           onError: err => {
-            setError(err instanceof Error ? err.message : 'Failed to save averages');
+            setError(
+              err instanceof Error ? err.message : 'Failed to save averages'
+            );
             setIsSavingAverages(false);
           },
         }
@@ -772,92 +886,27 @@ export function UsageDataPage() {
     }
   };
 
-  const handleSaveAllChanges = async () => {
-    if (!userId) return;
-
-    setIsSaving(true);
-    setError(null);
-
-    try {
-      // Convert monthly data to usage points
-      const usagePoints: UsageDataPoint[] = monthlyData
-        .filter(m => m.kwh !== null && m.kwh > 0)
-        .map(m => ({
-          timestamp: m.date.toISOString(),
-          kwh: m.kwh!,
-          cost: m.cost || undefined,
-        }));
-
-      if (usagePoints.length === 0) {
-        setError('Please enter at least one month of data');
-        setIsSaving(false);
-        return;
-      }
-
-      // Calculate aggregated stats
-      const totalKwh = usagePoints.reduce((sum, p) => sum + p.kwh, 0);
-      const avgMonthlyKwh = totalKwh / usagePoints.length;
-      const peakPoint = usagePoints.reduce((max, p) => p.kwh > max.kwh ? p : max, usagePoints[0]);
-      const peakDate = new Date(peakPoint.timestamp);
-      const peakMonth = peakDate.toLocaleString('default', { month: 'long' });
-      const peakMonthKwh = peakPoint.kwh;
-
-      uploadUsageData(
-        {
-          userId,
-          usageData: {
-            userId,
-            usagePoints,
-            totalAnnualKwh: totalKwh,
-            averageMonthlyKwh: avgMonthlyKwh,
-            peakMonthKwh,
-            peakMonth,
-          },
-        },
-        {
-          onSuccess: async () => {
-            setSuccess(true);
-            setError(null);
-            setIsSaving(false);
-            // Refetch usage data to update the UI
-            await refetchUsageData();
-            setTimeout(() => {
-              setSuccess(false);
-            }, 3000);
-          },
-          onError: err => {
-            setError(
-              err instanceof Error ? err.message : 'Failed to save data'
-            );
-            setIsSaving(false);
-          },
-        }
-      );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save data');
-      setIsSaving(false);
-    }
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold">Usage Data</h1>
         <p className="mt-2 text-muted-foreground">
-          Add and manage your energy usage data to get personalized recommendations
+          Add and manage your energy usage data to get personalized
+          recommendations
         </p>
       </div>
 
       {/* Current Plan Information */}
-      <Card className="mx-auto max-w-6xl mb-6">
+      <Card className="mx-auto mb-6 max-w-6xl">
         <CardHeader>
           <CardTitle>Current Plan Information</CardTitle>
           <CardDescription>
-            Enter your current energy plan details to get accurate recommendations
+            Enter your current energy plan details to get accurate
+            recommendations
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="supplierName">Supplier Name</Label>
               <Input
@@ -865,7 +914,7 @@ export function UsageDataPage() {
                 type="text"
                 placeholder="e.g., PG&E, ConEd"
                 value={currentPlan.supplierName || ''}
-                onChange={(e) =>
+                onChange={e =>
                   setCurrentPlan({
                     ...currentPlan,
                     supplierName: e.target.value,
@@ -879,7 +928,7 @@ export function UsageDataPage() {
                 id="contractStartDate"
                 type="date"
                 value={currentPlan.contractStartDate || ''}
-                onChange={(e) =>
+                onChange={e =>
                   setCurrentPlan({
                     ...currentPlan,
                     contractStartDate: e.target.value,
@@ -893,7 +942,7 @@ export function UsageDataPage() {
                 id="contractEndDate"
                 type="date"
                 value={currentPlan.contractEndDate || ''}
-                onChange={(e) =>
+                onChange={e =>
                   setCurrentPlan({
                     ...currentPlan,
                     contractEndDate: e.target.value,
@@ -902,7 +951,9 @@ export function UsageDataPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="earlyTerminationFee">Early Termination Fee ($)</Label>
+              <Label htmlFor="earlyTerminationFee">
+                Early Termination Fee ($)
+              </Label>
               <Input
                 id="earlyTerminationFee"
                 type="number"
@@ -910,7 +961,7 @@ export function UsageDataPage() {
                 min="0"
                 placeholder="0"
                 value={currentPlan.earlyTerminationFee || ''}
-                onChange={(e) =>
+                onChange={e =>
                   setCurrentPlan({
                     ...currentPlan,
                     earlyTerminationFee: parseFloat(e.target.value) || 0,
@@ -919,8 +970,8 @@ export function UsageDataPage() {
               />
             </div>
           </div>
-          <Button 
-            onClick={handleSaveCurrentPlan} 
+          <Button
+            onClick={handleSaveCurrentPlan}
             variant="outline"
             disabled={isSaving}
           >
@@ -930,7 +981,7 @@ export function UsageDataPage() {
       </Card>
 
       {/* Past 12 Months Display */}
-      <Card className="mx-auto max-w-6xl mb-6">
+      <Card className="mx-auto mb-6 max-w-6xl">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -954,17 +1005,19 @@ export function UsageDataPage() {
         <CardContent>
           {/* Average Display at Top */}
           <div className="mb-4 rounded-lg bg-muted p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               <div className="min-h-[3.5rem]">
-                <p className="text-sm text-muted-foreground">Average Monthly kWh</p>
+                <p className="text-sm text-muted-foreground">
+                  Average Monthly kWh
+                </p>
                 {isOverrideMode ? (
                   <Input
                     type="number"
                     step="0.01"
                     min="0"
-                    className="text-2xl font-bold h-[1.875rem] py-0 px-2 mt-1 w-full"
+                    className="mt-1 h-[1.875rem] w-full px-2 py-0 text-2xl font-bold"
                     value={editableAverageKwh}
-                    onChange={(e) => {
+                    onChange={e => {
                       setEditableAverageKwh(e.target.value);
                     }}
                     onBlur={handleSaveAverages}
@@ -972,24 +1025,30 @@ export function UsageDataPage() {
                     placeholder="0.00"
                   />
                 ) : (
-                  <p className="text-2xl font-bold leading-[1.875rem] mt-1 px-2 w-full border border-transparent">{averageKwh.toFixed(2)}</p>
+                  <p className="mt-1 w-full border border-transparent px-2 text-2xl font-bold leading-[1.875rem]">
+                    {averageKwh.toFixed(2)}
+                  </p>
                 )}
                 {isOverrideMode && isSavingAverages && (
-                  <p className="text-xs text-primary mt-1">Saving...</p>
+                  <p className="mt-1 text-xs text-primary">Saving...</p>
                 )}
               </div>
               <div className="min-h-[3.5rem]">
-                <p className="text-sm text-muted-foreground">Average Monthly Cost</p>
+                <p className="text-sm text-muted-foreground">
+                  Average Monthly Cost
+                </p>
                 {isOverrideMode ? (
                   <div className="relative mt-1">
-                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-2xl font-bold text-foreground pointer-events-none z-10">$</span>
+                    <span className="pointer-events-none absolute left-2 top-1/2 z-10 -translate-y-1/2 text-2xl font-bold text-foreground">
+                      $
+                    </span>
                     <Input
                       type="number"
                       step="0.01"
                       min="0"
-                      className="text-2xl font-bold h-[1.875rem] py-0 pl-7 pr-2 w-full"
+                      className="h-[1.875rem] w-full py-0 pl-7 pr-2 text-2xl font-bold"
                       value={editableAverageCost}
-                      onChange={(e) => {
+                      onChange={e => {
                         setEditableAverageCost(e.target.value);
                       }}
                       onBlur={handleSaveAverages}
@@ -999,28 +1058,41 @@ export function UsageDataPage() {
                   </div>
                 ) : (
                   <div className="relative mt-1">
-                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-2xl font-bold text-foreground pointer-events-none z-10">$</span>
-                    <p className="text-2xl font-bold leading-[1.875rem] pl-7 pr-2 w-full border border-transparent">{averageCost.toFixed(2)}</p>
+                    <span className="pointer-events-none absolute left-2 top-1/2 z-10 -translate-y-1/2 text-2xl font-bold text-foreground">
+                      $
+                    </span>
+                    <p className="w-full border border-transparent pl-7 pr-2 text-2xl font-bold leading-[1.875rem]">
+                      {averageCost.toFixed(2)}
+                    </p>
                   </div>
                 )}
                 {isOverrideMode && isSavingAverages && (
-                  <p className="text-xs text-primary mt-1">Saving...</p>
+                  <p className="mt-1 text-xs text-primary">Saving...</p>
                 )}
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Annual kWh</p>
+                <p className="text-sm text-muted-foreground">
+                  Total Annual kWh
+                </p>
                 <p className="text-2xl font-bold">
                   {isOverrideMode && editableAverageKwh
                     ? (parseFloat(editableAverageKwh) * 12).toFixed(2)
-                    : monthlyData.reduce((sum, m) => sum + (m.kwh || 0), 0).toFixed(2)}
+                    : monthlyData
+                        .reduce((sum, m) => sum + (m.kwh || 0), 0)
+                        .toFixed(2)}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Annual Cost</p>
+                <p className="text-sm text-muted-foreground">
+                  Total Annual Cost
+                </p>
                 <p className="text-2xl font-bold">
-                  ${isOverrideMode && editableAverageCost
+                  $
+                  {isOverrideMode && editableAverageCost
                     ? (parseFloat(editableAverageCost) * 12).toFixed(2)
-                    : monthlyData.reduce((sum, m) => sum + (m.cost || 0), 0).toFixed(2)}
+                    : monthlyData
+                        .reduce((sum, m) => sum + (m.cost || 0), 0)
+                        .toFixed(2)}
                 </p>
               </div>
             </div>
@@ -1031,22 +1103,26 @@ export function UsageDataPage() {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left p-2 font-semibold">Month</th>
-                  <th className="text-right p-2 font-semibold">kWh</th>
-                  <th className="text-right p-2 font-semibold">Rate ($/kWh)</th>
-                  <th className="text-right p-2 font-semibold">Cost ($)</th>
-                  <th className="text-center p-2 font-semibold w-32">Actions</th>
+                  <th className="p-2 text-left font-semibold">Month</th>
+                  <th className="p-2 text-right font-semibold">kWh</th>
+                  <th className="p-2 text-right font-semibold">Rate ($/kWh)</th>
+                  <th className="p-2 text-right font-semibold">Cost ($)</th>
+                  <th className="w-32 p-2 text-center font-semibold">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {monthlyData.map((monthData, index) => {
-                  const rate = monthData.kwh && monthData.cost 
-                    ? monthData.cost / monthData.kwh 
-                    : currentPlan.ratePerKwh || 0;
-                  const calculatedCost = monthData.kwh && currentPlan.ratePerKwh
-                    ? monthData.kwh * currentPlan.ratePerKwh
-                    : monthData.cost;
-                  
+                  const rate =
+                    monthData.kwh && monthData.cost
+                      ? monthData.cost / monthData.kwh
+                      : currentPlan.ratePerKwh || 0;
+                  const calculatedCost =
+                    monthData.kwh && currentPlan.ratePerKwh
+                      ? monthData.kwh * currentPlan.ratePerKwh
+                      : monthData.cost;
+
                   return (
                     <tr
                       key={`${monthData.month}-${monthData.year}`}
@@ -1055,40 +1131,51 @@ export function UsageDataPage() {
                       <td className="p-2">
                         {monthData.month} {monthData.year}
                       </td>
-                      <td className="p-2 h-10">
+                      <td className="h-10 p-2">
                         {monthData.isEditing ? (
                           <Input
                             type="number"
                             step="0.01"
                             min="0"
-                            className="w-24 ml-auto h-8"
+                            className="ml-auto h-8 w-24"
                             value={monthData.editedKwh}
-                            onChange={(e) => updateRowField(index, 'editedKwh', e.target.value)}
+                            onChange={e =>
+                              updateRowField(index, 'editedKwh', e.target.value)
+                            }
                           />
                         ) : (
-                          <span className="block text-right w-24 ml-auto h-8 flex items-center justify-end border border-transparent rounded-md">
-                            {monthData.kwh !== null ? monthData.kwh.toFixed(2) : '—'}
+                          <span className="ml-auto block flex h-8 w-24 items-center justify-end rounded-md border border-transparent text-right">
+                            {monthData.kwh !== null
+                              ? monthData.kwh.toFixed(2)
+                              : '—'}
                           </span>
                         )}
                       </td>
-                      <td className="p-2 h-10">
-                        <span className="block text-right h-8 flex items-center justify-end">
+                      <td className="h-10 p-2">
+                        <span className="block flex h-8 items-center justify-end text-right">
                           {rate > 0 ? rate.toFixed(3) : '—'}
                         </span>
                       </td>
-                      <td className="p-2 h-10">
+                      <td className="h-10 p-2">
                         {monthData.isEditing ? (
                           <Input
                             type="number"
                             step="0.01"
                             min="0"
-                            className="w-24 ml-auto h-8"
+                            className="ml-auto h-8 w-24"
                             value={monthData.editedCost}
-                            onChange={(e) => updateRowField(index, 'editedCost', e.target.value)}
+                            onChange={e =>
+                              updateRowField(
+                                index,
+                                'editedCost',
+                                e.target.value
+                              )
+                            }
                           />
                         ) : (
-                          <span className="block text-right w-24 ml-auto h-8 flex items-center justify-end border border-transparent rounded-md">
-                            {calculatedCost !== null && calculatedCost !== undefined
+                          <span className="ml-auto block flex h-8 w-24 items-center justify-end rounded-md border border-transparent text-right">
+                            {calculatedCost !== null &&
+                            calculatedCost !== undefined
                               ? calculatedCost.toFixed(2)
                               : monthData.cost !== null
                                 ? monthData.cost.toFixed(2)
@@ -1096,15 +1183,15 @@ export function UsageDataPage() {
                           </span>
                         )}
                       </td>
-                      <td className="p-2 w-32 h-10">
-                        <div className="flex items-center justify-center gap-1 w-full min-w-[8rem] h-8">
+                      <td className="h-10 w-32 p-2">
+                        <div className="flex h-8 w-full min-w-[8rem] items-center justify-center gap-1">
                           {monthData.isEditing ? (
                             <>
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => saveRow(index)}
-                                className="flex-1 h-8"
+                                className="h-8 flex-1"
                               >
                                 Save
                               </Button>
@@ -1112,7 +1199,7 @@ export function UsageDataPage() {
                                 size="sm"
                                 variant="ghost"
                                 onClick={() => cancelEditRow(index)}
-                                className="flex-1 h-8"
+                                className="h-8 flex-1"
                               >
                                 Cancel
                               </Button>
@@ -1122,7 +1209,7 @@ export function UsageDataPage() {
                               size="sm"
                               variant="outline"
                               onClick={() => toggleEditRow(index)}
-                              className="w-full h-8"
+                              className="h-8 w-full"
                             >
                               Edit
                             </Button>
@@ -1145,9 +1232,10 @@ export function UsageDataPage() {
                   <td className="p-2 text-right">
                     {monthlyData
                       .reduce((sum, m) => {
-                        const cost = m.kwh && currentPlan.ratePerKwh
-                          ? m.kwh * currentPlan.ratePerKwh
-                          : m.cost || 0;
+                        const cost =
+                          m.kwh && currentPlan.ratePerKwh
+                            ? m.kwh * currentPlan.ratePerKwh
+                            : m.cost || 0;
                         return sum + cost;
                       }, 0)
                       .toFixed(2)}
@@ -1169,7 +1257,10 @@ export function UsageDataPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'upload' | 'manual')}>
+          <Tabs
+            value={activeTab}
+            onValueChange={v => setActiveTab(v as 'upload' | 'manual')}
+          >
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="upload">Upload Bill</TabsTrigger>
               <TabsTrigger value="manual">Manual Entry</TabsTrigger>
@@ -1186,18 +1277,28 @@ export function UsageDataPage() {
                 <AlertDescription className="space-y-3">
                   <p className="font-semibold">✓ Data saved successfully!</p>
                   <div className="mt-2 rounded-md bg-muted p-3 text-sm">
-                    <p className="font-medium mb-2">Summary:</p>
+                    <p className="mb-2 font-medium">Summary:</p>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <span className="text-muted-foreground">Total Annual:</span>{' '}
+                        <span className="text-muted-foreground">
+                          Total Annual:
+                        </span>{' '}
                         <span className="font-semibold">
-                          {extractedData.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'} kWh
+                          {extractedData.aggregatedStats?.totalKwh?.toFixed(
+                            0
+                          ) || 'N/A'}{' '}
+                          kWh
                         </span>
                       </div>
                       <div>
-                        <span className="text-muted-foreground">Avg Monthly:</span>{' '}
+                        <span className="text-muted-foreground">
+                          Avg Monthly:
+                        </span>{' '}
                         <span className="font-semibold">
-                          {extractedData.aggregatedStats?.averageMonthlyKwh?.toFixed(0) || 'N/A'} kWh
+                          {extractedData.aggregatedStats?.averageMonthlyKwh?.toFixed(
+                            0
+                          ) || 'N/A'}{' '}
+                          kWh
                         </span>
                       </div>
                     </div>
@@ -1212,29 +1313,33 @@ export function UsageDataPage() {
             {success && !extractedData && (
               <Alert className="mt-4">
                 <AlertDescription>
-                  <p className="font-semibold">✓ Data saved successfully! Redirecting...</p>
+                  <p className="font-semibold">
+                    ✓ Data saved successfully! Redirecting...
+                  </p>
                 </AlertDescription>
               </Alert>
             )}
 
-            <TabsContent value="upload" className="space-y-4 mt-4">
+            <TabsContent value="upload" className="mt-4 space-y-4">
               <div
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                className={`rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
                   isDragging
                     ? 'border-primary bg-primary/5'
                     : 'border-muted-foreground/25 hover:border-primary/50'
                 }`}
               >
-                <div className="mx-auto h-12 w-12 text-muted-foreground mb-4 flex items-center justify-center text-4xl">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center text-4xl text-muted-foreground">
                   📄
                 </div>
-                <p className="text-lg font-medium mb-2">
-                  {isDragging ? 'Drop your file here' : 'Drag and drop your energy bill here'}
+                <p className="mb-2 text-lg font-medium">
+                  {isDragging
+                    ? 'Drop your file here'
+                    : 'Drag and drop your energy bill here'}
                 </p>
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="mb-4 text-sm text-muted-foreground">
                   or click to browse files
                 </p>
                 <div className="flex flex-col items-center gap-2">
@@ -1242,7 +1347,7 @@ export function UsageDataPage() {
                     id="file"
                     type="file"
                     accept=".csv,.pdf,.png,.jpg,.jpeg,.txt"
-                    onChange={(e) => {
+                    onChange={e => {
                       const selectedFile = e.target.files?.[0];
                       if (selectedFile) {
                         handleFileChange(selectedFile);
@@ -1260,7 +1365,7 @@ export function UsageDataPage() {
                     Browse Files
                   </Button>
                   {file && (
-                    <div className="mt-4 rounded-md border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-950 w-full max-w-md">
+                    <div className="mt-4 w-full max-w-md rounded-md border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-950">
                       <p className="text-sm font-medium text-green-800 dark:text-green-200">
                         ✓ Selected: {file.name}
                       </p>
@@ -1270,7 +1375,7 @@ export function UsageDataPage() {
                     </div>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground mt-4">
+                <p className="mt-4 text-xs text-muted-foreground">
                   Supported formats: PDF, PNG, JPG, CSV, TXT
                 </p>
               </div>
@@ -1284,16 +1389,20 @@ export function UsageDataPage() {
               </Button>
             </TabsContent>
 
-            <TabsContent value="manual" className="space-y-4 mt-4">
+            <TabsContent value="manual" className="mt-4 space-y-4">
               <form onSubmit={handleManualSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="selectedMonth">Month & Year</Label>
                     <select
                       id="selectedMonth"
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      value={selectedMonth && selectedYear ? `${selectedMonth}-${selectedYear}` : ''}
-                      onChange={(e) => {
+                      value={
+                        selectedMonth && selectedYear
+                          ? `${selectedMonth}-${selectedYear}`
+                          : ''
+                      }
+                      onChange={e => {
                         const [month, year] = e.target.value.split('-');
                         setSelectedMonth(month);
                         setSelectedYear(parseInt(year, 10));
@@ -1302,8 +1411,11 @@ export function UsageDataPage() {
                       required
                     >
                       <option value="">Select month...</option>
-                      {getAvailableMonths().map((m) => (
-                        <option key={`${m.month}-${m.year}`} value={`${m.month}-${m.year}`}>
+                      {getAvailableMonths().map(m => (
+                        <option
+                          key={`${m.month}-${m.year}`}
+                          value={`${m.month}-${m.year}`}
+                        >
                           {m.month} {m.year}
                         </option>
                       ))}
@@ -1319,7 +1431,7 @@ export function UsageDataPage() {
                       min="0"
                       placeholder="e.g., 500"
                       value={manualKwh}
-                      onChange={(e) => setManualKwh(e.target.value)}
+                      onChange={e => setManualKwh(e.target.value)}
                       disabled={isSubmittingManual || success}
                       required
                     />
@@ -1334,16 +1446,21 @@ export function UsageDataPage() {
                       min="0"
                       placeholder="e.g., 60.00"
                       value={manualCost}
-                      onChange={(e) => setManualCost(e.target.value)}
+                      onChange={e => setManualCost(e.target.value)}
                       disabled={isSubmittingManual || success}
                     />
                   </div>
                 </div>
 
-                <div className="flex justify-end pt-4 border-t">
+                <div className="flex justify-end border-t pt-4">
                   <Button
                     type="submit"
-                    disabled={isSubmittingManual || success || !selectedMonth || !manualKwh}
+                    disabled={
+                      isSubmittingManual ||
+                      success ||
+                      !selectedMonth ||
+                      !manualKwh
+                    }
                   >
                     {isSubmittingManual ? 'Saving...' : 'Add to Table'}
                   </Button>
@@ -1355,7 +1472,8 @@ export function UsageDataPage() {
                 <Alert className="mt-4 border-yellow-500 bg-yellow-50">
                   <AlertDescription className="space-y-3">
                     <p className="font-semibold text-yellow-800">
-                      Data already exists for {pendingManualEntry.month} {pendingManualEntry.year}
+                      Data already exists for {pendingManualEntry.month}{' '}
+                      {pendingManualEntry.year}
                     </p>
                     <p className="text-sm text-yellow-700">
                       Do you want to override the existing data?

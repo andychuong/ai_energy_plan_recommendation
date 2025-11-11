@@ -60,8 +60,10 @@ export function PlanComparisonPage() {
           apiClient.getEnergyPlans(profile?.state),
           apiClient.getRecommendationHistory(userId),
         ]);
-        const plansMap = new Map(availablePlans.map(plan => [plan.planId, plan]));
-        
+        const plansMap = new Map(
+          availablePlans.map(plan => [plan.planId, plan])
+        );
+
         // Create a map of planId to recommendation for quick lookup
         const recommendationsMap = new Map<string, Recommendation>();
         for (const rec of recommendationHistory) {
@@ -72,8 +74,7 @@ export function PlanComparisonPage() {
 
         // Calculate costs for each plan
         const annualKwh =
-          usageData?.totalAnnualKwh ||
-          (usageData?.averageMonthlyKwh || 0) * 12;
+          usageData?.totalAnnualKwh || (usageData?.averageMonthlyKwh || 0) * 12;
         const currentAnnualCost =
           usageData?.aggregatedStats?.totalCost ||
           (usageData?.aggregatedStats?.averageMonthlyCost || 0) * 12;
@@ -125,6 +126,7 @@ export function PlanComparisonPage() {
     if (userId) {
       loadPlans();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, userId, usageData]);
 
   if (isLoading) {
@@ -333,9 +335,7 @@ export function PlanComparisonPage() {
                 {/* Contract Length */}
                 <tr className="border-b">
                   <td className="p-4 font-medium">Contract Length</td>
-                  <td className="p-4 text-center text-muted-foreground">
-                    N/A
-                  </td>
+                  <td className="p-4 text-center text-muted-foreground">N/A</td>
                   {plans.map(comparisonPlan => (
                     <td
                       key={comparisonPlan.plan.planId}
@@ -384,7 +384,9 @@ export function PlanComparisonPage() {
                       className="p-4 text-center"
                     >
                       {comparisonPlan.plan.earlyTerminationFee
-                        ? formatCurrency(comparisonPlan.plan.earlyTerminationFee)
+                        ? formatCurrency(
+                            comparisonPlan.plan.earlyTerminationFee
+                          )
                         : 'None'}
                     </td>
                   ))}
@@ -393,9 +395,7 @@ export function PlanComparisonPage() {
                 {/* Supplier Rating */}
                 <tr className="border-b">
                   <td className="p-4 font-medium">Supplier Rating</td>
-                  <td className="p-4 text-center text-muted-foreground">
-                    N/A
-                  </td>
+                  <td className="p-4 text-center text-muted-foreground">N/A</td>
                   {plans.map(comparisonPlan => (
                     <td
                       key={comparisonPlan.plan.planId}
@@ -460,12 +460,14 @@ export function PlanComparisonPage() {
                 </tr>
 
                 {/* Risk Flags */}
-                {plans.some(p => p.recommendation?.riskFlags && p.recommendation.riskFlags.length > 0) && (
+                {plans.some(
+                  p =>
+                    p.recommendation?.riskFlags &&
+                    p.recommendation.riskFlags.length > 0
+                ) && (
                   <tr className="border-b">
                     <td className="p-4 font-medium">Risk Flags</td>
-                    <td className="p-4 text-center text-muted-foreground">
-                      —
-                    </td>
+                    <td className="p-4 text-center text-muted-foreground">—</td>
                     {plans.map(comparisonPlan => (
                       <td
                         key={comparisonPlan.plan.planId}
@@ -522,7 +524,7 @@ export function PlanComparisonPage() {
                       {comparisonPlan.recommendation.explanation}
                     </p>
                   ) : (
-                    <p className="text-sm text-muted-foreground italic">
+                    <p className="text-sm italic text-muted-foreground">
                       No explanation available
                     </p>
                   )}
@@ -558,7 +560,8 @@ export function PlanComparisonPage() {
                 });
 
                 // Update recommendation history to mark as selected
-                const recommendationHistory = await apiClient.getRecommendationHistory(userId);
+                const recommendationHistory =
+                  await apiClient.getRecommendationHistory(userId);
                 const relevantRec = recommendationHistory.find(
                   r => r.planId === comparisonPlan.plan.planId
                 );
@@ -567,12 +570,16 @@ export function PlanComparisonPage() {
                   // This would need to be added or handled differently
                 }
 
-                setSuccess(`Plan "${comparisonPlan.plan.planName}" selected successfully!`);
+                setSuccess(
+                  `Plan "${comparisonPlan.plan.planName}" selected successfully!`
+                );
                 setTimeout(() => {
                   navigate('/dashboard');
                 }, 2000);
               } catch (err) {
-                setError(err instanceof Error ? err.message : 'Failed to select plan');
+                setError(
+                  err instanceof Error ? err.message : 'Failed to select plan'
+                );
               } finally {
                 setIsSelecting(null);
               }
@@ -580,11 +587,12 @@ export function PlanComparisonPage() {
             disabled={isSelecting !== null}
             className="min-w-[200px]"
           >
-            {isSelecting === comparisonPlan.plan.planId ? 'Selecting...' : `Select Plan ${index + 1}`}
+            {isSelecting === comparisonPlan.plan.planId
+              ? 'Selecting...'
+              : `Select Plan ${index + 1}`}
           </Button>
         ))}
       </div>
     </div>
   );
 }
-

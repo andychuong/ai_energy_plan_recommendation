@@ -16,25 +16,29 @@ export function useUserProfile(userId: string | undefined) {
   });
 
   const mutation = useMutation({
-    mutationFn: async (data: { 
-      userId: string; 
-      profile: { 
-        state?: string; 
-        address?: any;
+    mutationFn: async (data: {
+      userId: string;
+      profile: {
+        state?: string;
+        address?: Record<string, unknown>;
         useCustomAverages?: boolean;
         customAverageKwh?: number;
         customAverageCost?: number;
-      } 
+      };
     }) => {
       await apiClient.saveUserProfile(data.userId, data.profile);
       return data.profile;
     },
     onSuccess: (_, variables) => {
       // Invalidate user profile query
-      queryClient.invalidateQueries({ queryKey: ['userProfile', variables.userId] });
+      queryClient.invalidateQueries({
+        queryKey: ['userProfile', variables.userId],
+      });
       queryClient.invalidateQueries({ queryKey: ['userProfile'] });
       // Also invalidate usage data query since it depends on user profile (for custom averages)
-      queryClient.invalidateQueries({ queryKey: ['usageData', variables.userId] });
+      queryClient.invalidateQueries({
+        queryKey: ['usageData', variables.userId],
+      });
       queryClient.invalidateQueries({ queryKey: ['usageData'] });
     },
   });
@@ -48,4 +52,3 @@ export function useUserProfile(userId: string | undefined) {
     isSaving: mutation.isPending,
   };
 }
-
