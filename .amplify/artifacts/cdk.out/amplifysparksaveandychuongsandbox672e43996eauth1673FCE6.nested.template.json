@@ -294,7 +294,7 @@
      "GOOGLE_CLIENT_ID",
      "GOOGLE_CLIENT_SECRET"
     ],
-    "secretLastUpdated": 1762811828642
+    "secretLastUpdated": 1762817105390
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
@@ -316,11 +316,17 @@
     "AdminCreateUserConfig": {
      "AllowAdminCreateUserOnly": false
     },
-    "AutoVerifiedAttributes": [
-     "email"
-    ],
+    "AutoVerifiedAttributes": [],
     "EmailVerificationMessage": "The verification code to your new account is {####}",
     "EmailVerificationSubject": "Verify your new account",
+    "LambdaConfig": {
+     "PreSignUp": {
+      "Fn::GetAtt": [
+       "autoconfirmuserlambda626CB722",
+       "Arn"
+      ]
+     }
+    },
     "Policies": {
      "PasswordPolicy": {
       "MinimumLength": 8,
@@ -339,9 +345,7 @@
     ],
     "SmsVerificationMessage": "The verification code to your new account is {####}",
     "UserAttributeUpdateSettings": {
-     "AttributesRequireVerificationBeforeUpdate": [
-      "email"
-     ]
+     "AttributesRequireVerificationBeforeUpdate": []
     },
     "UserPoolTags": {
      "amplify:deployment-type": "sandbox",
@@ -430,7 +434,9 @@
     ],
     "CallbackURLs": [
      "http://localhost:3000/",
-     "http://localhost:3000/auth/callback"
+     "http://localhost:3000/auth/callback",
+     "https://main.d2rn94kbvpfx34.amplifyapp.com/",
+     "https://main.d2rn94kbvpfx34.amplifyapp.com/auth/callback"
     ],
     "ExplicitAuthFlows": [
      "ALLOW_CUSTOM_AUTH",
@@ -438,7 +444,8 @@
      "ALLOW_REFRESH_TOKEN_AUTH"
     ],
     "LogoutURLs": [
-     "http://localhost:3000/"
+     "http://localhost:3000/",
+     "https://main.d2rn94kbvpfx34.amplifyapp.com/"
     ],
     "PreventUserExistenceErrors": "ENABLED",
     "SupportedIdentityProviders": [
@@ -660,10 +667,141 @@
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifyAuth/IdentityPoolRoleAttachment"
    }
   },
+  "autoconfirmuserlambdaServiceRoleA21ABFE9": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "auto-confirm-user"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/auth/auto-confirm-user-lambda/ServiceRole/Resource"
+   }
+  },
+  "autoconfirmuserlambda626CB722": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "x86_64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "33fe7020931f9863568fb6c319a545480c61881c45a740186edf9328bd03f07d.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "AMPLIFY_SSM_ENV_CONFIG": "{}"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "index.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "autoconfirmuserlambdaServiceRoleA21ABFE9",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "auto-confirm-user"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ],
+    "Timeout": 3
+   },
+   "DependsOn": [
+    "autoconfirmuserlambdaServiceRoleA21ABFE9"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/auth/auto-confirm-user-lambda/Resource",
+    "aws:asset:path": "asset.33fe7020931f9863568fb6c319a545480c61881c45a740186edf9328bd03f07d",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "autoconfirmuserlambdaCognitoInvoke61740B20": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "autoconfirmuserlambda626CB722",
+      "Arn"
+     ]
+    },
+    "Principal": "cognito-idp.amazonaws.com",
+    "SourceArn": {
+     "Fn::GetAtt": [
+      "amplifyAuthUserPool4BA7F805",
+      "Arn"
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/auth/auto-confirm-user-lambda/CognitoInvoke"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/3VRy26EMAz8lt6Du2X7A7tUrXpZIaqeUTa4NBBiKQ5brRD/3vBKufQ0M57YscYppOkRDg/yhxNVtYnRVxguyB6rDy9VK4JRDkZ210qWlipsGC4zvPZWeU1WaNnBUJBBkX3ZGXMyWt0nubBR8LGUzOgZThMEDedetejPklEs42EIDXHqRkahqLbaEwyfjC4nMtPgyDfyQp3Udm+tlU2+V2i99vfc0U1X6N6I6mXn/17E1szo4Oyf/lVi07rYXk9hnHyI8bsLxXEUBTL1TqGYUwgB19rWQvXsqSvdajLEBbLZiV1TvisfxXQMaPjxlj7D0yGcsGGtE9eH3zuEYsFfNdNNFN8BAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/3VRwU7DMAz9Fu6ZGR0/sBWBuEzTEOcqS03x1sRSnA5NVf+dpO1CL5z8np/tOM8FFMUG1g/6R1amvqxaOkG/RwlYfwRtLioKVd9qe6p15bjGs8B+DK+dM4HYKdIW+iO3qMovN8YDt2RuiU5oULKptAgGgW0KkcOuMxcMOy2opvHQx4Y8NYM0Bb0lkcgGZbhxFBj6T0F/YG5TQcZ38MJWk1tKc+ZO32t0gcLt4PlKNfo35mb6wX8VubVsKSrL0r9MbpoXW/JkzTZEU79tTA6DOqJw5w2q0ZNod0OuUaaTwLbysyiQFyhHJXclt2c8qHQaOMvjtXiGp3U86FmIVr6Lr1uE4xR/AccnGmbtAQAA"
    },
    "Metadata": {
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/auth/CDKMetadata/Default"
@@ -966,6 +1104,11 @@
   "amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthunauthenticatedUserRole8B78DAB5Ref": {
    "Value": {
     "Ref": "amplifyAuthunauthenticatedUserRole2B524D9E"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996eauthautoconfirmuserlambda040D2C15Ref": {
+   "Value": {
+    "Ref": "autoconfirmuserlambda626CB722"
    }
   }
  }

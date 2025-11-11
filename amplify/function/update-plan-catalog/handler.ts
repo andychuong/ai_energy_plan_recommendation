@@ -1,6 +1,6 @@
 import type { Handler } from 'aws-lambda';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../data/resource';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
 
 /**
  * Plan Catalog Update Lambda Function
@@ -11,10 +11,18 @@ import type { Schema } from '../../data/resource';
  * - Generates realistic plans based on market rates
  */
 
-// Generate client for DynamoDB access
-const client = generateClient<Schema>({
-  authMode: 'iam',
-});
+// Initialize DynamoDB client
+// The backend grants this function access to the data resource via allow.resource()
+// This allows the function to access DynamoDB tables directly
+// IMPORTANT: Lambda functions automatically get AWS_REGION from the runtime environment
+// If not set, default to us-east-1 where the table is located
+const awsRegion = process.env.AWS_REGION || 'us-east-1';
+console.log(`[init] Initializing DynamoDB client`);
+console.log(`[init] AWS_REGION from env: ${process.env.AWS_REGION || 'not set'}`);
+console.log(`[init] Using region: ${awsRegion}`);
+const dynamoClient = DynamoDBDocumentClient.from(new DynamoDBClient({
+  region: awsRegion,
+}));
 
 interface UpdatePlanCatalogEvent {
   sources?: string[]; // ['eia', 'openei']
@@ -275,6 +283,37 @@ function generatePlansFromRate(
 }
 
 /**
+ * Get the DynamoDB table name for EnergyPlan
+ * Table name pattern: EnergyPlan-{ApiId}-NONE
+ */
+function getTableName(): string {
+  // Get table name from environment variable (set by backend.ts)
+  const tableName = process.env.ENERGY_PLAN_TABLE_NAME;
+  if (tableName) {
+    console.log(`[getTableName] Using table name from environment: ${tableName}`);
+    return tableName;
+  }
+  
+  // Fallback: Extract API ID from GraphQL endpoint and construct table name
+  // Pattern: EnergyPlan-{ApiId}-NONE
+  const endpoint = process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT || '';
+  const apiIdMatch = endpoint.match(/https:\/\/([^.]+)\.appsync-api/);
+  const graphqlApiId = apiIdMatch?.[1] || '';
+  
+  if (graphqlApiId) {
+    const constructedTableName = `EnergyPlan-${graphqlApiId}-NONE`;
+    console.log(`[getTableName] Constructed table name from GraphQL endpoint: ${constructedTableName}`);
+    return constructedTableName;
+  }
+  
+  // Last resort: throw an error if we can't determine the table name
+  throw new Error(
+    'Unable to determine table name. ENERGY_PLAN_TABLE_NAME environment variable is not set and ' +
+    'AMPLIFY_DATA_GRAPHQL_ENDPOINT is not available.'
+  );
+}
+
+/**
  * Store plans in DynamoDB
  */
 async function storePlans(plans: Array<{
@@ -291,55 +330,103 @@ async function storePlans(plans: Array<{
 }>): Promise<number> {
   let stored = 0;
   const now = new Date().toISOString();
+  const tableName = getTableName();
+  const region = process.env.AWS_REGION || 'us-east-1';
+  
+  console.log(`[storePlans] Attempting to store ${plans.length} plans`);
+  console.log(`[storePlans] Table name: ${tableName}`);
+  console.log(`[storePlans] Region: ${region}`);
+  console.log(`[storePlans] DynamoDB client region: ${dynamoClient.config.region || 'not set'}`);
 
   for (const plan of plans) {
     try {
-      // Check if plan already exists by querying with planId
-      // Note: Amplify uses 'id' as primary key, but we store planId as a field
-      const existingPlans = await client.models.EnergyPlan.list({
-        filter: {
-          planId: { eq: plan.planId },
-        },
-      });
+      // Generate a deterministic ID from planId (or use planId as ID)
+      // Since planId is unique, we can use it as the primary key
+      const id = plan.planId;
+      
+      console.log(`[storePlans] Processing plan: ${plan.planId} (id: ${id})`);
+
+      // Check if plan already exists by getting item with id
+      console.log(`[storePlans] Checking if plan exists: ${id}`);
+      const getResult = await dynamoClient.send(
+        new GetCommand({
+          TableName: tableName,
+          Key: { id },
+        })
+      );
+      console.log(`[storePlans] GetItem result: ${getResult.Item ? 'exists' : 'not found'}`);
 
       const planData = {
+        id,
         planId: plan.planId,
         supplierName: plan.supplierName,
         planName: plan.planName,
         ratePerKwh: plan.ratePerKwh,
         contractType: plan.contractType,
-        contractLengthMonths: plan.contractLengthMonths,
-        renewablePercentage: plan.renewablePercentage,
-        earlyTerminationFee: plan.earlyTerminationFee,
-        supplierRating: plan.supplierRating,
+        contractLengthMonths: plan.contractLengthMonths ?? null,
+        renewablePercentage: plan.renewablePercentage ?? null,
+        earlyTerminationFee: plan.earlyTerminationFee ?? null,
+        supplierRating: plan.supplierRating ?? null,
         state: plan.state,
+        utilityTerritory: null,
         updatedAt: now,
       };
 
-      const existing = existingPlans.data?.[0];
+      const existing = getResult.Item;
 
       if (!existing) {
         // Create new plan
-        await client.models.EnergyPlan.create({
-          ...planData,
-          createdAt: now,
-        });
+        console.log(`[storePlans] Creating new plan: ${plan.planId}`);
+        await dynamoClient.send(
+          new PutCommand({
+            TableName: tableName,
+            Item: {
+              ...planData,
+              createdAt: now,
+            },
+          })
+        );
+        console.log(`[storePlans] Successfully created plan: ${plan.planId}`);
         stored++;
       } else {
-        // Update existing plan (use the id from existing plan)
-        await client.models.EnergyPlan.update({
-          id: existing.id,
-          ...planData,
-          createdAt: existing.createdAt || now,
-        });
+        // Update existing plan
+        console.log(`[storePlans] Updating existing plan: ${plan.planId}`);
+        await dynamoClient.send(
+          new UpdateCommand({
+            TableName: tableName,
+            Key: { id },
+            UpdateExpression: 'SET planId = :planId, supplierName = :supplierName, planName = :planName, ratePerKwh = :ratePerKwh, contractType = :contractType, contractLengthMonths = :contractLengthMonths, renewablePercentage = :renewablePercentage, earlyTerminationFee = :earlyTerminationFee, supplierRating = :supplierRating, state = :state, updatedAt = :updatedAt',
+            ExpressionAttributeValues: {
+              ':planId': plan.planId,
+              ':supplierName': plan.supplierName,
+              ':planName': plan.planName,
+              ':ratePerKwh': plan.ratePerKwh,
+              ':contractType': plan.contractType,
+              ':contractLengthMonths': plan.contractLengthMonths ?? null,
+              ':renewablePercentage': plan.renewablePercentage ?? null,
+              ':earlyTerminationFee': plan.earlyTerminationFee ?? null,
+              ':supplierRating': plan.supplierRating ?? null,
+              ':state': plan.state,
+              ':updatedAt': now,
+            },
+          })
+        );
+        console.log(`[storePlans] Successfully updated plan: ${plan.planId}`);
         stored++;
       }
     } catch (error) {
-      console.error(`Error storing plan ${plan.planId}:`, error);
+      console.error(`[storePlans] Error storing plan ${plan.planId}:`, error);
+      console.error(`[storePlans] Error details:`, {
+        message: error instanceof Error ? error.message : String(error),
+        name: error instanceof Error ? error.name : 'Unknown',
+        tableName,
+        region: process.env.AWS_REGION || 'us-east-1',
+      });
       // Continue with next plan even if one fails
     }
   }
 
+  console.log(`[storePlans] Completed: stored ${stored} out of ${plans.length} plans`);
   return stored;
 }
 
@@ -347,8 +434,18 @@ export const handler: Handler<
   UpdatePlanCatalogEvent,
   UpdatePlanCatalogResponse
 > = async (event) => {
+  console.log(`[handler] Starting plan catalog update`);
+  console.log(`[handler] Event:`, JSON.stringify(event, null, 2));
+  console.log(`[handler] Environment variables:`, {
+    AWS_REGION: process.env.AWS_REGION,
+    AMPLIFY_DATA_GRAPHQL_ENDPOINT: process.env.AMPLIFY_DATA_GRAPHQL_ENDPOINT?.substring(0, 50) + '...',
+    ENERGY_PLAN_TABLE_NAME: process.env.ENERGY_PLAN_TABLE_NAME,
+  });
+  
   try {
     const { sources = ['eia', 'openei'], states = ['CA', 'TX', 'NY', 'FL'] } = event;
+    console.log(`[handler] Processing states: ${states.join(', ')}`);
+    console.log(`[handler] Using sources: ${sources.join(', ')}`);
 
     let totalPlansStored = 0;
 

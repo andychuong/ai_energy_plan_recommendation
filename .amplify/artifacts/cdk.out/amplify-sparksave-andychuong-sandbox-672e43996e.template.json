@@ -49,6 +49,12 @@
    "stackOutputs": [
     "definedFunctions"
    ]
+  },
+  "AWS::Amplify::Custom": {
+   "version": "1",
+   "stackOutputs": [
+    "customOutputs"
+   ]
   }
  },
  "Outputs": {
@@ -99,7 +105,7 @@
    "Value": "[\"email\"]"
   },
   "verificationMechanisms": {
-   "Value": "[\"email\"]"
+   "Value": "[]"
   },
   "passwordPolicyMinLength": {
    "Value": "8"
@@ -140,10 +146,10 @@
    "Value": "[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"]"
   },
   "oauthRedirectSignIn": {
-   "Value": "http://localhost:3000/,http://localhost:3000/auth/callback"
+   "Value": "http://localhost:3000/,http://localhost:3000/auth/callback,https://main.d2rn94kbvpfx34.amplifyapp.com/,https://main.d2rn94kbvpfx34.amplifyapp.com/auth/callback"
   },
   "oauthRedirectSignOut": {
-   "Value": "http://localhost:3000/"
+   "Value": "http://localhost:3000/,https://main.d2rn94kbvpfx34.amplifyapp.com/"
   },
   "oauthResponseType": {
    "Value": "code"
@@ -232,6 +238,27 @@
       {
        "Fn::GetAtt": [
         "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambda2C731F47Ref"
+       ]
+      },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaF7BCE361Ref"
+       ]
+      },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambda191AE3A3Ref"
+       ]
+      },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
         "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionnormalizedatalambda6A866DEFRef"
        ]
       },
@@ -240,13 +267,6 @@
        "Fn::GetAtt": [
         "function1351588B",
         "Outputs.amplifysparksaveandychuongsandbox672e43996efunctiongeneraterecommendationslambda87A653B3Ref"
-       ]
-      },
-      "\",\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambda2C731F47Ref"
        ]
       },
       "\",\"",
@@ -263,7 +283,59 @@
         "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaF8588808Ref"
        ]
       },
+      "\",\"",
+      {
+       "Fn::GetAtt": [
+        "auth179371D7",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996eauthautoconfirmuserlambda040D2C15Ref"
+       ]
+      },
       "\"]"
+     ]
+    ]
+   }
+  },
+  "customOutputs": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "{\"custom\":{\"generateRecommendationsFunction\":{\"url\":\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctiongeneraterecommendationslambdaFunctionUrlEA2980EEFunctionUrl"
+       ]
+      },
+      "\"},\"readStatementFunction\":{\"url\":\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaFunctionUrl910E4354FunctionUrl"
+       ]
+      },
+      "\"},\"saveCurrentPlanFunction\":{\"url\":\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaFunctionUrl428B2346FunctionUrl"
+       ]
+      },
+      "\"},\"saveUsageDataFunction\":{\"url\":\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaFunctionUrlC9C7406EFunctionUrl"
+       ]
+      },
+      "\"},\"updatePlanCatalogFunction\":{\"url\":\"",
+      {
+       "Fn::GetAtt": [
+        "function1351588B",
+        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaFunctionUrlB93EE404FunctionUrl"
+       ]
+      },
+      "\"}},\"version\":\"1.4\"}"
      ]
     ]
    }
@@ -299,7 +371,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/cedb04710d7d0ae56e36110c10ebd464cbd82f658d994104dc5c62c23de52929.json"
+       "/c5229b81e0e80da35a9986a71e6a2e8d73d69d524226bb0c9d28523d876cac4f.json"
       ]
      ]
     }
@@ -339,6 +411,24 @@
        "auth179371D7",
        "Outputs.amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthIdentityPool4815BE49Ref"
       ]
+     },
+     "referencetoamplifysparksaveandychuongsandbox672e43996efunctionNestedStackfunctionNestedStackResource98F2C9B7Outputsamplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaServiceRole18F8565BRef": {
+      "Fn::GetAtt": [
+       "function1351588B",
+       "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaServiceRole18F8565BRef"
+      ]
+     },
+     "referencetoamplifysparksaveandychuongsandbox672e43996efunctionNestedStackfunctionNestedStackResource98F2C9B7Outputsamplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaServiceRole302894D2Ref": {
+      "Fn::GetAtt": [
+       "function1351588B",
+       "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaServiceRole302894D2Ref"
+      ]
+     },
+     "referencetoamplifysparksaveandychuongsandbox672e43996efunctionNestedStackfunctionNestedStackResource98F2C9B7Outputsamplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaServiceRoleF5200FAERef": {
+      "Fn::GetAtt": [
+       "function1351588B",
+       "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaServiceRoleF5200FAERef"
+      ]
      }
     },
     "Tags": [
@@ -367,7 +457,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/0842a5b0b43729cb59fa6677d53b76107b7b1511b0e10c830ca10ea3abebaac7.json"
+       "/9285ed484c73468c36de7e44512bf961cb531cd8927129cfb15a904ad8d7c9ff.json"
       ]
      ]
     }
@@ -409,7 +499,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/63956de4f01e41f09c87a4375bfa807ad9cc327653ef7aa73dbb1807da525606.json"
+       "/a53262870bfcb9f1c394ae7ec3be9285345555a6d6a1891a9fd568345f21fd4c.json"
       ]
      ]
     }

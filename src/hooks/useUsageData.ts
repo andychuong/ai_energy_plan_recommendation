@@ -11,17 +11,38 @@ export function useUsageData(userId: string | undefined) {
       if (!userId) {
         throw new Error('User ID is required');
       }
-      return apiClient.getUsageData(userId);
+      console.log('[useUsageData] Fetching usage data for userId:', userId);
+      const data = await apiClient.getUsageData(userId);
+      console.log('[useUsageData] Fetched usage data:', {
+        averageMonthlyKwh: data.aggregatedStats?.averageMonthlyKwh,
+        averageMonthlyCost: data.aggregatedStats?.averageMonthlyCost,
+        totalKwh: data.aggregatedStats?.totalKwh,
+        totalCost: data.aggregatedStats?.totalCost,
+      });
+      return data;
     },
     enabled: !!userId,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    staleTime: 0, // Always consider data stale to ensure fresh data
+    gcTime: 0, // Don't cache data - always fetch fresh (React Query v5)
   });
 
   const mutation = useMutation({
     mutationFn: async (data: { userId: string; usageData: UsageData }) => {
-      // TODO: Implement upload endpoint when backend is ready
-      return Promise.resolve(data.usageData);
+      await apiClient.saveUsageData(data.userId, {
+        usagePoints: data.usageData.usagePoints,
+        totalAnnualKwh: data.usageData.totalAnnualKwh,
+        averageMonthlyKwh: data.usageData.averageMonthlyKwh,
+        peakMonthKwh: data.usageData.peakMonthKwh,
+        peakMonth: data.usageData.peakMonth,
+      });
+      return data.usageData;
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
+      // Invalidate queries for this specific user
+      queryClient.invalidateQueries({ queryKey: ['usageData', variables.userId] });
+      // Also invalidate all usage data queries
       queryClient.invalidateQueries({ queryKey: ['usageData'] });
     },
   });
@@ -32,5 +53,6 @@ export function useUsageData(userId: string | undefined) {
     error: query.error,
     uploadUsageData: mutation.mutate,
     isUploading: mutation.isPending,
+    refetch: query.refetch,
   };
 }

@@ -27,8 +27,8 @@ export function Header() {
               <Link to="/dashboard">
                 <Button variant="ghost">Dashboard</Button>
               </Link>
-              <Link to="/upload">
-                <Button variant="ghost">Upload Data</Button>
+              <Link to="/usage-data">
+                <Button variant="ghost">Usage Data</Button>
               </Link>
               <Link to="/recommendations">
                 <Button variant="ghost">Recommendations</Button>

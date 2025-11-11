@@ -5,9 +5,10 @@ import { Layout } from './components/layout/Layout';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
 import { Dashboard } from './pages/Dashboard';
-import { UploadPage } from './pages/UploadPage';
+import { UsageDataPage } from './pages/UsageDataPage';
 import { PreferencesPage } from './pages/PreferencesPage';
 import { RecommendationsPage } from './pages/RecommendationsPage';
+import { PlanComparisonPage } from './pages/PlanComparisonPage';
 import { SignIn } from './components/auth/SignIn';
 
 const queryClient = new QueryClient({
@@ -38,10 +39,19 @@ function App() {
                 }
               />
               <Route
+                path="/usage-data"
+                element={
+                  <ProtectedRoute>
+                    <UsageDataPage />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Legacy route redirect */}
+              <Route
                 path="/upload"
                 element={
                   <ProtectedRoute>
-                    <UploadPage />
+                    <UsageDataPage />
                   </ProtectedRoute>
                 }
               />
@@ -58,6 +68,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <RecommendationsPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/compare"
+                element={
+                  <ProtectedRoute>
+                    <PlanComparisonPage />
                   </ProtectedRoute>
                 }
               />

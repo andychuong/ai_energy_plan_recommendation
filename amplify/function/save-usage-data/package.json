@@ -1,0 +1,11 @@
+{
+  "name": "save-usage-data",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@aws-amplify/backend": "^1.0.0",
+    "@aws-amplify/backend-cli": "^1.0.0",
+    "aws-lambda": "^1.0.0"
+  }
+}
+

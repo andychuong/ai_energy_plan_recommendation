@@ -1,0 +1,11 @@
+Account Number,Customer Name,Service Address,City,State,ZIP,Utility Name,Supplier Name,Plan Name,Rate per kWh,Billing Period Start,Billing Period End,Total kWh,Total Cost
+ACC-12345678,John Smith,1234 Oak Street,Austin,TX,78701,Austin Energy,Reliant Energy,Reliant Secure 12,0.115,2024-02-01,2024-02-29,1080,124.20
+Date,kWh,Cost
+2024-02-01,32.5,3.74
+2024-02-08,33.8,3.89
+2024-02-15,34.2,3.93
+2024-02-22,35.5,4.08
+2024-02-29,34.0,3.91
+
+
+

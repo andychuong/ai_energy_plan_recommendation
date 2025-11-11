@@ -17,6 +17,7 @@ interface RecommendationCardProps {
   plan?: EnergyPlan;
   onSelect?: () => void;
   onCompare?: () => void;
+  isSelectedForComparison?: boolean;
 }
 
 export function RecommendationCard({
@@ -24,12 +25,19 @@ export function RecommendationCard({
   plan,
   onSelect,
   onCompare,
+  isSelectedForComparison = false,
 }: RecommendationCardProps) {
   const savings = recommendation.projectedSavings;
   const isPositive = savings > 0;
 
   return (
-    <Card className="relative">
+    <Card
+      className={`relative ${
+        isSelectedForComparison
+          ? 'ring-2 ring-primary ring-offset-2'
+          : ''
+      }`}
+    >
       <CardHeader>
         <div className="flex items-start justify-between">
           <div>
@@ -126,8 +134,11 @@ export function RecommendationCard({
           </Button>
         )}
         {onCompare && (
-          <Button variant="outline" onClick={onCompare}>
-            Compare
+          <Button
+            variant={isSelectedForComparison ? 'default' : 'outline'}
+            onClick={onCompare}
+          >
+            {isSelectedForComparison ? 'Selected' : 'Compare'}
           </Button>
         )}
       </CardFooter>

@@ -1,4 +1,9 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { 
+  updatePlanCatalogFunction,
+  saveCurrentPlanFunction,
+  saveUsageDataFunction,
+} from '../api/resource';
 
 /**
  * Define the data schema for the memory bank system
@@ -117,7 +122,72 @@ const schema = a.schema({
     .authorization((allow) => [
       allow.authenticated().to(['read', 'create', 'update', 'delete']), // Authenticated users can read and modify
     ]),
-});
+
+  /**
+   * Current Plan
+   * Stores user's current energy plan information
+   */
+  CurrentPlan: a
+    .model({
+      userId: a.id().required(),
+      supplierName: a.string().required(),
+      planName: a.string(),
+      contractStartDate: a.string(),
+      contractEndDate: a.string(),
+      earlyTerminationFee: a.float(),
+      contractType: a.string(), // 'fixed' | 'variable' | 'indexed' | 'hybrid'
+      createdAt: a.datetime().required(),
+      updatedAt: a.datetime().required(),
+    })
+    .authorization((allow) => [
+      allow.owner(), // Users can only access their own current plan
+    ]),
+
+  /**
+   * Customer Usage Data
+   * Stores user's energy usage data with billing information
+   */
+  CustomerUsageData: a
+    .model({
+      userId: a.id().required(),
+      usageDataId: a.id().required(),
+      usagePoints: a.json().required(), // Array of UsageDataPoint
+      totalAnnualKwh: a.float(),
+      averageMonthlyKwh: a.float(),
+      peakMonthKwh: a.float(),
+      peakMonth: a.string(),
+      billingInfo: a.json(), // Billing information including current plan
+      createdAt: a.datetime().required(),
+      updatedAt: a.datetime().required(),
+    })
+    .authorization((allow) => [
+      allow.owner(), // Users can only access their own usage data
+    ]),
+
+  /**
+   * User Profile
+   * Stores user profile information including state and usage data preferences
+   */
+  UserProfile: a
+    .model({
+      userId: a.id().required(),
+      state: a.string(), // State code (e.g., 'CA', 'TX')
+      address: a.json(), // Address information
+      useCustomAverages: a.boolean(), // Whether user wants to use custom averages instead of calculated
+      customAverageKwh: a.float(), // Custom average monthly kWh
+      customAverageCost: a.float(), // Custom average monthly cost
+      createdAt: a.datetime().required(),
+      updatedAt: a.datetime().required(),
+    })
+    .authorization((allow) => [
+      allow.owner(), // Users can only access their own profile
+    ]),
+})
+  .authorization((allow) => [
+    allow.resource(updatePlanCatalogFunction).to(['query', 'mutate']), // Function can query and mutate all models
+    allow.resource(saveCurrentPlanFunction).to(['query', 'mutate']), // Function can query and mutate all models
+    allow.resource(saveUsageDataFunction).to(['query', 'mutate']), // Function can query and mutate all models
+  ]);
 
 export type Schema = ClientSchema<typeof schema>;
 

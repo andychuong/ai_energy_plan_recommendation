@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -13,7 +13,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRecommendations } from '@/hooks/useRecommendations';
 import { useUsageData } from '@/hooks/useUsageData';
 import { useUserPreferences } from '@/hooks/useUserPreferences';
+import { useUserProfile } from '@/hooks/useUserProfile';
 import { RecommendationCard } from '@/components/features/RecommendationCard';
+import { FeedbackForm } from '@/components/features/FeedbackForm';
 import { UsageChart } from '@/components/charts/UsageChart';
 import { apiClient } from '@/services/api/client';
 import type { Recommendation, EnergyPlan } from 'shared/types';
@@ -21,12 +23,16 @@ import type { Recommendation, EnergyPlan } from 'shared/types';
 export function RecommendationsPage() {
   const { user } = useAuth();
   const userId = user?.userId || user?.username;
+  const navigate = useNavigate();
   const { usageData, isLoading: isLoadingUsage } = useUsageData(userId);
   const { preferences, isLoading: isLoadingPrefs } = useUserPreferences(userId);
+  const { profile } = useUserProfile(userId);
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [plans, setPlans] = useState<Map<string, EnergyPlan>>(new Map());
+  const [selectedPlans, setSelectedPlans] = useState<Set<string>>(new Set());
+  const [showFeedbackFor, setShowFeedbackFor] = useState<string | null>(null);
 
   const { generateRecommendations } = useRecommendations(
     userId,
@@ -43,9 +49,8 @@ export function RecommendationsPage() {
     setError(null);
 
     try {
-      // Fetch plans first
-      const state = 'CA'; // TODO: Get from user profile or preferences
-      const availablePlans = await apiClient.getEnergyPlans(state);
+      // Fetch plans first - getEnergyPlans will use user profile state if available
+      const availablePlans = await apiClient.getEnergyPlans(profile?.state);
       const plansMap = new Map(availablePlans.map(plan => [plan.planId, plan]));
       setPlans(plansMap);
 
@@ -96,14 +101,14 @@ export function RecommendationsPage() {
           <CardHeader>
             <CardTitle>Missing Information</CardTitle>
             <CardDescription>
-              You need to upload usage data and set preferences before getting
+              You need to add usage data and set preferences before getting
               recommendations
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {!usageData && (
-              <Link to="/upload">
-                <Button>Upload Usage Data</Button>
+              <Link to="/usage-data">
+                <Button>Add Usage Data</Button>
               </Link>
             )}
             {!preferences && (
@@ -165,33 +170,97 @@ export function RecommendationsPage() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">Top Recommendations</h2>
-            <Button
-              variant="outline"
-              onClick={handleGenerateRecommendations}
-              disabled={isGenerating}
-            >
-              Regenerate
-            </Button>
+            <div className="flex gap-2">
+              {selectedPlans.size > 0 && (
+                <Button
+                  onClick={() => {
+                    const planIds = Array.from(selectedPlans).join(',');
+                    navigate(`/compare?plans=${planIds}`);
+                  }}
+                >
+                  Compare Selected ({selectedPlans.size})
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                onClick={handleGenerateRecommendations}
+                disabled={isGenerating}
+              >
+                Regenerate
+              </Button>
+            </div>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-            {recommendations.map(recommendation => (
-              <RecommendationCard
-                key={recommendation.recommendationId || recommendation.planId}
-                recommendation={recommendation}
-                plan={plans.get(recommendation.planId)}
-                onSelect={() => {
-                  // TODO: Handle plan selection
-                  // eslint-disable-next-line no-console
-                  console.log('Select plan:', recommendation.planId);
-                }}
-                onCompare={() => {
-                  // TODO: Navigate to comparison page
-                  // eslint-disable-next-line no-console
-                  console.log('Compare plan:', recommendation.planId);
-                }}
-              />
-            ))}
+          <div className="space-y-6">
+            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+              {recommendations.map(recommendation => (
+                <RecommendationCard
+                  key={recommendation.recommendationId || recommendation.planId}
+                  recommendation={recommendation}
+                  plan={plans.get(recommendation.planId)}
+                  isSelectedForComparison={selectedPlans.has(recommendation.planId)}
+                  onSelect={async () => {
+                    if (!userId) {
+                      setError('User ID is required');
+                      return;
+                    }
+
+                    const plan = plans.get(recommendation.planId);
+                    if (!plan) {
+                      setError('Plan not found');
+                      return;
+                    }
+
+                    try {
+                      await apiClient.saveCurrentPlan(userId, {
+                        supplierName: plan.supplierName,
+                        planName: plan.planName,
+                        contractType: plan.contractType,
+                        earlyTerminationFee: plan.earlyTerminationFee,
+                      });
+                      setError(null);
+                      // Show success message
+                      alert(`Plan "${plan.planName}" selected successfully!`);
+                      navigate('/dashboard');
+                    } catch (err) {
+                      setError(err instanceof Error ? err.message : 'Failed to select plan');
+                    }
+                  }}
+                  onCompare={() => {
+                    // Toggle plan selection
+                    const newSelected = new Set(selectedPlans);
+                    if (newSelected.has(recommendation.planId)) {
+                      newSelected.delete(recommendation.planId);
+                    } else {
+                      newSelected.add(recommendation.planId);
+                    }
+                    setSelectedPlans(newSelected);
+                  }}
+                />
+              ))}
+            </div>
+            {showFeedbackFor && userId && (
+              <div className="mt-6">
+                <FeedbackForm
+                  userId={userId}
+                  recommendationId={showFeedbackFor}
+                  onSubmitted={() => setShowFeedbackFor(null)}
+                />
+              </div>
+            )}
+            {recommendations.length > 0 && !showFeedbackFor && (
+              <div className="mt-6 flex justify-center">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    const firstRec = recommendations[0];
+                    setShowFeedbackFor(firstRec.recommendationId || firstRec.planId);
+                  }}
+                >
+                  Provide Feedback
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -4,6 +4,8 @@
   "type": "module",
   "dependencies": {
     "@aws-amplify/backend": "^1.17.0",
+    "@aws-sdk/client-dynamodb": "^3.928.0",
+    "@aws-sdk/lib-dynamodb": "^3.928.0",
     "aws-amplify": "^6.15.8"
   },
   "devDependencies": {
@@ -11,4 +13,3 @@
     "typescript": "^5.2.2"
   }
 }
-

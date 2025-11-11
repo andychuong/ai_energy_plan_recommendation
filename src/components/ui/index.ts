@@ -16,3 +16,6 @@ export { Badge, badgeVariants } from './badge';
 export type { BadgeProps } from './badge';
 export { Alert, AlertTitle, AlertDescription } from './alert';
 export { Slider } from './slider';
+export { Switch } from './switch';
+
+

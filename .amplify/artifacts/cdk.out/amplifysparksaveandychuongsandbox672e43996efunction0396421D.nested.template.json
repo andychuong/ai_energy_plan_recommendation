@@ -1,6 +1,951 @@
 {
  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"AmplifySandbox\",\"createdWith\":\"1.15.0\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
  "Resources": {
+  "updateplancataloglambdaServiceRole12B95F2A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "update-plan-catalog"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/ServiceRole/Resource"
+   }
+  },
+  "updateplancataloglambdaServiceRoleDefaultPolicyDB20EF85": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        "arn:aws:dynamodb:*:*:table/EnergyPlan-*-NONE",
+        "arn:aws:dynamodb:*:*:table/EnergyPlan-*-NONE/*"
+       ]
+      },
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/sparksave/andychuong-sandbox-672e43996e/EIA_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/shared/sparksave/EIA_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/sparksave/andychuong-sandbox-672e43996e/OPENEI_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/shared/sparksave/OPENEI_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_GRAPHQL_ENDPOINT"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_DEFAULT_NAME"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "updateplancataloglambdaServiceRoleDefaultPolicyDB20EF85",
+    "Roles": [
+     {
+      "Ref": "updateplancataloglambdaServiceRole12B95F2A"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "updateplancataloglambda104EA566": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "x86_64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "402ea0182bb1d14cbfb5a6f2d5d723d892f6cff467d681da40d634d2217ff74f.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "EIA_API_KEY": "<value will be resolved during runtime>",
+      "OPENEI_API_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"EIA_API_KEY\":{\"path\":\"/amplify/sparksave/andychuong-sandbox-672e43996e/EIA_API_KEY\",\"sharedPath\":\"/amplify/shared/sparksave/EIA_API_KEY\"},\"OPENEI_API_KEY\":{\"path\":\"/amplify/sparksave/andychuong-sandbox-672e43996e/OPENEI_API_KEY\",\"sharedPath\":\"/amplify/shared/sparksave/OPENEI_API_KEY\"},\"AMPLIFY_DATA_GRAPHQL_ENDPOINT\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_GRAPHQL_ENDPOINT\"},\"AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\"},\"AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY\"},\"AMPLIFY_DATA_DEFAULT_NAME\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_DEFAULT_NAME\"}}",
+      "AMPLIFY_DATA_GRAPHQL_ENDPOINT": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_DEFAULT_NAME": "<value will be resolved during runtime>"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "index.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "updateplancataloglambdaServiceRole12B95F2A",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "update-plan-catalog"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ],
+    "Timeout": 3
+   },
+   "DependsOn": [
+    "updateplancataloglambdaServiceRoleDefaultPolicyDB20EF85",
+    "updateplancataloglambdaServiceRole12B95F2A"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/Resource",
+    "aws:asset:path": "asset.402ea0182bb1d14cbfb5a6f2d5d723d892f6cff467d681da40d634d2217ff74f",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "updateplancataloglambdaFunctionUrlAB21742E": {
+   "Type": "AWS::Lambda::Url",
+   "Properties": {
+    "AuthType": "NONE",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "updateplancataloglambda104EA566",
+      "Arn"
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/FunctionUrl/Resource"
+   }
+  },
+  "updateplancataloglambdainvokefunctionurlB3DF4ACF": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunctionUrl",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "updateplancataloglambda104EA566",
+      "Arn"
+     ]
+    },
+    "FunctionUrlAuthType": "NONE",
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/invoke-function-url"
+   }
+  },
+  "updateplancataloglambdainvokefunctionE185E757": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "updateplancataloglambda104EA566",
+      "Arn"
+     ]
+    },
+    "InvokedViaFunctionUrl": true,
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/invoke-function"
+   }
+  },
+  "savecurrentplanlambdaServiceRole16F591AF": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "save-current-plan"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/ServiceRole/Resource"
+   }
+  },
+  "savecurrentplanlambdaServiceRoleDefaultPolicyA884FF9A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:Query"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        "arn:aws:dynamodb:*:*:table/*-CurrentPlan-*",
+        "arn:aws:dynamodb:*:*:table/*-CurrentPlan-*/*"
+       ]
+      },
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_GRAPHQL_ENDPOINT"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_DEFAULT_NAME"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "savecurrentplanlambdaServiceRoleDefaultPolicyA884FF9A",
+    "Roles": [
+     {
+      "Ref": "savecurrentplanlambdaServiceRole16F591AF"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "savecurrentplanlambda5E810A95": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "x86_64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "0f829dadead9b3b56b8b0672b805597d6c1110e9fd2aebbccff9c26485e2afda.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"AMPLIFY_DATA_GRAPHQL_ENDPOINT\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_GRAPHQL_ENDPOINT\"},\"AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\"},\"AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY\"},\"AMPLIFY_DATA_DEFAULT_NAME\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_DEFAULT_NAME\"}}",
+      "AMPLIFY_DATA_GRAPHQL_ENDPOINT": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_DEFAULT_NAME": "<value will be resolved during runtime>"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "index.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "savecurrentplanlambdaServiceRole16F591AF",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "save-current-plan"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ],
+    "Timeout": 3
+   },
+   "DependsOn": [
+    "savecurrentplanlambdaServiceRoleDefaultPolicyA884FF9A",
+    "savecurrentplanlambdaServiceRole16F591AF"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/Resource",
+    "aws:asset:path": "asset.0f829dadead9b3b56b8b0672b805597d6c1110e9fd2aebbccff9c26485e2afda",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "savecurrentplanlambdaFunctionUrl3C4AB2E0": {
+   "Type": "AWS::Lambda::Url",
+   "Properties": {
+    "AuthType": "NONE",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "savecurrentplanlambda5E810A95",
+      "Arn"
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/FunctionUrl/Resource"
+   }
+  },
+  "savecurrentplanlambdainvokefunctionurl20CD4CF0": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunctionUrl",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "savecurrentplanlambda5E810A95",
+      "Arn"
+     ]
+    },
+    "FunctionUrlAuthType": "NONE",
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/invoke-function-url"
+   }
+  },
+  "savecurrentplanlambdainvokefunctionA9200958": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "savecurrentplanlambda5E810A95",
+      "Arn"
+     ]
+    },
+    "InvokedViaFunctionUrl": true,
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/invoke-function"
+   }
+  },
+  "saveusagedatalambdaServiceRoleA9DC7A5A": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ],
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "save-usage-data"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/ServiceRole/Resource"
+   }
+  },
+  "saveusagedatalambdaServiceRoleDefaultPolicy4DFFCC4D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:Query"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        "arn:aws:dynamodb:*:*:table/*-CustomerUsageData-*",
+        "arn:aws:dynamodb:*:*:table/*-CustomerUsageData-*/*"
+       ]
+      },
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_GRAPHQL_ENDPOINT"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_DEFAULT_NAME"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "saveusagedatalambdaServiceRoleDefaultPolicy4DFFCC4D",
+    "Roles": [
+     {
+      "Ref": "saveusagedatalambdaServiceRoleA9DC7A5A"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "saveusagedatalambda36BC2926": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "x86_64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "e3aedca8e0598b18a977cf6eb35e6d6c790c2f9ca465a50790fae2f00ca5534f.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"AMPLIFY_DATA_GRAPHQL_ENDPOINT\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_GRAPHQL_ENDPOINT\"},\"AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME\"},\"AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY\"},\"AMPLIFY_DATA_DEFAULT_NAME\":{\"path\":\"/amplify/resource_reference/sparksave/andychuong-sandbox-672e43996e/AMPLIFY_DATA_DEFAULT_NAME\"}}",
+      "AMPLIFY_DATA_GRAPHQL_ENDPOINT": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_BUCKET_NAME": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_MODEL_INTROSPECTION_SCHEMA_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_DATA_DEFAULT_NAME": "<value will be resolved during runtime>"
+     }
+    },
+    "EphemeralStorage": {
+     "Size": 512
+    },
+    "Handler": "index.handler",
+    "MemorySize": 512,
+    "Role": {
+     "Fn::GetAtt": [
+      "saveusagedatalambdaServiceRoleA9DC7A5A",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Tags": [
+     {
+      "Key": "amplify:deployment-type",
+      "Value": "sandbox"
+     },
+     {
+      "Key": "amplify:friendly-name",
+      "Value": "save-usage-data"
+     },
+     {
+      "Key": "created-by",
+      "Value": "amplify"
+     }
+    ],
+    "Timeout": 3
+   },
+   "DependsOn": [
+    "saveusagedatalambdaServiceRoleDefaultPolicy4DFFCC4D",
+    "saveusagedatalambdaServiceRoleA9DC7A5A"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/Resource",
+    "aws:asset:path": "asset.e3aedca8e0598b18a977cf6eb35e6d6c790c2f9ca465a50790fae2f00ca5534f",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "saveusagedatalambdaFunctionUrl10274473": {
+   "Type": "AWS::Lambda::Url",
+   "Properties": {
+    "AuthType": "NONE",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "saveusagedatalambda36BC2926",
+      "Arn"
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/FunctionUrl/Resource"
+   }
+  },
+  "saveusagedatalambdainvokefunctionurl24518B2E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunctionUrl",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "saveusagedatalambda36BC2926",
+      "Arn"
+     ]
+    },
+    "FunctionUrlAuthType": "NONE",
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/invoke-function-url"
+   }
+  },
+  "saveusagedatalambdainvokefunction8624E500": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "saveusagedatalambda36BC2926",
+      "Arn"
+     ]
+    },
+    "InvokedViaFunctionUrl": true,
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/invoke-function"
+   }
+  },
   "normalizedatalambdaServiceRole1B2A5FFD": {
    "Type": "AWS::IAM::Role",
    "Properties": {
@@ -51,6 +996,71 @@
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/normalize-data-lambda/ServiceRole/Resource"
    }
   },
+  "normalizedatalambdaServiceRoleDefaultPolicyA04AAEF6": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/sparksave/andychuong-sandbox-672e43996e/OPENROUTER_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/shared/sparksave/OPENROUTER_API_KEY"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "normalizedatalambdaServiceRoleDefaultPolicyA04AAEF6",
+    "Roles": [
+     {
+      "Ref": "normalizedatalambdaServiceRole1B2A5FFD"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/normalize-data-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
   "normalizedatalambdaF6EB3A09": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
@@ -65,8 +1075,8 @@
     },
     "Environment": {
      "Variables": {
-      "OPENROUTER_API_KEY": "",
-      "AMPLIFY_SSM_ENV_CONFIG": "{}"
+      "OPENROUTER_API_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"OPENROUTER_API_KEY\":{\"path\":\"/amplify/sparksave/andychuong-sandbox-672e43996e/OPENROUTER_API_KEY\",\"sharedPath\":\"/amplify/shared/sparksave/OPENROUTER_API_KEY\"}}"
      }
     },
     "EphemeralStorage": {
@@ -159,6 +1169,88 @@
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/ServiceRole/Resource"
    }
   },
+  "generaterecommendationslambdaServiceRoleDefaultPolicy6DA05D3D": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        "arn:aws:dynamodb:*:*:table/*-UsagePattern-*",
+        "arn:aws:dynamodb:*:*:table/*-UsagePattern-*/*",
+        "arn:aws:dynamodb:*:*:table/*-RecommendationHistory-*",
+        "arn:aws:dynamodb:*:*:table/*-RecommendationHistory-*/*"
+       ]
+      },
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/sparksave/andychuong-sandbox-672e43996e/OPENROUTER_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/shared/sparksave/OPENROUTER_API_KEY"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "generaterecommendationslambdaServiceRoleDefaultPolicy6DA05D3D",
+    "Roles": [
+     {
+      "Ref": "generaterecommendationslambdaServiceRoleB316D9C8"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
   "generaterecommendationslambda2312FCCB": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
@@ -169,12 +1261,12 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "fcb02d6833176da33fc077cbe5a6640ea1c071970df25f3e82cddedf568f41fc.zip"
+     "S3Key": "7bd789656fc7b6f67c1f6e3d38c6f3eebfcc04739176fb36c8ccc95094386ca0.zip"
     },
     "Environment": {
      "Variables": {
-      "OPENROUTER_API_KEY": "",
-      "AMPLIFY_SSM_ENV_CONFIG": "{}"
+      "OPENROUTER_API_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"OPENROUTER_API_KEY\":{\"path\":\"/amplify/sparksave/andychuong-sandbox-672e43996e/OPENROUTER_API_KEY\",\"sharedPath\":\"/amplify/shared/sparksave/OPENROUTER_API_KEY\"}}"
      }
     },
     "EphemeralStorage": {
@@ -206,124 +1298,71 @@
     "Timeout": 3
    },
    "DependsOn": [
+    "generaterecommendationslambdaServiceRoleDefaultPolicy6DA05D3D",
     "generaterecommendationslambdaServiceRoleB316D9C8"
    ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/Resource",
-    "aws:asset:path": "asset.fcb02d6833176da33fc077cbe5a6640ea1c071970df25f3e82cddedf568f41fc",
+    "aws:asset:path": "asset.7bd789656fc7b6f67c1f6e3d38c6f3eebfcc04739176fb36c8ccc95094386ca0",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
   },
-  "updateplancataloglambdaServiceRole12B95F2A": {
-   "Type": "AWS::IAM::Role",
+  "generaterecommendationslambdaFunctionUrlF22E796D": {
+   "Type": "AWS::Lambda::Url",
    "Properties": {
-    "AssumeRolePolicyDocument": {
-     "Statement": [
-      {
-       "Action": "sts:AssumeRole",
-       "Effect": "Allow",
-       "Principal": {
-        "Service": "lambda.amazonaws.com"
-       }
-      }
-     ],
-     "Version": "2012-10-17"
-    },
-    "ManagedPolicyArns": [
-     {
-      "Fn::Join": [
-       "",
-       [
-        "arn:",
-        {
-         "Ref": "AWS::Partition"
-        },
-        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-       ]
-      ]
-     }
-    ],
-    "Tags": [
-     {
-      "Key": "amplify:deployment-type",
-      "Value": "sandbox"
-     },
-     {
-      "Key": "amplify:friendly-name",
-      "Value": "update-plan-catalog"
-     },
-     {
-      "Key": "created-by",
-      "Value": "amplify"
-     }
-    ]
+    "AuthType": "NONE",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "generaterecommendationslambda2312FCCB",
+      "Arn"
+     ]
+    }
    },
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/ServiceRole/Resource"
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/FunctionUrl/Resource"
    }
   },
-  "updateplancataloglambda104EA566": {
-   "Type": "AWS::Lambda::Function",
+  "generaterecommendationslambdainvokefunctionurlC32AEA1F": {
+   "Type": "AWS::Lambda::Permission",
    "Properties": {
-    "Architectures": [
-     "x86_64"
-    ],
-    "Code": {
-     "S3Bucket": {
-      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-     },
-     "S3Key": "a4dd06ee7060ffaaabce5c102a0a33cbbe31189d7245462a7224808c1a972e03.zip"
-    },
-    "Environment": {
-     "Variables": {
-      "EIA_API_KEY": "",
-      "OPENEI_API_KEY": "",
-      "AMPLIFY_SSM_ENV_CONFIG": "{}"
-     }
-    },
-    "EphemeralStorage": {
-     "Size": 512
-    },
-    "Handler": "index.handler",
-    "MemorySize": 512,
-    "Role": {
+    "Action": "lambda:InvokeFunctionUrl",
+    "FunctionName": {
      "Fn::GetAtt": [
-      "updateplancataloglambdaServiceRole12B95F2A",
+      "generaterecommendationslambda2312FCCB",
       "Arn"
      ]
     },
-    "Runtime": "nodejs20.x",
-    "Tags": [
-     {
-      "Key": "amplify:deployment-type",
-      "Value": "sandbox"
-     },
-     {
-      "Key": "amplify:friendly-name",
-      "Value": "update-plan-catalog"
-     },
-     {
-      "Key": "created-by",
-      "Value": "amplify"
-     }
-    ],
-    "Timeout": 3
+    "FunctionUrlAuthType": "NONE",
+    "Principal": "*"
    },
-   "DependsOn": [
-    "updateplancataloglambdaServiceRole12B95F2A"
-   ],
    "UpdateReplacePolicy": "Delete",
    "DeletionPolicy": "Delete",
    "Metadata": {
-    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/Resource",
-    "aws:asset:path": "asset.a4dd06ee7060ffaaabce5c102a0a33cbbe31189d7245462a7224808c1a972e03",
-    "aws:asset:is-bundled": true,
-    "aws:asset:property": "Code"
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/invoke-function-url"
+   }
+  },
+  "generaterecommendationslambdainvokefunction62D6F452": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "generaterecommendationslambda2312FCCB",
+      "Arn"
+     ]
+    },
+    "InvokedViaFunctionUrl": true,
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/invoke-function"
    }
   },
   "processusagedatalambdaServiceRoleD42A8C63": {
@@ -386,7 +1425,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "d7236fcf256e6fb8c04872e88d926d7d57d05f625978d2a2d1ebc715fbd8fd85.zip"
+     "S3Key": "3ed103b2f235ab9da591ba44d75f40eb97067e962b091001744f426090a0b0af.zip"
     },
     "Environment": {
      "Variables": {
@@ -428,7 +1467,7 @@
    "DeletionPolicy": "Delete",
    "Metadata": {
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/process-usage-data-lambda/Resource",
-    "aws:asset:path": "asset.d7236fcf256e6fb8c04872e88d926d7d57d05f625978d2a2d1ebc715fbd8fd85",
+    "aws:asset:path": "asset.3ed103b2f235ab9da591ba44d75f40eb97067e962b091001744f426090a0b0af",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -483,6 +1522,71 @@
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/ServiceRole/Resource"
    }
   },
+  "readstatementlambdaServiceRoleDefaultPolicy735B6007": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "ssm:GetParameters",
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/sparksave/andychuong-sandbox-672e43996e/OPENROUTER_API_KEY"
+          ]
+         ]
+        },
+        {
+         "Fn::Join": [
+          "",
+          [
+           "arn:",
+           {
+            "Ref": "AWS::Partition"
+           },
+           ":ssm:",
+           {
+            "Ref": "AWS::Region"
+           },
+           ":",
+           {
+            "Ref": "AWS::AccountId"
+           },
+           ":parameter/amplify/shared/sparksave/OPENROUTER_API_KEY"
+          ]
+         ]
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "readstatementlambdaServiceRoleDefaultPolicy735B6007",
+    "Roles": [
+     {
+      "Ref": "readstatementlambdaServiceRole98C3CFF7"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
   "readstatementlambda5CD6B74F": {
    "Type": "AWS::Lambda::Function",
    "Properties": {
@@ -497,8 +1601,8 @@
     },
     "Environment": {
      "Variables": {
-      "OPENROUTER_API_KEY": "",
-      "AMPLIFY_SSM_ENV_CONFIG": "{}"
+      "OPENROUTER_API_KEY": "<value will be resolved during runtime>",
+      "AMPLIFY_SSM_ENV_CONFIG": "{\"OPENROUTER_API_KEY\":{\"path\":\"/amplify/sparksave/andychuong-sandbox-672e43996e/OPENROUTER_API_KEY\",\"sharedPath\":\"/amplify/shared/sparksave/OPENROUTER_API_KEY\"}}"
      }
     },
     "EphemeralStorage": {
@@ -541,10 +1645,65 @@
     "aws:asset:property": "Code"
    }
   },
+  "readstatementlambdaFunctionUrl29574C44": {
+   "Type": "AWS::Lambda::Url",
+   "Properties": {
+    "AuthType": "NONE",
+    "TargetFunctionArn": {
+     "Fn::GetAtt": [
+      "readstatementlambda5CD6B74F",
+      "Arn"
+     ]
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/FunctionUrl/Resource"
+   }
+  },
+  "readstatementlambdainvokefunctionurlE069B06B": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunctionUrl",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "readstatementlambda5CD6B74F",
+      "Arn"
+     ]
+    },
+    "FunctionUrlAuthType": "NONE",
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/invoke-function-url"
+   }
+  },
+  "readstatementlambdainvokefunction68B13F3E": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "readstatementlambda5CD6B74F",
+      "Arn"
+     ]
+    },
+    "InvokedViaFunctionUrl": true,
+    "Principal": "*"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/invoke-function"
+   }
+  },
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/zWOSQ6DMAxFz9K9cWnoBUqlLlnAAVBIXGSGRMJJu0DcvQHU1dOX/2CFShWYX/RXMmPHbOIO14okkG2CNiOkQ7tOeu6sbp23NAhWB17RmcDeAesZ19pPBM+327mBFK0WoSD42JE0ltGMFEotBGcbJve/Y4OaxMfFEByBNN2z6zfYF3GQ60fd8ZanPwdhzpboAs+E9ckfl9rE3sQAAAA="
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/z2PwQ6CMBBEv8V7WRH8ATHxaAjGMyntShZKm7BFY0j/3QLq6c3sZiezGWRZDulOvjhRuk8MNTBfkT3qm5eqF3FRz0YOjZa1dRo7huuKy2SVJ2cFyQHmyhkU54ddWTpD6r3YTQXBeS2Z0TOcFkQPxaR69IVkFFs8zPHgn/oT99EsQV+UOA7EHOchiArZTaNCsWbGui3ZNoilJXS8f2ZHOKTxt46JknGyngaEauMHksP43vgAAAA="
    },
    "Metadata": {
     "aws:cdk:path": "amplify-sparksave-andychuong-sandbox-672e43996e/function/CDKMetadata/Default"
@@ -819,6 +1978,36 @@
   }
  },
  "Outputs": {
+  "amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaServiceRole18F8565BRef": {
+   "Value": {
+    "Ref": "updateplancataloglambdaServiceRole12B95F2A"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaServiceRole302894D2Ref": {
+   "Value": {
+    "Ref": "savecurrentplanlambdaServiceRole16F591AF"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaServiceRoleF5200FAERef": {
+   "Value": {
+    "Ref": "saveusagedatalambdaServiceRoleA9DC7A5A"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambda2C731F47Ref": {
+   "Value": {
+    "Ref": "updateplancataloglambda104EA566"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaF7BCE361Ref": {
+   "Value": {
+    "Ref": "savecurrentplanlambda5E810A95"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambda191AE3A3Ref": {
+   "Value": {
+    "Ref": "saveusagedatalambda36BC2926"
+   }
+  },
   "amplifysparksaveandychuongsandbox672e43996efunctionnormalizedatalambda6A866DEFRef": {
    "Value": {
     "Ref": "normalizedatalambdaF6EB3A09"
@@ -829,11 +2018,6 @@
     "Ref": "generaterecommendationslambda2312FCCB"
    }
   },
-  "amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambda2C731F47Ref": {
-   "Value": {
-    "Ref": "updateplancataloglambda104EA566"
-   }
-  },
   "amplifysparksaveandychuongsandbox672e43996efunctionprocessusagedatalambdaDAC73B89Ref": {
    "Value": {
     "Ref": "processusagedatalambda34C65399"
@@ -842,6 +2026,46 @@
   "amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaF8588808Ref": {
    "Value": {
     "Ref": "readstatementlambda5CD6B74F"
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctiongeneraterecommendationslambdaFunctionUrlEA2980EEFunctionUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "generaterecommendationslambdaFunctionUrlF22E796D",
+     "FunctionUrl"
+    ]
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaFunctionUrl910E4354FunctionUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "readstatementlambdaFunctionUrl29574C44",
+     "FunctionUrl"
+    ]
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaFunctionUrl428B2346FunctionUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "savecurrentplanlambdaFunctionUrl3C4AB2E0",
+     "FunctionUrl"
+    ]
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaFunctionUrlC9C7406EFunctionUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "saveusagedatalambdaFunctionUrl10274473",
+     "FunctionUrl"
+    ]
+   }
+  },
+  "amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaFunctionUrlB93EE404FunctionUrl": {
+   "Value": {
+    "Fn::GetAtt": [
+     "updateplancataloglambdaFunctionUrlAB21742E",
+     "FunctionUrl"
+    ]
    }
   }
  }

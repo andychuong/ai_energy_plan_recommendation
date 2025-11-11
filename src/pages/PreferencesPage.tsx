@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUserPreferences } from '@/hooks/useUserPreferences';
+import { useUserProfile } from '@/hooks/useUserProfile';
 import type { UserPreferences } from 'shared/types';
 
 export function PreferencesPage() {
@@ -21,6 +22,7 @@ export function PreferencesPage() {
   const userId = user?.userId || user?.username;
   const { preferences, isLoading, updatePreferences, isUpdating } =
     useUserPreferences(userId);
+  const { profile, saveUserProfile, isSaving: isSavingProfile } = useUserProfile(userId);
   const navigate = useNavigate();
   const [formData, setFormData] = useState<Partial<UserPreferences>>({
     costSavingsPriority: 'medium',
@@ -30,6 +32,7 @@ export function PreferencesPage() {
     contractTypePreference: null,
     earlyTerminationFeeTolerance: 100,
   });
+  const [userState, setUserState] = useState<string>(profile?.state || '');
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -38,29 +41,70 @@ export function PreferencesPage() {
     }
   }, [preferences]);
 
+  useEffect(() => {
+    if (profile?.state) {
+      setUserState(profile.state);
+    }
+  }, [profile]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!userId) return;
 
-    updatePreferences(
-      {
-        userId,
-        preferences: {
-          ...formData,
+    // Save user profile state if changed
+    if (userState && userState !== profile?.state) {
+      saveUserProfile(
+        {
           userId,
-          createdAt: preferences?.createdAt || new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        } as UserPreferences,
-      },
-      {
-        onSuccess: () => {
-          setSuccess(true);
-          setTimeout(() => {
-            navigate('/dashboard');
-          }, 2000);
+          profile: { state: userState },
         },
-      }
-    );
+        {
+          onSuccess: () => {
+            // Continue with preferences save
+            updatePreferences(
+              {
+                userId,
+                preferences: {
+                  ...formData,
+                  userId,
+                  createdAt: preferences?.createdAt || new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                } as UserPreferences,
+              },
+              {
+                onSuccess: () => {
+                  setSuccess(true);
+                  setTimeout(() => {
+                    navigate('/dashboard');
+                  }, 2000);
+                },
+              }
+            );
+          },
+        }
+      );
+    } else {
+      // Just save preferences
+      updatePreferences(
+        {
+          userId,
+          preferences: {
+            ...formData,
+            userId,
+            createdAt: preferences?.createdAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          } as UserPreferences,
+        },
+        {
+          onSuccess: () => {
+            setSuccess(true);
+            setTimeout(() => {
+              navigate('/dashboard');
+            }, 2000);
+          },
+        }
+      );
+    }
   };
 
   if (isLoading) {
@@ -99,6 +143,71 @@ export function PreferencesPage() {
                 </AlertDescription>
               </Alert>
             )}
+
+            <div className="space-y-2">
+              <Label htmlFor="state">State</Label>
+              <select
+                id="state"
+                value={userState}
+                onChange={(e) => setUserState(e.target.value)}
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <option value="">Select your state...</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA">California</option>
+                <option value="CO">Colorado</option>
+                <option value="CT">Connecticut</option>
+                <option value="DE">Delaware</option>
+                <option value="FL">Florida</option>
+                <option value="GA">Georgia</option>
+                <option value="HI">Hawaii</option>
+                <option value="ID">Idaho</option>
+                <option value="IL">Illinois</option>
+                <option value="IN">Indiana</option>
+                <option value="IA">Iowa</option>
+                <option value="KS">Kansas</option>
+                <option value="KY">Kentucky</option>
+                <option value="LA">Louisiana</option>
+                <option value="ME">Maine</option>
+                <option value="MD">Maryland</option>
+                <option value="MA">Massachusetts</option>
+                <option value="MI">Michigan</option>
+                <option value="MN">Minnesota</option>
+                <option value="MS">Mississippi</option>
+                <option value="MO">Missouri</option>
+                <option value="MT">Montana</option>
+                <option value="NE">Nebraska</option>
+                <option value="NV">Nevada</option>
+                <option value="NH">New Hampshire</option>
+                <option value="NJ">New Jersey</option>
+                <option value="NM">New Mexico</option>
+                <option value="NY">New York</option>
+                <option value="NC">North Carolina</option>
+                <option value="ND">North Dakota</option>
+                <option value="OH">Ohio</option>
+                <option value="OK">Oklahoma</option>
+                <option value="OR">Oregon</option>
+                <option value="PA">Pennsylvania</option>
+                <option value="RI">Rhode Island</option>
+                <option value="SC">South Carolina</option>
+                <option value="SD">South Dakota</option>
+                <option value="TN">Tennessee</option>
+                <option value="TX">Texas</option>
+                <option value="UT">Utah</option>
+                <option value="VT">Vermont</option>
+                <option value="VA">Virginia</option>
+                <option value="WA">Washington</option>
+                <option value="WV">West Virginia</option>
+                <option value="WI">Wisconsin</option>
+                <option value="WY">Wyoming</option>
+              </select>
+              <p className="text-sm text-muted-foreground">
+                Select your state to get energy plans available in your area
+              </p>
+            </div>
 
             <div className="space-y-2">
               <Label>Cost Savings Priority</Label>
@@ -253,7 +362,7 @@ export function PreferencesPage() {
                 disabled={isUpdating || success}
                 className="flex-1"
               >
-                {isUpdating ? 'Saving...' : 'Save Preferences'}
+                {isUpdating || isSavingProfile ? 'Saving...' : 'Save Preferences'}
               </Button>
               <Button
                 type="button"

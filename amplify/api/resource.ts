@@ -1,4 +1,5 @@
 import { defineFunction } from '@aws-amplify/backend';
+import { secret } from '@aws-amplify/backend';
 
 /**
  * API Functions
@@ -20,7 +21,7 @@ export const normalizeDataFunction = defineFunction({
   name: 'normalize-data',
   entry: '../function/normalize-data/handler.ts',
   environment: {
-    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || '',
+    OPENROUTER_API_KEY: secret('OPENROUTER_API_KEY'),
   },
 });
 
@@ -33,7 +34,7 @@ export const generateRecommendationsFunction = defineFunction({
   name: 'generate-recommendations',
   entry: '../function/generate-recommendations/handler.ts',
   environment: {
-    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || '',
+    OPENROUTER_API_KEY: secret('OPENROUTER_API_KEY'),
   },
 });
 
@@ -45,8 +46,14 @@ export const updatePlanCatalogFunction = defineFunction({
   name: 'update-plan-catalog',
   entry: '../function/update-plan-catalog/handler.ts',
   environment: {
-    EIA_API_KEY: process.env.EIA_API_KEY || '',
-    OPENEI_API_KEY: process.env.OPENEI_API_KEY || '',
+    // EIA and OpenEI API keys - set via Parameter Store secrets
+    // For sandbox: npx ampx sandbox secret set EIA_API_KEY
+    // For production: Set in Parameter Store as /amplify/{app-name}/main/EIA_API_KEY
+    // The handler gracefully handles missing keys by falling back to default rates
+    EIA_API_KEY: secret('EIA_API_KEY'),
+    OPENEI_API_KEY: secret('OPENEI_API_KEY'),
+    // Table name will be set dynamically by backend.ts from the data resource
+    // This allows the table name to be determined at deployment time
   },
 });
 
@@ -69,7 +76,37 @@ export const readStatementFunction = defineFunction({
   name: 'read-statement',
   entry: '../function/read-statement/handler.ts',
   environment: {
-    OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY || '',
+    OPENROUTER_API_KEY: secret('OPENROUTER_API_KEY'),
   },
+});
+
+/**
+ * Auto Confirm User Function
+ * Pre Sign-Up Lambda trigger that automatically confirms users
+ * and marks their email as verified to bypass verification steps
+ * Assigned to auth stack to avoid circular dependency
+ */
+export const autoConfirmUserFunction = defineFunction({
+  name: 'auto-confirm-user',
+  entry: '../function/auto-confirm-user/handler.ts',
+  resourceGroupName: 'auth', // Assign to auth stack since it's an auth trigger
+});
+
+/**
+ * Save Current Plan Function
+ * Saves user's current energy plan information
+ */
+export const saveCurrentPlanFunction = defineFunction({
+  name: 'save-current-plan',
+  entry: '../function/save-current-plan/handler.ts',
+});
+
+/**
+ * Save Usage Data Function
+ * Saves user's energy usage data
+ */
+export const saveUsageDataFunction = defineFunction({
+  name: 'save-usage-data',
+  entry: '../function/save-usage-data/handler.ts',
 });
 

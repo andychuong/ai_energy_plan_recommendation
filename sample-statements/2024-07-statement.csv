@@ -1,0 +1,11 @@
+Account Number,Customer Name,Service Address,City,State,ZIP,Utility Name,Supplier Name,Plan Name,Rate per kWh,Billing Period Start,Billing Period End,Total kWh,Total Cost
+ACC-12345678,John Smith,1234 Oak Street,Austin,TX,78701,Austin Energy,TXU Energy,TXU Energy Free Nights,0.128,2024-07-01,2024-07-31,2150,275.20
+Date,kWh,Cost
+2024-07-01,68.5,8.77
+2024-07-08,72.2,9.24
+2024-07-15,74.8,9.57
+2024-07-22,76.5,9.79
+2024-07-31,73.0,9.35
+
+
+

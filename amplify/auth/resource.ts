@@ -10,7 +10,14 @@ import { secret } from '@aws-amplify/backend';
  * 2. Set secrets: npx ampx sandbox secret set GOOGLE_CLIENT_ID
  * 3. Set secrets: npx ampx sandbox secret set GOOGLE_CLIENT_SECRET
  * 4. Restart sandbox: npx ampx sandbox
+ * 
+ * Production URLs:
+ * Update PRODUCTION_DOMAIN below with your actual production domain before deploying
+ * Example: 'https://sparksave.app' or 'https://app.sparksave.com'
+ * Set to null or empty string to disable production URLs (development only)
  */
+const PRODUCTION_DOMAIN: string | null = 'https://main.d2rn94kbvpfx34.amplifyapp.com';
+
 export const auth = defineAuth({
   loginWith: {
     email: true,
@@ -24,11 +31,25 @@ export const auth = defineAuth({
       //   clientId: secret('FACEBOOK_CLIENT_ID'),
       //   clientSecret: secret('FACEBOOK_CLIENT_SECRET'),
       // },
+      // Callback and logout URLs for OAuth
+      // Development URLs (localhost) are always included
+      // Production URLs are added when PRODUCTION_DOMAIN is set above
       callbackUrls: [
         'http://localhost:3000/',
         'http://localhost:3000/auth/callback',
+        // Production URLs - added when PRODUCTION_DOMAIN is set
+        ...(PRODUCTION_DOMAIN ? [
+          `${PRODUCTION_DOMAIN}/`,
+          `${PRODUCTION_DOMAIN}/auth/callback`,
+        ] : []),
       ],
-      logoutUrls: ['http://localhost:3000/'],
+      logoutUrls: [
+        'http://localhost:3000/',
+        // Production logout URL - added when PRODUCTION_DOMAIN is set
+        ...(PRODUCTION_DOMAIN ? [
+          `${PRODUCTION_DOMAIN}/`,
+        ] : []),
+      ],
     },
   },
   userAttributes: {

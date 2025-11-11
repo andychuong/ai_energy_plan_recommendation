@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -10,12 +11,42 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
 import { useUserPreferences } from '@/hooks/useUserPreferences';
+import { UsageChart } from '@/components/charts/UsageChart';
 
 export function Dashboard() {
   const { user } = useAuth();
   const userId = user?.userId || user?.username;
-  const { usageData, isLoading: isLoadingUsage } = useUsageData(userId);
+  const { usageData, isLoading: isLoadingUsage, refetch: refetchUsageData } = useUsageData(userId);
   const { preferences, isLoading: isLoadingPrefs } = useUserPreferences(userId);
+
+  // Refetch usage data when component mounts or becomes visible
+  // Also refetch when window regains focus (user navigates back to tab)
+  React.useEffect(() => {
+    if (userId) {
+      console.log('[Dashboard] Component mounted, refetching usage data');
+      refetchUsageData();
+      
+      // Refetch when window regains focus
+      const handleFocus = () => {
+        console.log('[Dashboard] Window focused, refetching usage data');
+        refetchUsageData();
+      };
+      window.addEventListener('focus', handleFocus);
+      return () => window.removeEventListener('focus', handleFocus);
+    }
+  }, [userId, refetchUsageData]);
+
+  // Log usage data for debugging
+  React.useEffect(() => {
+    if (usageData) {
+      console.log('[Dashboard] Usage data loaded:', {
+        averageMonthlyKwh: usageData.aggregatedStats?.averageMonthlyKwh,
+        averageMonthlyCost: usageData.aggregatedStats?.averageMonthlyCost,
+        totalKwh: usageData.aggregatedStats?.totalKwh,
+        totalCost: usageData.aggregatedStats?.totalCost,
+      });
+    }
+  }, [usageData]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -26,6 +57,17 @@ export function Dashboard() {
         </p>
       </div>
 
+      {/* Usage Data Summary Section */}
+      {usageData && usageData.usagePoints && usageData.usagePoints.length > 0 && (
+        <div className="mb-8">
+          <UsageChart
+            data={usageData.usagePoints}
+            title="Your Energy Usage"
+            description="Monthly energy consumption over time"
+          />
+        </div>
+      )}
+
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader>
@@ -33,34 +75,78 @@ export function Dashboard() {
             <CardDescription>
               {usageData
                 ? 'Your usage data is ready'
-                : 'Upload your usage data to get started'}
+                : 'Add your usage data to get started'}
             </CardDescription>
           </CardHeader>
           <CardContent>
             {isLoadingUsage ? (
               <p className="text-sm text-muted-foreground">Loading...</p>
             ) : usageData ? (
-              <div className="space-y-2">
-                <p className="text-sm">
-                  <span className="font-medium">Average Monthly:</span>{' '}
-                  {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(0) ||
-                    'N/A'}{' '}
-                  kWh
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium">Total Annual:</span>{' '}
-                  {usageData?.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'}{' '}
-                  kWh
-                </p>
-                <Link to="/upload">
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <p className="text-muted-foreground">Average Monthly</p>
+                    <p className="text-lg font-semibold">
+                      {usageData?.aggregatedStats?.averageMonthlyKwh?.toFixed(0) ||
+                        'N/A'}{' '}
+                      kWh
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Total Annual</p>
+                    <p className="text-lg font-semibold">
+                      {usageData?.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'}{' '}
+                      kWh
+                    </p>
+                  </div>
+                  {usageData?.aggregatedStats?.averageMonthlyCost && (
+                    <>
+                      <div>
+                        <p className="text-muted-foreground">Avg Monthly Cost</p>
+                        <p className="text-lg font-semibold">
+                          ${usageData.aggregatedStats.averageMonthlyCost.toFixed(2)}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Total Annual Cost</p>
+                        <p className="text-lg font-semibold">
+                          ${usageData.aggregatedStats.totalCost?.toFixed(2) || 'N/A'}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {usageData?.aggregatedStats?.peakMonth && (
+                    <>
+                      <div>
+                        <p className="text-muted-foreground">Peak Month</p>
+                        <p className="text-lg font-semibold">
+                          {usageData.aggregatedStats.peakMonth}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Peak Usage</p>
+                        <p className="text-lg font-semibold">
+                          {usageData.aggregatedStats.peakMonthKwh?.toFixed(0) || 'N/A'}{' '}
+                          kWh
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
+                {usageData.usagePoints && usageData.usagePoints.length > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    {usageData.usagePoints.length} data points recorded
+                  </p>
+                )}
+                <Link to="/usage-data">
                   <Button variant="outline" className="mt-4 w-full">
                     Update Usage Data
                   </Button>
                 </Link>
               </div>
             ) : (
-              <Link to="/upload">
-                <Button className="w-full">Upload Usage Data</Button>
+              <Link to="/usage-data">
+                <Button className="w-full">Add Usage Data</Button>
               </Link>
             )}
           </CardContent>
@@ -117,7 +203,7 @@ export function Dashboard() {
             </Link>
             {(!usageData || !preferences) && (
               <p className="mt-2 text-xs text-muted-foreground">
-                Upload usage data and set preferences first
+                Add usage data and set preferences first
               </p>
             )}
           </CardContent>

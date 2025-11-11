@@ -23,6 +23,7 @@ export function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [extractedData, setExtractedData] = useState<any>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -56,6 +57,9 @@ export function UploadPage() {
       if (isPDF || isImage || isText || isCSV) {
         // Use AI statement reader for all supported formats
         const usageData = await apiClient.readStatement(userId, file);
+        
+        // Store extracted data for preview
+        setExtractedData(usageData);
 
         // Process and store the usage data
         uploadUsageData(
@@ -75,7 +79,7 @@ export function UploadPage() {
               setSuccess(true);
               setTimeout(() => {
                 navigate('/dashboard');
-              }, 2000);
+              }, 3000); // Give user time to see the preview
             },
             onError: err => {
               setError(
@@ -118,23 +122,90 @@ export function UploadPage() {
             </Alert>
           )}
 
-          {success && (
+          {success && extractedData && (
             <Alert>
-              <AlertDescription>
-                Data uploaded successfully! Redirecting to dashboard...
+              <AlertDescription className="space-y-3">
+                <p className="font-semibold">✓ Data extracted and uploaded successfully!</p>
+                <div className="mt-2 rounded-md bg-muted p-3 text-sm">
+                  <p className="font-medium mb-2">Extracted Summary:</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <span className="text-muted-foreground">Total Annual:</span>{' '}
+                      <span className="font-semibold">
+                        {extractedData.aggregatedStats?.totalKwh?.toFixed(0) || 'N/A'} kWh
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Avg Monthly:</span>{' '}
+                      <span className="font-semibold">
+                        {extractedData.aggregatedStats?.averageMonthlyKwh?.toFixed(0) || 'N/A'} kWh
+                      </span>
+                    </div>
+                    {extractedData.aggregatedStats?.totalCost && (
+                      <div>
+                        <span className="text-muted-foreground">Annual Cost:</span>{' '}
+                        <span className="font-semibold">
+                          ${extractedData.aggregatedStats.totalCost.toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                    {extractedData.aggregatedStats?.peakMonth && (
+                      <div>
+                        <span className="text-muted-foreground">Peak Month:</span>{' '}
+                        <span className="font-semibold">
+                          {extractedData.aggregatedStats.peakMonth}
+                        </span>
+                      </div>
+                    )}
+                    {extractedData.usageDataPoints && (
+                      <div className="col-span-2">
+                        <span className="text-muted-foreground">Data Points:</span>{' '}
+                        <span className="font-semibold">
+                          {extractedData.usageDataPoints.length} months
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Redirecting to dashboard in 3 seconds...
+                </p>
               </AlertDescription>
             </Alert>
           )}
 
           <div className="space-y-2">
             <Label htmlFor="file">Energy Bill File</Label>
-            <Input
-              id="file"
-              type="file"
-              accept=".csv,.pdf,.png,.jpg,.jpeg,.txt"
-              onChange={handleFileChange}
-              disabled={isUploading}
-            />
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <Input
+                  id="file"
+                  type="file"
+                  accept=".csv,.pdf,.png,.jpg,.jpeg,.txt"
+                  onChange={handleFileChange}
+                  disabled={isUploading}
+                  className="flex-1 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => document.getElementById('file')?.click()}
+                  disabled={isUploading}
+                >
+                  Browse Files
+                </Button>
+              </div>
+              {file && (
+                <div className="rounded-md border border-green-200 bg-green-50 p-3 dark:border-green-800 dark:bg-green-950">
+                  <p className="text-sm font-medium text-green-800 dark:text-green-200">
+                    ✓ Selected: {file.name}
+                  </p>
+                  <p className="text-xs text-green-600 dark:text-green-400">
+                    Size: {(file.size / 1024).toFixed(2)} KB
+                  </p>
+                </div>
+              )}
+            </div>
             <p className="text-xs text-muted-foreground">
               Supported formats: PDF, PNG, JPG, CSV, TXT. Our AI will
               automatically extract all relevant data from your energy bill.
