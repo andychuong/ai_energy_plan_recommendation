@@ -14,6 +14,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
 import { apiClient } from '@/services/api/client';
+import type { CustomerUsageData } from 'shared/types';
 
 export function UploadPage() {
   const { user } = useAuth();

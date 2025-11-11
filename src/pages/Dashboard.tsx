@@ -66,11 +66,11 @@ export function Dashboard() {
 
       {/* Usage Data Summary Section */}
       {usageData &&
-        usageData.usagePoints &&
-        usageData.usagePoints.length > 0 && (
+        usageData.usageDataPoints &&
+        usageData.usageDataPoints.length > 0 && (
           <div className="mb-8">
             <UsageChart
-              data={usageData.usagePoints}
+              data={usageData.usageDataPoints}
               title="Your Energy Usage"
               description="Monthly energy consumption over time"
             />
@@ -154,9 +154,9 @@ export function Dashboard() {
                     </>
                   )}
                 </div>
-                {usageData.usagePoints && usageData.usagePoints.length > 0 && (
+                {usageData.usageDataPoints && usageData.usageDataPoints.length > 0 && (
                   <p className="text-xs text-muted-foreground">
-                    {usageData.usagePoints.length} data points recorded
+                    {usageData.usageDataPoints.length} data points recorded
                   </p>
                 )}
                 <Link to="/usage-data">

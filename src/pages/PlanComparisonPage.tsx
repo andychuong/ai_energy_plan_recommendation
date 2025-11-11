@@ -74,7 +74,8 @@ export function PlanComparisonPage() {
 
         // Calculate costs for each plan
         const annualKwh =
-          usageData?.totalAnnualKwh || (usageData?.averageMonthlyKwh || 0) * 12;
+          usageData?.aggregatedStats?.totalKwh || 
+          (usageData?.aggregatedStats?.averageMonthlyKwh || 0) * 12;
         const currentAnnualCost =
           usageData?.aggregatedStats?.totalCost ||
           (usageData?.aggregatedStats?.averageMonthlyCost || 0) * 12;
@@ -101,7 +102,7 @@ export function PlanComparisonPage() {
 
             return {
               plan,
-              recommendation,
+              ...(recommendation ? { recommendation } : {}),
               annualCost,
               monthlyCost,
               annualSavings,
@@ -315,11 +316,13 @@ export function PlanComparisonPage() {
                 <tr className="border-b">
                   <td className="p-4 font-medium">Contract Type</td>
                   <td className="p-4 text-center text-muted-foreground">
-                    {usageData?.billingInfo?.currentPlan?.contractType
-                      ? usageData.billingInfo.currentPlan.contractType
+                    {usageData?.billingInfo?.currentPlan && 
+                     'contractType' in usageData.billingInfo.currentPlan &&
+                     usageData.billingInfo.currentPlan.contractType
+                      ? String(usageData.billingInfo.currentPlan.contractType)
                           .charAt(0)
                           .toUpperCase() +
-                        usageData.billingInfo.currentPlan.contractType.slice(1)
+                        String(usageData.billingInfo.currentPlan.contractType).slice(1)
                       : 'N/A'}
                   </td>
                   {plans.map(comparisonPlan => (
@@ -352,7 +355,9 @@ export function PlanComparisonPage() {
                 <tr className="border-b">
                   <td className="p-4 font-medium">Renewable Energy</td>
                   <td className="p-4 text-center text-muted-foreground">
-                    {usageData?.billingInfo?.currentPlan?.renewablePercentage
+                    {usageData?.billingInfo?.currentPlan && 
+                     'renewablePercentage' in usageData.billingInfo.currentPlan &&
+                     usageData.billingInfo.currentPlan.renewablePercentage !== undefined
                       ? `${usageData.billingInfo.currentPlan.renewablePercentage}%`
                       : 'N/A'}
                   </td>
@@ -372,9 +377,11 @@ export function PlanComparisonPage() {
                 <tr className="border-b">
                   <td className="p-4 font-medium">Early Termination Fee</td>
                   <td className="p-4 text-center text-muted-foreground">
-                    {usageData?.billingInfo?.currentPlan?.earlyTerminationFee
+                    {usageData?.billingInfo?.currentPlan && 
+                     'earlyTerminationFee' in usageData.billingInfo.currentPlan &&
+                     usageData.billingInfo.currentPlan.earlyTerminationFee !== undefined
                       ? formatCurrency(
-                          usageData.billingInfo.currentPlan.earlyTerminationFee
+                          Number(usageData.billingInfo.currentPlan.earlyTerminationFee)
                         )
                       : 'N/A'}
                   </td>

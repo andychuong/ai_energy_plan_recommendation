@@ -17,7 +17,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { apiClient } from '@/services/api/client';
-import type { CurrentPlan, UsageDataPoint } from 'shared/types';
+import type { CurrentPlan, UsageDataPoint, CustomerUsageData } from 'shared/types';
 
 interface MonthData {
   month: string;
@@ -168,15 +168,16 @@ export function UsageDataPage() {
 
       // Fallback to usage data billing info
       if (usageData?.billingInfo?.currentPlan) {
+        const currentPlanData = usageData.billingInfo.currentPlan;
         setCurrentPlan({
-          supplierName: usageData.billingInfo.currentPlan.supplierName || '',
-          planName: usageData.billingInfo.currentPlan.planName || '',
+          supplierName: currentPlanData.supplierName || '',
+          planName: ('planName' in currentPlanData && currentPlanData.planName) ? String(currentPlanData.planName) : '',
           contractEndDate:
-            usageData.billingInfo.currentPlan.contractEndDate || '',
+            ('contractEndDate' in currentPlanData && currentPlanData.contractEndDate) ? String(currentPlanData.contractEndDate) : '',
           earlyTerminationFee:
-            usageData.billingInfo.currentPlan.earlyTerminationFee || 0,
+            ('earlyTerminationFee' in currentPlanData && currentPlanData.earlyTerminationFee !== undefined) ? Number(currentPlanData.earlyTerminationFee) : 0,
           contractType:
-            usageData.billingInfo.currentPlan.contractType || 'fixed',
+            ('contractType' in currentPlanData && currentPlanData.contractType) ? String(currentPlanData.contractType) as 'fixed' | 'variable' | 'indexed' | 'hybrid' : 'fixed',
         });
       }
     };
@@ -200,9 +201,9 @@ export function UsageDataPage() {
 
       // Find matching usage data point
       let usagePoint: UsageDataPoint | null = null;
-      if (usageData?.usagePoints) {
+      if (usageData?.usageDataPoints) {
         usagePoint =
-          usageData.usagePoints.find(point => {
+          usageData.usageDataPoints.find((point: UsageDataPoint) => {
             const pointDate = new Date(point.timestamp);
             return (
               pointDate.getMonth() === date.getMonth() &&

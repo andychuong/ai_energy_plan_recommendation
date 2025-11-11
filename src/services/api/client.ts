@@ -15,6 +15,7 @@ import type {
   Recommendation,
   UserPreferences,
   UsagePattern,
+  UsageDataPoint,
   CreateUserPreferencesRequest,
   CreateUsagePatternRequest,
   CreateRecommendationHistoryRequest,
@@ -190,14 +191,14 @@ class ApiClient {
       if (result.data && result.data.length > 0) {
         // Sort by createdAt descending and get the most recent
         const sorted = result.data.sort(
-          (a, b) =>
+          (a: { createdAt: string }, b: { createdAt: string }) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
         const latest = sorted[0];
 
         // Convert to CustomerUsageData format
-        const usagePoints = (latest.usagePoints as UsageDataPoint[]) || [];
-        const billingInfo =
+        const usagePoints: UsageDataPoint[] = (latest.usagePoints as UsageDataPoint[]) || [];
+        const billingInfo: Record<string, unknown> =
           (latest.billingInfo as Record<string, unknown>) || {};
 
         // If user wants to use custom averages, use those instead of calculated values
@@ -243,7 +244,8 @@ class ApiClient {
           } else {
             // Fallback to stored values or calculate from annual kWh if we have a rate
             const annualKwh = totalKwh;
-            const ratePerKwh = billingInfo.currentPlan?.ratePerKwh;
+            const currentPlan = billingInfo.currentPlan as { ratePerKwh?: number } | undefined;
+            const ratePerKwh = currentPlan?.ratePerKwh;
             if (ratePerKwh && annualKwh > 0) {
               totalCost = annualKwh * ratePerKwh;
               averageMonthlyCost = totalCost / 12;
@@ -254,13 +256,13 @@ class ApiClient {
           }
         }
 
-        const result = {
+        const usageDataResult: CustomerUsageData = {
           customerInfo: {
             customerId: userId,
             address: {},
           },
           utilityInfo: {
-            utilityName: billingInfo.currentPlan?.supplierName || 'Unknown',
+            utilityName: (billingInfo.currentPlan as { supplierName?: string })?.supplierName || 'Unknown',
           },
           usageDataPoints: usagePoints,
           aggregatedStats: {
@@ -271,15 +273,15 @@ class ApiClient {
             peakMonth: latest.peakMonth || 'Unknown',
             peakMonthKwh: latest.peakMonthKwh || 0,
           },
-          billingInfo: billingInfo,
+          billingInfo: billingInfo as CustomerUsageData['billingInfo'],
         };
 
         // eslint-disable-next-line no-console
         console.log(
           '[getUsageData] Returning result with aggregatedStats:',
-          result.aggregatedStats
+          usageDataResult.aggregatedStats
         );
-        return result;
+        return usageDataResult;
       }
 
       // No usage data found - check if user wants to use custom averages
@@ -556,7 +558,13 @@ class ApiClient {
 
       // Map to Recommendation format with required fields
       const now = new Date().toISOString();
-      return result.recommendations.map(rec => ({
+      return result.recommendations.map((rec: {
+        planId: string;
+        rank: number;
+        projectedSavings: number;
+        explanation: string;
+        riskFlags?: string[];
+      }) => ({
         recommendationId: `rec-${Date.now()}-${rec.rank}`,
         planId: rec.planId,
         rank: rec.rank,
@@ -1273,7 +1281,7 @@ class ApiClient {
         const profile = result.data[0];
         return {
           state: profile.state || undefined,
-          address: profile.address || undefined,
+          address: (profile.address as Record<string, unknown> | undefined) || undefined,
           useCustomAverages: profile.useCustomAverages ?? undefined,
           customAverageKwh: profile.customAverageKwh ?? undefined,
           customAverageCost: profile.customAverageCost ?? undefined,
