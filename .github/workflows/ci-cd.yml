@@ -157,8 +157,20 @@ jobs:
         run: |
           for dir in amplify/function/*/; do
             if [ -f "$dir/package.json" ]; then
-              echo "Installing dependencies for $dir"
-              cd "$dir" && npm ci && cd - || exit 1
+              # Check if package.json has dependencies
+              if grep -q '"dependencies"' "$dir/package.json" || grep -q '"devDependencies"' "$dir/package.json"; then
+                echo "Installing dependencies for $dir"
+                cd "$dir"
+                if [ -f "package-lock.json" ]; then
+                  npm ci
+                else
+                  echo "No package-lock.json found, running npm install"
+                  npm install --production
+                fi
+                cd - || exit 1
+              else
+                echo "Skipping $dir (no dependencies)"
+              fi
             fi
           done
       
