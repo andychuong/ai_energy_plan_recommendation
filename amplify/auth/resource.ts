@@ -1,5 +1,5 @@
 import { defineAuth } from '@aws-amplify/backend';
-import { secret } from '@aws-amplify/backend';
+// import { secret } from '@aws-amplify/backend'; // Uncomment when re-enabling OAuth
 
 /**
  * Define authentication configuration
@@ -7,7 +7,8 @@ import { secret } from '@aws-amplify/backend';
  * 
  * OAuth Setup:
  * 1. Create OAuth app in Google Cloud Console
- * 2. Set secrets: npx ampx sandbox secret set GOOGLE_CLIENT_ID
+ * 2. Set secrets via Amplify Console (Hosting > Secrets) for production
+ *    OR use: npx ampx sandbox secret set GOOGLE_CLIENT_ID for local dev
  * 3. Set secrets: npx ampx sandbox secret set GOOGLE_CLIENT_SECRET
  * 4. Restart sandbox: npx ampx sandbox
  * 
@@ -16,7 +17,7 @@ import { secret } from '@aws-amplify/backend';
  * Example: 'https://sparksave.app' or 'https://app.sparksave.com'
  * Set to null or empty string to disable production URLs (development only)
  */
-const PRODUCTION_DOMAIN: string | null = 'https://main.d2rn94kbvpfx34.amplifyapp.com';
+// const PRODUCTION_DOMAIN: string | null = 'https://main.d2rn94kbvpfx34.amplifyapp.com'; // Uncomment when re-enabling OAuth
 
 export const auth = defineAuth({
   loginWith: {
