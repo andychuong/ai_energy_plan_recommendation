@@ -153,6 +153,15 @@ jobs:
       - name: Install Amplify Backend CLI
         run: npm install -g @aws-amplify/backend-cli
       
+      - name: Install Lambda function dependencies
+        run: |
+          for dir in amplify/function/*/; do
+            if [ -f "$dir/package.json" ]; then
+              echo "Installing dependencies for $dir"
+              cd "$dir" && npm ci && cd - || exit 1
+            fi
+          done
+      
       - name: Deploy backend to Amplify Gen 2
         run: npx ampx pipeline-deploy --branch main --app-id d2rn94kbvpfx34
         # Note: Secrets are now stored in AWS Parameter Store, not GitHub secrets
