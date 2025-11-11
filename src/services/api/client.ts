@@ -197,7 +197,8 @@ class ApiClient {
         const latest = sorted[0];
 
         // Convert to CustomerUsageData format
-        const usagePoints: UsageDataPoint[] = (latest.usagePoints as UsageDataPoint[]) || [];
+        const usagePoints: UsageDataPoint[] =
+          (latest.usagePoints as UsageDataPoint[]) || [];
         const billingInfo: Record<string, unknown> =
           (latest.billingInfo as Record<string, unknown>) || {};
 
@@ -244,7 +245,9 @@ class ApiClient {
           } else {
             // Fallback to stored values or calculate from annual kWh if we have a rate
             const annualKwh = totalKwh;
-            const currentPlan = billingInfo.currentPlan as { ratePerKwh?: number } | undefined;
+            const currentPlan = billingInfo.currentPlan as
+              | { ratePerKwh?: number }
+              | undefined;
             const ratePerKwh = currentPlan?.ratePerKwh;
             if (ratePerKwh && annualKwh > 0) {
               totalCost = annualKwh * ratePerKwh;
@@ -262,7 +265,9 @@ class ApiClient {
             address: {},
           },
           utilityInfo: {
-            utilityName: (billingInfo.currentPlan as { supplierName?: string })?.supplierName || 'Unknown',
+            utilityName:
+              (billingInfo.currentPlan as { supplierName?: string })
+                ?.supplierName || 'Unknown',
           },
           usageDataPoints: usagePoints,
           aggregatedStats: {
@@ -558,21 +563,23 @@ class ApiClient {
 
       // Map to Recommendation format with required fields
       const now = new Date().toISOString();
-      return result.recommendations.map((rec: {
-        planId: string;
-        rank: number;
-        projectedSavings: number;
-        explanation: string;
-        riskFlags?: string[];
-      }) => ({
-        recommendationId: `rec-${Date.now()}-${rec.rank}`,
-        planId: rec.planId,
-        rank: rec.rank,
-        projectedSavings: rec.projectedSavings,
-        explanation: rec.explanation,
-        riskFlags: rec.riskFlags,
-        createdAt: now,
-      }));
+      return result.recommendations.map(
+        (rec: {
+          planId: string;
+          rank: number;
+          projectedSavings: number;
+          explanation: string;
+          riskFlags?: string[];
+        }) => ({
+          recommendationId: `rec-${Date.now()}-${rec.rank}`,
+          planId: rec.planId,
+          rank: rec.rank,
+          projectedSavings: rec.projectedSavings,
+          explanation: rec.explanation,
+          riskFlags: rec.riskFlags,
+          createdAt: now,
+        })
+      );
     } catch (error) {
       console.error('Error generating recommendations:', error);
       // Fallback to mock data if function call fails
@@ -1281,7 +1288,9 @@ class ApiClient {
         const profile = result.data[0];
         return {
           state: profile.state || undefined,
-          address: (profile.address as Record<string, unknown> | undefined) || undefined,
+          address:
+            (profile.address as Record<string, unknown> | undefined) ||
+            undefined,
           useCustomAverages: profile.useCustomAverages ?? undefined,
           customAverageKwh: profile.customAverageKwh ?? undefined,
           customAverageCost: profile.customAverageCost ?? undefined,

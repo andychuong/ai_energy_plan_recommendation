@@ -17,7 +17,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { apiClient } from '@/services/api/client';
-import type { CurrentPlan, UsageDataPoint, CustomerUsageData } from 'shared/types';
+import type {
+  CurrentPlan,
+  UsageDataPoint,
+  CustomerUsageData,
+} from 'shared/types';
 
 interface MonthData {
   month: string;
@@ -171,13 +175,28 @@ export function UsageDataPage() {
         const currentPlanData = usageData.billingInfo.currentPlan;
         setCurrentPlan({
           supplierName: currentPlanData.supplierName || '',
-          planName: ('planName' in currentPlanData && currentPlanData.planName) ? String(currentPlanData.planName) : '',
+          planName:
+            'planName' in currentPlanData && currentPlanData.planName
+              ? String(currentPlanData.planName)
+              : '',
           contractEndDate:
-            ('contractEndDate' in currentPlanData && currentPlanData.contractEndDate) ? String(currentPlanData.contractEndDate) : '',
+            'contractEndDate' in currentPlanData &&
+            currentPlanData.contractEndDate
+              ? String(currentPlanData.contractEndDate)
+              : '',
           earlyTerminationFee:
-            ('earlyTerminationFee' in currentPlanData && currentPlanData.earlyTerminationFee !== undefined) ? Number(currentPlanData.earlyTerminationFee) : 0,
+            'earlyTerminationFee' in currentPlanData &&
+            currentPlanData.earlyTerminationFee !== undefined
+              ? Number(currentPlanData.earlyTerminationFee)
+              : 0,
           contractType:
-            ('contractType' in currentPlanData && currentPlanData.contractType) ? String(currentPlanData.contractType) as 'fixed' | 'variable' | 'indexed' | 'hybrid' : 'fixed',
+            'contractType' in currentPlanData && currentPlanData.contractType
+              ? (String(currentPlanData.contractType) as
+                  | 'fixed'
+                  | 'variable'
+                  | 'indexed'
+                  | 'hybrid')
+              : 'fixed',
         });
       }
     };

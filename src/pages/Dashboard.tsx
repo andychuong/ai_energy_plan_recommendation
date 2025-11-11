@@ -154,11 +154,12 @@ export function Dashboard() {
                     </>
                   )}
                 </div>
-                {usageData.usageDataPoints && usageData.usageDataPoints.length > 0 && (
-                  <p className="text-xs text-muted-foreground">
-                    {usageData.usageDataPoints.length} data points recorded
-                  </p>
-                )}
+                {usageData.usageDataPoints &&
+                  usageData.usageDataPoints.length > 0 && (
+                    <p className="text-xs text-muted-foreground">
+                      {usageData.usageDataPoints.length} data points recorded
+                    </p>
+                  )}
                 <Link to="/usage-data">
                   <Button variant="outline" className="mt-4 w-full">
                     Update Usage Data
