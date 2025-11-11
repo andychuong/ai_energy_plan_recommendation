@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/99e8fc043a42e52251acc9e4e5aec17270d5a1bbdd50b5d7bec2cca70fb0e567.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/68dc1f7353bc00afc80813f60d5c6279d90a377fe84d1c68516ecd2a32cef0c6.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -65,64 +65,10 @@
             "data": "region"
           }
         ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResourceProviderLambda/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResourceProviderLambdaServiceRole3F02FB0D"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResourceProviderLambda/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResourceProviderLambdaServiceRoleDefaultPolicy080657DD"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResourceProviderLambda/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResourceProviderLambda27823B35"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResourceProvider/framework-onEvent/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResourceProviderframeworkonEventServiceRole0941C6B4"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResourceProvider/framework-onEvent/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResourceProviderframeworkonEventServiceRoleDefaultPolicy749EBE05"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResourceProvider/framework-onEvent/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResourceProviderframeworkonEventA62AE3A8"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/AmplifySecretFetcherResource/Default": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AmplifySecretFetcherResource"
-          }
-        ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifyAuth/UserPool/Resource": [
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifyAuthUserPool4BA7F805"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifyAuth/UserPool/UserPoolDomain/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyAuthUserPoolUserPoolDomain1F688B5B"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifyAuth/GoogleIdP/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifyAuthGoogleIdPA9736819"
           }
         ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifyAuth/UserPoolAppClient/Resource": [
@@ -201,12 +147,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthIdentityPool4815BE49Ref"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthUserPoolUserPoolDomainCF8C567DRef": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthUserPoolUserPoolDomainCF8C567DRef"
           }
         ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthauthenticatedUserRoleE7F32B29Ref": [

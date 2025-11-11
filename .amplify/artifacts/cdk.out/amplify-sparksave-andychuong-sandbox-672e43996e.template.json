@@ -120,36 +120,19 @@
    "Value": "[]"
   },
   "socialProviders": {
-   "Value": "[\"GOOGLE\"]"
+   "Value": ""
   },
   "oauthCognitoDomain": {
-   "Value": {
-    "Fn::Join": [
-     "",
-     [
-      {
-       "Fn::GetAtt": [
-        "auth179371D7",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthUserPoolUserPoolDomainCF8C567DRef"
-       ]
-      },
-      ".auth.",
-      {
-       "Ref": "AWS::Region"
-      },
-      ".amazoncognito.com"
-     ]
-    ]
-   }
+   "Value": ""
   },
   "oauthScope": {
-   "Value": "[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"]"
+   "Value": "[\"profile\",\"phone\",\"email\",\"openid\",\"aws.cognito.signin.user.admin\"]"
   },
   "oauthRedirectSignIn": {
-   "Value": "http://localhost:3000/,http://localhost:3000/auth/callback,https://main.d2rn94kbvpfx34.amplifyapp.com/,https://main.d2rn94kbvpfx34.amplifyapp.com/auth/callback"
+   "Value": "https://example.com"
   },
   "oauthRedirectSignOut": {
-   "Value": "http://localhost:3000/,https://main.d2rn94kbvpfx34.amplifyapp.com/"
+   "Value": ""
   },
   "oauthResponseType": {
    "Value": "code"
@@ -371,7 +354,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/c5229b81e0e80da35a9986a71e6a2e8d73d69d524226bb0c9d28523d876cac4f.json"
+       "/b23a7a7ec65b5b87380948bc0328f463d2b86db6e831663fed88adc34c3b247a.json"
       ]
      ]
     }
