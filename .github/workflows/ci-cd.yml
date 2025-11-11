@@ -153,6 +153,55 @@ jobs:
       - name: Install Amplify Backend CLI
         run: npm install -g @aws-amplify/backend-cli
       
+      - name: Verify secrets exist in Parameter Store
+        run: |
+          echo "Verifying required secrets exist in Parameter Store..."
+          REQUIRED_SECRETS=("GOOGLE_CLIENT_ID" "GOOGLE_CLIENT_SECRET" "OPENROUTER_API_KEY" "EIA_API_KEY")
+          OPTIONAL_SECRETS=("OPENEI_API_KEY")
+          
+          # Check required secrets
+          MISSING_REQUIRED=()
+          for secret_name in "${REQUIRED_SECRETS[@]}"; do
+            PARAM_PATH="/amplify/d2rn94kbvpfx34/main/${secret_name}"
+            if aws ssm get-parameter --name "${PARAM_PATH}" --with-decryption --region us-east-1 > /dev/null 2>&1; then
+              echo "✓ ${secret_name} found at ${PARAM_PATH}"
+            else
+              echo "✗ ${secret_name} NOT found at ${PARAM_PATH}"
+              MISSING_REQUIRED+=("${secret_name}")
+            fi
+          done
+          
+          # Check optional secrets (warn only)
+          for secret_name in "${OPTIONAL_SECRETS[@]}"; do
+            PARAM_PATH="/amplify/d2rn94kbvpfx34/main/${secret_name}"
+            if aws ssm get-parameter --name "${PARAM_PATH}" --with-decryption --region us-east-1 > /dev/null 2>&1; then
+              echo "✓ ${secret_name} found at ${PARAM_PATH}"
+            else
+              echo "⚠ ${secret_name} not found at ${PARAM_PATH} (optional - handler will work without it)"
+              # Create a placeholder value so pipeline-deploy doesn't fail
+              echo "Creating placeholder for ${secret_name}..."
+              aws ssm put-parameter \
+                --name "${PARAM_PATH}" \
+                --value "placeholder-not-used" \
+                --type "SecureString" \
+                --region us-east-1 \
+                --overwrite > /dev/null 2>&1 || echo "  Note: Could not create placeholder (may need manual creation)"
+            fi
+          done
+          
+          # Fail if required secrets are missing
+          if [ ${#MISSING_REQUIRED[@]} -gt 0 ]; then
+            echo ""
+            echo "ERROR: Missing required secrets:"
+            for secret in "${MISSING_REQUIRED[@]}"; do
+              echo "  - ${secret}"
+              echo "    Create with: aws ssm put-parameter --name /amplify/d2rn94kbvpfx34/main/${secret} --value 'your-value' --type SecureString --region us-east-1"
+            done
+            exit 1
+          fi
+          
+          echo "All required secrets verified!"
+      
       - name: Install Lambda function dependencies
         run: |
           for dir in amplify/function/*/; do
