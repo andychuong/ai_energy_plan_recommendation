@@ -10,4 +10,5 @@ amplify
 .env.local
 package-lock.json
 yarn.lock
+amplify_outputs.json
 
