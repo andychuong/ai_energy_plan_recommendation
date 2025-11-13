@@ -777,22 +777,107 @@ export function UsageDataPage() {
     );
   };
 
-  const saveRow = (index: number) => {
-    setMonthlyData(prev =>
-      prev.map((m, i) => {
-        if (i === index) {
-          const kwh = parseFloat(m.editedKwh) || null;
-          const cost = parseFloat(m.editedCost) || null;
+  const saveRow = async (index: number) => {
+    if (!userId) {
+      setError('User ID is required');
+      return;
+    }
+
+    // Save previous state for potential rollback
+    const previousData = [...monthlyData];
+
+    // Update local state first
+    const updatedData = monthlyData.map((m, i) => {
+      if (i === index) {
+        const kwh = parseFloat(m.editedKwh) || null;
+        const cost = parseFloat(m.editedCost) || null;
+        return {
+          ...m,
+          kwh,
+          cost,
+          isEditing: false,
+        };
+      }
+      return m;
+    });
+
+    setMonthlyData(updatedData);
+
+    // Save to backend
+    try {
+      // Get all usage points from updated monthly data
+      const usagePoints: UsageDataPoint[] = updatedData
+        .filter(m => m.kwh !== null && m.kwh > 0)
+        .map(m => {
+          const date = new Date(m.year, getMonthIndex(m.month), 1);
           return {
-            ...m,
-            kwh,
-            cost,
-            isEditing: false,
+            timestamp: date.toISOString(),
+            kwh: m.kwh!,
+            cost: m.cost || undefined,
           };
+        });
+
+      if (usagePoints.length === 0) {
+        setError('No usage data to save');
+        // Revert to previous state
+        setMonthlyData(previousData);
+        return;
+      }
+
+      // Calculate aggregated stats
+      const totalKwh = usagePoints.reduce((sum, p) => sum + p.kwh, 0);
+      const avgMonthlyKwh =
+        usagePoints.length > 0 ? totalKwh / usagePoints.length : 0;
+      const totalCost = usagePoints.reduce((sum, p) => sum + (p.cost || 0), 0);
+      const avgMonthlyCost =
+        usagePoints.length > 0 ? totalCost / usagePoints.length : 0;
+      const peakPoint = usagePoints.reduce(
+        (max, p) => (p.kwh > max.kwh ? p : max),
+        usagePoints[0]
+      );
+      const peakDate = new Date(peakPoint.timestamp);
+      const peakMonth = peakDate.toLocaleString('default', { month: 'long' });
+      const peakMonthKwh = peakPoint.kwh;
+
+      // Save to backend
+      uploadUsageData(
+        {
+          userId,
+          usageData: {
+            userId,
+            usagePoints,
+            totalAnnualKwh: totalKwh,
+            averageMonthlyKwh: avgMonthlyKwh,
+            totalAnnualCost: totalCost,
+            averageMonthlyCost: avgMonthlyCost,
+            peakMonthKwh,
+            peakMonth,
+          },
+        },
+        {
+          onSuccess: async () => {
+            setSuccess(true);
+            await refetchUsageData();
+            setTimeout(() => {
+              setSuccess(false);
+            }, 3000);
+          },
+          onError: err => {
+            setError(
+              err instanceof Error ? err.message : 'Failed to save usage data'
+            );
+            // Revert local state on error
+            setMonthlyData(previousData);
+          },
         }
-        return m;
-      })
-    );
+      );
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : 'Failed to save usage data'
+      );
+      // Revert local state on error
+      setMonthlyData(previousData);
+    }
   };
 
   const cancelEditRow = (index: number) => {
