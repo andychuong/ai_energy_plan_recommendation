@@ -21,6 +21,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const currentUser = await getCurrentUser();
       setUser(currentUser);
     } catch (error) {
+      // User is not authenticated or Amplify not configured
       setUser(null);
     } finally {
       setLoading(false);
@@ -28,10 +29,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    checkUser();
+    // Set a timeout to ensure loading doesn't get stuck
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+
+    checkUser().finally(() => {
+      clearTimeout(timeout);
+    });
+
     // Check user periodically
     const interval = setInterval(checkUser, 5000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
 
   async function signOut() {

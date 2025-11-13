@@ -38,15 +38,21 @@ export function RecommendationCard({
     >
       <CardHeader>
         <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="flex items-center gap-2">
+          <div className="flex-1">
+            <CardTitle className="mb-1">
               #{recommendation.rank} Recommendation
-              {plan && <Badge variant="secondary">{plan.supplierName}</Badge>}
             </CardTitle>
             {plan && (
-              <CardDescription className="mt-1">
-                {plan.planName}
-              </CardDescription>
+              <>
+                <div className="mb-1">
+                  <span className="text-base font-semibold text-foreground">
+                    {plan.supplierName}
+                  </span>
+                </div>
+                <CardDescription className="mt-0">
+                  {plan.planName}
+                </CardDescription>
+              </>
             )}
           </div>
           <div className="text-right">
