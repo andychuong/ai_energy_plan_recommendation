@@ -136,10 +136,7 @@ function createResponse(
   };
 }
 
-export const handler: Handler<
-  HandlerEvent,
-  ReadStatementResponse | { statusCode: number; headers: Record<string, string>; body: string }
-> = async (event) => {
+export const handler: Handler<HandlerEvent, unknown> = async (event) => {
   // Check if this is an HTTP request (Function URL) vs direct invocation
   const httpEvent = event as HttpEvent;
   const isHttpRequest = !!(httpEvent.routeKey || httpEvent.requestContext || httpEvent.rawPath);
@@ -159,7 +156,7 @@ export const handler: Handler<
         statusCode: 200,
         headers: corsHeaders,
         body: JSON.stringify({ success: true }),
-      };
+      } as { statusCode: number; headers: Record<string, string>; body: string };
     }
   }
 
@@ -441,11 +438,11 @@ Important:
 
     // Return HTTP response if called via Function URL
     if (isHttpRequest) {
-      return createResponse(200, response);
+      return createResponse(200, response) as { statusCode: number; headers: Record<string, string>; body: string };
     }
 
     // Return direct invocation response
-    return response;
+    return response as ReadStatementResponse;
   } catch (error) {
     console.error('Error reading statement:', error);
     const errorResponse: ReadStatementResponse = {
@@ -455,11 +452,11 @@ Important:
 
     // Return HTTP error response if called via Function URL
     if (isHttpRequest) {
-      return createResponse(500, errorResponse);
+      return createResponse(500, errorResponse) as { statusCode: number; headers: Record<string, string>; body: string };
     }
 
     // Return direct invocation error response
-    return errorResponse;
+    return errorResponse as ReadStatementResponse;
   }
 };
 

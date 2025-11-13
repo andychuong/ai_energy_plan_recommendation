@@ -86,10 +86,7 @@ function createResponse(
   };
 }
 
-export const handler: Handler<
-  HandlerEvent,
-  SaveUsageDataResponse | { statusCode: number; headers: Record<string, string>; body: string }
-> = async (event) => {
+export const handler: Handler<HandlerEvent, unknown> = async (event) => {
   // Check if this is an HTTP request (Function URL) vs direct invocation
   const httpEvent = event as HttpEvent;
   const isHttpRequest = !!(httpEvent.routeKey || httpEvent.requestContext || httpEvent.rawPath);
