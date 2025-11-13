@@ -21,7 +21,10 @@ export function Header() {
         </Link>
         <nav className="flex items-center space-x-4">
           {loading ? (
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" aria-label="Loading"></div>
+            <div
+              className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent"
+              aria-label="Loading"
+            ></div>
           ) : user ? (
             <>
               <Link to="/dashboard">

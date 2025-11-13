@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * End-to-End Test Script for Austin, Texas User
- * 
+ *
  * This script tests the complete user journey:
  * 1. Sign up a new user
  * 2. Set user profile (Austin, TX)
@@ -11,11 +11,11 @@
  * 6. Compare plans
  * 7. Select a plan
  * 8. Submit feedback
- * 
+ *
  * Test Account Credentials:
  * Email: test.austin.tx@sparksave.test
  * Password: TestAustin2024!
- * 
+ *
  * Real Austin, TX Data Used:
  * - Location: 1234 Oak Street, Austin, TX 78701
  * - Utility: Austin Energy
@@ -26,15 +26,21 @@
  */
 
 import { Amplify } from 'aws-amplify';
-import { signUp, confirmSignUp, signIn, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import {
+  signUp,
+  confirmSignUp,
+  signIn,
+  signOut,
+  getCurrentUser,
+  fetchAuthSession,
+} from 'aws-amplify/auth';
 import { generateClient } from 'aws-amplify/data';
 import outputs from '../amplify_outputs.json';
-import type { Schema } from '../amplify/data/resource';
 
 // Configure Amplify
 Amplify.configure(outputs);
 
-const dataClient = generateClient<Schema>({
+const dataClient = generateClient({
   authMode: 'userPool',
 });
 
@@ -56,24 +62,24 @@ const AUSTIN_DATA = {
   currentRate: 0.118, // $0.118/kWh
   // Typical monthly usage for 2,000 sq ft home in Austin
   monthlyUsage: [
-    { month: '2024-01', kwh: 980, cost: 115.64 },   // Winter (heating)
+    { month: '2024-01', kwh: 980, cost: 115.64 }, // Winter (heating)
     { month: '2024-02', kwh: 920, cost: 108.56 },
-    { month: '2024-03', kwh: 1050, cost: 123.90 },
-    { month: '2024-04', kwh: 1180, cost: 139.24 },  // Spring
-    { month: '2024-05', kwh: 1320, cost: 155.76 },  // Summer starts
-    { month: '2024-06', kwh: 1450, cost: 171.10 },  // Peak summer (AC)
-    { month: '2024-07', kwh: 1580, cost: 186.44 },  // Peak summer (AC)
-    { month: '2024-08', kwh: 1520, cost: 179.36 },  // Peak summer (AC)
-    { month: '2024-09', kwh: 1380, cost: 162.84 },  // Summer ends
-    { month: '2024-10', kwh: 1200, cost: 141.60 },  // Fall
+    { month: '2024-03', kwh: 1050, cost: 123.9 },
+    { month: '2024-04', kwh: 1180, cost: 139.24 }, // Spring
+    { month: '2024-05', kwh: 1320, cost: 155.76 }, // Summer starts
+    { month: '2024-06', kwh: 1450, cost: 171.1 }, // Peak summer (AC)
+    { month: '2024-07', kwh: 1580, cost: 186.44 }, // Peak summer (AC)
+    { month: '2024-08', kwh: 1520, cost: 179.36 }, // Peak summer (AC)
+    { month: '2024-09', kwh: 1380, cost: 162.84 }, // Summer ends
+    { month: '2024-10', kwh: 1200, cost: 141.6 }, // Fall
     { month: '2024-11', kwh: 1020, cost: 120.36 },
-    { month: '2024-12', kwh: 980, cost: 115.64 },   // Winter
+    { month: '2024-12', kwh: 980, cost: 115.64 }, // Winter
   ],
   // Calculated stats
   totalAnnualKwh: 13800,
   totalAnnualCost: 1628.44,
   averageMonthlyKwh: 1150,
-  averageMonthlyCost: 135.70,
+  averageMonthlyCost: 135.7,
   peakMonth: 'July',
   peakMonthKwh: 1580,
 };
@@ -153,10 +159,16 @@ async function testSetUserProfile(userId) {
       city: 'Austin',
       zipCode: '78701',
     });
-    log(`✅ User profile created: ${JSON.stringify(profile.data, null, 2)}`, 'green');
+    log(
+      `✅ User profile created: ${JSON.stringify(profile.data, null, 2)}`,
+      'green'
+    );
     return profile.data;
   } catch (error) {
-    if (error.errors?.[0]?.errorType === 'DynamoDB:ConditionalCheckFailedException') {
+    if (
+      error.errors?.[0]?.errorType ===
+      'DynamoDB:ConditionalCheckFailedException'
+    ) {
       log('⚠️  Profile already exists. Updating...', 'yellow');
       const existing = await dataClient.models.UserProfile.list({
         filter: { userId: { eq: userId } },
@@ -181,11 +193,17 @@ async function testUploadUsageData(userId) {
   logStep(4, 'Uploading 12 months of usage data...');
   try {
     const usageDataPoints = AUSTIN_DATA.monthlyUsage.map((month, index) => ({
-      timestamp: new Date(`2024-${String(month.month.split('-')[1]).padStart(2, '0')}-15`).toISOString(),
+      timestamp: new Date(
+        `2024-${String(month.month.split('-')[1]).padStart(2, '0')}-15`
+      ).toISOString(),
       kwh: month.kwh,
       cost: month.cost,
-      periodStart: new Date(`2024-${String(month.month.split('-')[1]).padStart(2, '0')}-01`).toISOString(),
-      periodEnd: new Date(`2024-${String(month.month.split('-')[1]).padStart(2, '0')}-${new Date(2024, parseInt(month.month.split('-')[1]) - 1, 0).getDate()}`).toISOString(),
+      periodStart: new Date(
+        `2024-${String(month.month.split('-')[1]).padStart(2, '0')}-01`
+      ).toISOString(),
+      periodEnd: new Date(
+        `2024-${String(month.month.split('-')[1]).padStart(2, '0')}-${new Date(2024, parseInt(month.month.split('-')[1]) - 1, 0).getDate()}`
+      ).toISOString(),
     }));
 
     const usageData = await dataClient.models.CustomerUsageData.create({
@@ -213,9 +231,15 @@ async function testUploadUsageData(userId) {
       },
     });
 
-    log(`✅ Usage data uploaded: ${usageDataPoints.length} data points`, 'green');
+    log(
+      `✅ Usage data uploaded: ${usageDataPoints.length} data points`,
+      'green'
+    );
     log(`   Total Annual Usage: ${AUSTIN_DATA.totalAnnualKwh} kWh`, 'green');
-    log(`   Total Annual Cost: $${AUSTIN_DATA.totalAnnualCost.toFixed(2)}`, 'green');
+    log(
+      `   Total Annual Cost: $${AUSTIN_DATA.totalAnnualCost.toFixed(2)}`,
+      'green'
+    );
     log(`   Average Monthly: ${AUSTIN_DATA.averageMonthlyKwh} kWh`, 'green');
     return usageData.data;
   } catch (error) {
@@ -237,10 +261,16 @@ async function testSetCurrentPlan(userId) {
       contractEndDate: null, // No end date for variable rate
     });
 
-    log(`✅ Current plan set: ${AUSTIN_DATA.utilityName} at $${AUSTIN_DATA.currentRate}/kWh`, 'green');
+    log(
+      `✅ Current plan set: ${AUSTIN_DATA.utilityName} at $${AUSTIN_DATA.currentRate}/kWh`,
+      'green'
+    );
     return currentPlan.data;
   } catch (error) {
-    if (error.errors?.[0]?.errorType === 'DynamoDB:ConditionalCheckFailedException') {
+    if (
+      error.errors?.[0]?.errorType ===
+      'DynamoDB:ConditionalCheckFailedException'
+    ) {
       log('⚠️  Plan already exists. Updating...', 'yellow');
       const existing = await dataClient.models.CurrentPlan.list({
         filter: { userId: { eq: userId } },
@@ -272,7 +302,10 @@ async function testSetUserPreferences(userId) {
     log(`✅ User preferences set`, 'green');
     return preferences.data;
   } catch (error) {
-    if (error.errors?.[0]?.errorType === 'DynamoDB:ConditionalCheckFailedException') {
+    if (
+      error.errors?.[0]?.errorType ===
+      'DynamoDB:ConditionalCheckFailedException'
+    ) {
       log('⚠️  Preferences already exist. Updating...', 'yellow');
       const existing = await dataClient.models.UserPreferences.list({
         filter: { userId: { eq: userId } },
@@ -326,14 +359,23 @@ async function testGenerateRecommendations(userId) {
     }
 
     const result = await response.json();
-    log(`✅ Recommendations generated: ${result.recommendations?.length || 0} plans`, 'green');
-    
+    log(
+      `✅ Recommendations generated: ${result.recommendations?.length || 0} plans`,
+      'green'
+    );
+
     if (result.recommendations && result.recommendations.length > 0) {
       log('\n📊 Top Recommendations:', 'yellow');
       result.recommendations.slice(0, 3).forEach((rec, index) => {
-        log(`   ${index + 1}. ${rec.plan.supplierName} - ${rec.plan.planName}`, 'yellow');
+        log(
+          `   ${index + 1}. ${rec.plan.supplierName} - ${rec.plan.planName}`,
+          'yellow'
+        );
         log(`      Rate: $${rec.plan.ratePerKwh.toFixed(3)}/kWh`, 'yellow');
-        log(`      Annual Savings: $${rec.annualSavings?.toFixed(2) || 'N/A'}`, 'yellow');
+        log(
+          `      Annual Savings: $${rec.annualSavings?.toFixed(2) || 'N/A'}`,
+          'yellow'
+        );
       });
     }
 
@@ -350,7 +392,8 @@ async function testSubmitFeedback(userId) {
     const feedback = await dataClient.models.Feedback.create({
       userId,
       rating: 5,
-      comments: 'Great recommendations! Found a better plan that saves me $200/year.',
+      comments:
+        'Great recommendations! Found a better plan that saves me $200/year.',
       recommendationId: null, // Optional
     });
 
@@ -365,7 +408,7 @@ async function testSubmitFeedback(userId) {
 async function runTests() {
   log('\n🧪 Starting End-to-End Test for Austin, Texas User', 'blue');
   log('='.repeat(60), 'blue');
-  
+
   let userId = null;
 
   try {
@@ -405,13 +448,15 @@ async function runTests() {
     log(`   Password: ${TEST_PASSWORD}`, 'yellow');
     log(`   User ID: ${userId}`, 'yellow');
     log('\n📊 Test Data Summary:', 'yellow');
-    log(`   Location: ${AUSTIN_DATA.address.street}, ${AUSTIN_DATA.address.city}, ${AUSTIN_DATA.address.state} ${AUSTIN_DATA.address.zipCode}`, 'yellow');
+    log(
+      `   Location: ${AUSTIN_DATA.address.street}, ${AUSTIN_DATA.address.city}, ${AUSTIN_DATA.address.state} ${AUSTIN_DATA.address.zipCode}`,
+      'yellow'
+    );
     log(`   Utility: ${AUSTIN_DATA.utilityName}`, 'yellow');
     log(`   Current Rate: $${AUSTIN_DATA.currentRate}/kWh`, 'yellow');
     log(`   Annual Usage: ${AUSTIN_DATA.totalAnnualKwh} kWh`, 'yellow');
     log(`   Annual Cost: $${AUSTIN_DATA.totalAnnualCost.toFixed(2)}`, 'yellow');
     log(`   Average Monthly: ${AUSTIN_DATA.averageMonthlyKwh} kWh`, 'yellow');
-
   } catch (error) {
     log(`\n❌ Test failed: ${error.message}`, 'red');
     log(`   Stack: ${error.stack}`, 'red');
@@ -424,6 +469,3 @@ runTests().catch(error => {
   log(`\n❌ Fatal error: ${error.message}`, 'red');
   process.exit(1);
 });
-
-
-

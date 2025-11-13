@@ -63,5 +63,3 @@ These files can be uploaded to the application's statement reader to:
 ## Format
 
 The CSV files are formatted to be compatible with the `read-statement` Lambda function, which uses AI to extract structured data from various file formats including CSV.
-
-
