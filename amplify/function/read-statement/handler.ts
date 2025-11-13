@@ -97,6 +97,25 @@ interface ReadStatementResponse {
   error?: string;
 }
 
+// HTTP event structure for Function URL
+interface HttpEvent {
+  requestContext?: {
+    http?: {
+      method?: string;
+    };
+    httpMethod?: string;
+  };
+  httpMethod?: string;
+  body?: string | unknown;
+  routeKey?: string;
+  rawPath?: string;
+  headers?: {
+    [key: string]: string | undefined;
+  };
+}
+
+type HandlerEvent = ReadStatementEvent | HttpEvent;
+
 // CORS headers for Function URL responses
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -118,21 +137,23 @@ function createResponse(
 }
 
 export const handler: Handler<
-  ReadStatementEvent | { requestContext?: any; httpMethod?: string; body?: string; routeKey?: string; rawPath?: string; headers?: any },
+  HandlerEvent,
   ReadStatementResponse | { statusCode: number; headers: Record<string, string>; body: string }
 > = async (event) => {
   // Check if this is an HTTP request (Function URL) vs direct invocation
-  const isHttpRequest = !!(event as any).routeKey || !!(event as any).requestContext || !!(event as any).rawPath;
+  const httpEvent = event as HttpEvent;
+  const isHttpRequest = !!(httpEvent.routeKey || httpEvent.requestContext || httpEvent.rawPath);
   const isDirectInvocation = !!(event as ReadStatementEvent).userId && !isHttpRequest;
 
   // Handle OPTIONS preflight request
   if (isHttpRequest && !isDirectInvocation) {
-    const httpMethod = (event as any).requestContext?.http?.method || 
-                       (event as any).requestContext?.httpMethod ||
-                       (event as any).httpMethod ||
-                       ((event as any).headers?.['x-amzn-http-method'] || '').toUpperCase();
+    const httpMethod = httpEvent.requestContext?.http?.method || 
+                       httpEvent.requestContext?.httpMethod ||
+                       httpEvent.httpMethod ||
+                       (httpEvent.headers?.['x-amzn-http-method'] || '').toUpperCase();
     
     if (httpMethod === 'OPTIONS' || httpMethod === 'options') {
+      // eslint-disable-next-line no-console
       console.log('[read-statement] OPTIONS request detected');
       return {
         statusCode: 200,
@@ -144,11 +165,11 @@ export const handler: Handler<
 
   // Parse Function URL HTTP request
   let requestData: ReadStatementEvent;
-  if (isHttpRequest && (event as any).body) {
+  if (isHttpRequest && httpEvent.body) {
     try {
-      const body = typeof (event as any).body === 'string' 
-        ? JSON.parse((event as any).body) 
-        : (event as any).body;
+      const body = typeof httpEvent.body === 'string' 
+        ? JSON.parse(httpEvent.body) 
+        : httpEvent.body;
       requestData = body as ReadStatementEvent;
     } catch (error) {
       console.error('[read-statement] Error parsing request body:', error);
@@ -369,7 +390,7 @@ Important:
         ? 'openai/gpt-4o' // GPT-4 Vision for images/PDFs
         : 'openai/gpt-4-turbo'; // GPT-4 Turbo for text/CSV
 
-    const response = await openrouter.chat.completions.create({
+    const aiResponse = await openrouter.chat.completions.create({
       model,
       messages,
       response_format: { type: 'json_object' },
@@ -378,7 +399,7 @@ Important:
 
     // Parse extracted data
     const extractedData = JSON.parse(
-      response.choices[0].message.content || '{}'
+      aiResponse.choices[0].message.content || '{}'
     );
 
     // Validate and normalize the extracted data

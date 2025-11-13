@@ -37,14 +37,14 @@ export function RecommendationCard({
     >
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <CardTitle className="mb-2">
               #{recommendation.rank} Recommendation
             </CardTitle>
             {plan && (
               <>
                 <div className="mb-2">
-                  <h3 className="text-lg font-bold text-foreground leading-tight break-words">
+                  <h3 className="break-words text-lg font-bold leading-tight text-foreground">
                     {plan.supplierName}
                   </h3>
                 </div>
@@ -54,7 +54,7 @@ export function RecommendationCard({
               </>
             )}
           </div>
-          <div className="text-right flex-shrink-0">
+          <div className="flex-shrink-0 text-right">
             <div
               className={`text-2xl font-bold ${isPositive ? 'text-green-600' : 'text-red-600'}`}
             >

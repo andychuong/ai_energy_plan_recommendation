@@ -47,6 +47,25 @@ interface SaveUsageDataResponse {
   error?: string;
 }
 
+// HTTP event structure for Function URL
+interface HttpEvent {
+  requestContext?: {
+    http?: {
+      method?: string;
+    };
+    httpMethod?: string;
+  };
+  httpMethod?: string;
+  body?: string | unknown;
+  routeKey?: string;
+  rawPath?: string;
+  headers?: {
+    [key: string]: string | undefined;
+  };
+}
+
+type HandlerEvent = SaveUsageDataEvent | HttpEvent;
+
 // CORS headers for Function URL responses
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -68,21 +87,23 @@ function createResponse(
 }
 
 export const handler: Handler<
-  SaveUsageDataEvent | { requestContext?: any; httpMethod?: string; body?: string; routeKey?: string; rawPath?: string; headers?: any },
+  HandlerEvent,
   SaveUsageDataResponse | { statusCode: number; headers: Record<string, string>; body: string }
 > = async (event) => {
   // Check if this is an HTTP request (Function URL) vs direct invocation
-  const isHttpRequest = !!(event as any).routeKey || !!(event as any).requestContext || !!(event as any).rawPath;
+  const httpEvent = event as HttpEvent;
+  const isHttpRequest = !!(httpEvent.routeKey || httpEvent.requestContext || httpEvent.rawPath);
   const isDirectInvocation = !!(event as SaveUsageDataEvent).userId && !isHttpRequest;
 
   // Handle OPTIONS preflight request
   if (isHttpRequest && !isDirectInvocation) {
-    const httpMethod = (event as any).requestContext?.http?.method || 
-                       (event as any).requestContext?.httpMethod ||
-                       (event as any).httpMethod ||
-                       ((event as any).headers?.['x-amzn-http-method'] || '').toUpperCase();
+    const httpMethod = httpEvent.requestContext?.http?.method || 
+                       httpEvent.requestContext?.httpMethod ||
+                       httpEvent.httpMethod ||
+                       (httpEvent.headers?.['x-amzn-http-method'] || '').toUpperCase();
     
     if (httpMethod === 'OPTIONS' || httpMethod === 'options') {
+      // eslint-disable-next-line no-console
       console.log('[save-usage-data] OPTIONS request detected');
       return {
         statusCode: 200,
@@ -94,11 +115,11 @@ export const handler: Handler<
 
   // Parse Function URL HTTP request
   let requestData: SaveUsageDataEvent;
-  if (isHttpRequest && (event as any).body) {
+  if (isHttpRequest && httpEvent.body) {
     try {
-      const body = typeof (event as any).body === 'string' 
-        ? JSON.parse((event as any).body) 
-        : (event as any).body;
+      const body = typeof httpEvent.body === 'string' 
+        ? JSON.parse(httpEvent.body) 
+        : httpEvent.body;
       requestData = body as SaveUsageDataEvent;
     } catch (error) {
       console.error('[save-usage-data] Error parsing request body:', error);

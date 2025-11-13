@@ -49,12 +49,6 @@
    "stackOutputs": [
     "definedFunctions"
    ]
-  },
-  "AWS::Amplify::Custom": {
-   "version": "1",
-   "stackOutputs": [
-    "customOutputs"
-   ]
   }
  },
  "Outputs": {
@@ -105,7 +99,7 @@
    "Value": "[\"email\"]"
   },
   "verificationMechanisms": {
-   "Value": "[]"
+   "Value": "[\"email\"]"
   },
   "passwordPolicyMinLength": {
    "Value": "8"
@@ -259,66 +253,7 @@
         "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionprocessusagedatalambdaDAC73B89Ref"
        ]
       },
-      "\",\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaF8588808Ref"
-       ]
-      },
-      "\",\"",
-      {
-       "Fn::GetAtt": [
-        "auth179371D7",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996eauthautoconfirmuserlambda040D2C15Ref"
-       ]
-      },
       "\"]"
-     ]
-    ]
-   }
-  },
-  "customOutputs": {
-   "Value": {
-    "Fn::Join": [
-     "",
-     [
-      "{\"custom\":{\"generateRecommendationsFunction\":{\"url\":\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctiongeneraterecommendationslambdaFunctionUrlEA2980EEFunctionUrl"
-       ]
-      },
-      "\"},\"readStatementFunction\":{\"url\":\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaFunctionUrl910E4354FunctionUrl"
-       ]
-      },
-      "\"},\"saveCurrentPlanFunction\":{\"url\":\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaFunctionUrl428B2346FunctionUrl"
-       ]
-      },
-      "\"},\"saveUsageDataFunction\":{\"url\":\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaFunctionUrlC9C7406EFunctionUrl"
-       ]
-      },
-      "\"},\"updatePlanCatalogFunction\":{\"url\":\"",
-      {
-       "Fn::GetAtt": [
-        "function1351588B",
-        "Outputs.amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaFunctionUrlB93EE404FunctionUrl"
-       ]
-      },
-      "\"}},\"version\":\"1.4\"}"
      ]
     ]
    }
@@ -354,7 +289,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/b23a7a7ec65b5b87380948bc0328f463d2b86db6e831663fed88adc34c3b247a.json"
+       "/4e9f1beda4474dff66fb2e6e70f1434850d43e3c2bc9515444510f0efc951959.json"
       ]
      ]
     }
@@ -482,7 +417,7 @@
        {
         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
        },
-       "/a53262870bfcb9f1c394ae7ec3be9285345555a6d6a1891a9fd568345f21fd4c.json"
+       "/a47e63e8eb7a08230f4f89b5e3b5bfedf74d9759a8a9a31a4ab73200eaea5c50.json"
       ]
      ]
     }

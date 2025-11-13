@@ -22,7 +22,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/68dc1f7353bc00afc80813f60d5c6279d90a377fe84d1c68516ecd2a32cef0c6.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/a8f1120718f630fa1146f1158a662d90f2a375b85989c628b52e779e39ac15ec.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -101,24 +101,6 @@
             "data": "amplifyAuthIdentityPoolRoleAttachment045F17C8"
           }
         ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/auto-confirm-user-lambda/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "autoconfirmuserlambdaServiceRoleA21ABFE9"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/auto-confirm-user-lambda/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "autoconfirmuserlambda626CB722"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/auto-confirm-user-lambda/CognitoInvoke": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "autoconfirmuserlambdaCognitoInvoke61740B20"
-          }
-        ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
@@ -159,12 +141,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "amplifysparksaveandychuongsandbox672e43996eauthamplifyAuthunauthenticatedUserRole8B78DAB5Ref"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/auth/amplifysparksaveandychuongsandbox672e43996eauthautoconfirmuserlambda040D2C15Ref": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996eauthautoconfirmuserlambda040D2C15Ref"
           }
         ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/auth.NestedStack/auth.NestedStackResource": [
@@ -4921,24 +4897,6 @@
             "data": "updateplancataloglambda104EA566"
           }
         ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/FunctionUrl/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "updateplancataloglambdaFunctionUrlAB21742E"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/invoke-function-url": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "updateplancataloglambdainvokefunctionurlB3DF4ACF"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/update-plan-catalog-lambda/invoke-function": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "updateplancataloglambdainvokefunctionE185E757"
-          }
-        ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -4957,24 +4915,6 @@
             "data": "savecurrentplanlambda5E810A95"
           }
         ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/FunctionUrl/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "savecurrentplanlambdaFunctionUrl3C4AB2E0"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/invoke-function-url": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "savecurrentplanlambdainvokefunctionurl20CD4CF0"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-current-plan-lambda/invoke-function": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "savecurrentplanlambdainvokefunctionA9200958"
-          }
-        ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -4991,24 +4931,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "saveusagedatalambda36BC2926"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/FunctionUrl/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "saveusagedatalambdaFunctionUrl10274473"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/invoke-function-url": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "saveusagedatalambdainvokefunctionurl24518B2E"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/save-usage-data-lambda/invoke-function": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "saveusagedatalambdainvokefunction8624E500"
           }
         ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/function/normalize-data-lambda/ServiceRole/Resource": [
@@ -5047,24 +4969,6 @@
             "data": "generaterecommendationslambda2312FCCB"
           }
         ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/FunctionUrl/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "generaterecommendationslambdaFunctionUrlF22E796D"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/invoke-function-url": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "generaterecommendationslambdainvokefunctionurlC32AEA1F"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/generate-recommendations-lambda/invoke-function": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "generaterecommendationslambdainvokefunction62D6F452"
-          }
-        ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/function/process-usage-data-lambda/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -5081,36 +4985,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "readstatementlambdaServiceRole98C3CFF7"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "readstatementlambdaServiceRoleDefaultPolicy735B6007"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "readstatementlambda5CD6B74F"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/FunctionUrl/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "readstatementlambdaFunctionUrl29574C44"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/invoke-function-url": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "readstatementlambdainvokefunctionurlE069B06B"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/read-statement-lambda/invoke-function": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "readstatementlambdainvokefunction68B13F3E"
           }
         ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/function/CDKMetadata/Default": [
@@ -5179,42 +5053,6 @@
             "data": "amplifysparksaveandychuongsandbox672e43996efunctionprocessusagedatalambdaDAC73B89Ref"
           }
         ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaF8588808Ref": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaF8588808Ref"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/amplifysparksaveandychuongsandbox672e43996efunctiongeneraterecommendationslambdaFunctionUrlEA2980EEFunctionUrl": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996efunctiongeneraterecommendationslambdaFunctionUrlEA2980EEFunctionUrl"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaFunctionUrl910E4354FunctionUrl": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996efunctionreadstatementlambdaFunctionUrl910E4354FunctionUrl"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaFunctionUrl428B2346FunctionUrl": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996efunctionsavecurrentplanlambdaFunctionUrl428B2346FunctionUrl"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaFunctionUrlC9C7406EFunctionUrl": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996efunctionsaveusagedatalambdaFunctionUrlC9C7406EFunctionUrl"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/function/amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaFunctionUrlB93EE404FunctionUrl": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "amplifysparksaveandychuongsandbox672e43996efunctionupdateplancataloglambdaFunctionUrlB93EE404FunctionUrl"
-          }
-        ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/function.NestedStack/function.NestedStackResource": [
           {
             "type": "aws:cdk:logicalId",
@@ -5225,12 +5063,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "definedFunctions"
-          }
-        ],
-        "/amplify-sparksave-andychuong-sandbox-672e43996e/customOutputs": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "customOutputs"
           }
         ],
         "/amplify-sparksave-andychuong-sandbox-672e43996e/CDKMetadata/Default": [
