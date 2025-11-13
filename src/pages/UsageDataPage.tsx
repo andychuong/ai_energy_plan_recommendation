@@ -828,9 +828,6 @@ export function UsageDataPage() {
       const totalKwh = usagePoints.reduce((sum, p) => sum + p.kwh, 0);
       const avgMonthlyKwh =
         usagePoints.length > 0 ? totalKwh / usagePoints.length : 0;
-      const totalCost = usagePoints.reduce((sum, p) => sum + (p.cost || 0), 0);
-      const avgMonthlyCost =
-        usagePoints.length > 0 ? totalCost / usagePoints.length : 0;
       const peakPoint = usagePoints.reduce(
         (max, p) => (p.kwh > max.kwh ? p : max),
         usagePoints[0]
@@ -848,8 +845,6 @@ export function UsageDataPage() {
             usagePoints,
             totalAnnualKwh: totalKwh,
             averageMonthlyKwh: avgMonthlyKwh,
-            totalAnnualCost: totalCost,
-            averageMonthlyCost: avgMonthlyCost,
             peakMonthKwh,
             peakMonth,
           },
