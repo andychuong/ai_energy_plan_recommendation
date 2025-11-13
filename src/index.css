@@ -57,3 +57,70 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Amplify Authenticator Button Visibility Fixes */
+@layer components {
+  /* Make all Amplify buttons visible with proper contrast - always visible, no hover required */
+  [data-amplify-authenticator] button[type="submit"],
+  [data-amplify-authenticator] button[type="button"],
+  [data-amplify-authenticator] .amplify-button,
+  [data-amplify-authenticator] button.amplify-button,
+  [data-amplify-authenticator] button {
+    background-color: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+    border: 1px solid hsl(var(--border)) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-flex !important;
+    min-height: 2.5rem !important;
+    font-weight: 500 !important;
+  }
+
+  /* Hover states - maintain visibility */
+  [data-amplify-authenticator] button[type="submit"]:hover,
+  [data-amplify-authenticator] button[type="button"]:hover,
+  [data-amplify-authenticator] .amplify-button:hover,
+  [data-amplify-authenticator] button:hover {
+    background-color: hsl(var(--primary) / 0.9) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Ensure tabs are always visible */
+  [data-amplify-authenticator] [role="tablist"] button,
+  [data-amplify-authenticator] [role="tab"],
+  [data-amplify-authenticator] button[role="tab"] {
+    color: hsl(var(--foreground)) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+  }
+
+  [data-amplify-authenticator] [role="tab"][aria-selected="true"],
+  [data-amplify-authenticator] button[role="tab"][aria-selected="true"] {
+    color: hsl(var(--primary)) !important;
+    border-bottom-color: hsl(var(--primary)) !important;
+    opacity: 1 !important;
+  }
+
+  /* Make Google sign-in button visible */
+  [data-amplify-authenticator] button[data-variation="primary"],
+  [data-amplify-authenticator] button[aria-label*="Google"] {
+    background-color: white !important;
+    color: #1f2937 !important;
+    border: 1px solid hsl(var(--border)) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Ensure all submit buttons (Sign in, Create Account) are always visible */
+  [data-amplify-authenticator] form button[type="submit"],
+  [data-amplify-authenticator] button[type="submit"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-color: hsl(var(--primary)) !important;
+    color: hsl(var(--primary-foreground)) !important;
+  }
+}

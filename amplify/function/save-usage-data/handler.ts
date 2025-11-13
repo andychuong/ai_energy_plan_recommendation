@@ -47,22 +47,93 @@ interface SaveUsageDataResponse {
   error?: string;
 }
 
-export const handler: Handler<SaveUsageDataEvent, SaveUsageDataResponse> = async (event) => {
+// CORS headers for Function URL responses
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Content-Type': 'application/json',
+};
+
+// Helper to create HTTP response
+function createResponse(
+  statusCode: number,
+  body: SaveUsageDataResponse
+): { statusCode: number; headers: Record<string, string>; body: string } {
+  return {
+    statusCode,
+    headers: corsHeaders,
+    body: JSON.stringify(body),
+  };
+}
+
+export const handler: Handler<
+  SaveUsageDataEvent | { requestContext?: any; httpMethod?: string; body?: string; routeKey?: string; rawPath?: string; headers?: any },
+  SaveUsageDataResponse | { statusCode: number; headers: Record<string, string>; body: string }
+> = async (event) => {
+  // Check if this is an HTTP request (Function URL) vs direct invocation
+  const isHttpRequest = !!(event as any).routeKey || !!(event as any).requestContext || !!(event as any).rawPath;
+  const isDirectInvocation = !!(event as SaveUsageDataEvent).userId && !isHttpRequest;
+
+  // Handle OPTIONS preflight request
+  if (isHttpRequest && !isDirectInvocation) {
+    const httpMethod = (event as any).requestContext?.http?.method || 
+                       (event as any).requestContext?.httpMethod ||
+                       (event as any).httpMethod ||
+                       ((event as any).headers?.['x-amzn-http-method'] || '').toUpperCase();
+    
+    if (httpMethod === 'OPTIONS' || httpMethod === 'options') {
+      console.log('[save-usage-data] OPTIONS request detected');
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: JSON.stringify({ success: true }),
+      };
+    }
+  }
+
+  // Parse Function URL HTTP request
+  let requestData: SaveUsageDataEvent;
+  if (isHttpRequest && (event as any).body) {
+    try {
+      const body = typeof (event as any).body === 'string' 
+        ? JSON.parse((event as any).body) 
+        : (event as any).body;
+      requestData = body as SaveUsageDataEvent;
+    } catch (error) {
+      console.error('[save-usage-data] Error parsing request body:', error);
+      return createResponse(400, {
+        success: false,
+        error: 'Invalid request body',
+      });
+    }
+  } else {
+    // Direct invocation
+    requestData = event as SaveUsageDataEvent;
+  }
   try {
-    const { userId, usageData } = event;
+    const { userId, usageData } = requestData;
 
     if (!userId) {
-      return {
+      const errorResponse: SaveUsageDataResponse = {
         success: false,
         error: 'User ID is required',
       };
+      if (isHttpRequest) {
+        return createResponse(400, errorResponse);
+      }
+      return errorResponse;
     }
 
     if (!usageData.usagePoints || usageData.usagePoints.length === 0) {
-      return {
+      const errorResponse: SaveUsageDataResponse = {
         success: false,
         error: 'Usage points are required',
       };
+      if (isHttpRequest) {
+        return createResponse(400, errorResponse);
+      }
+      return errorResponse;
     }
 
     const now = new Date().toISOString();
@@ -115,11 +186,18 @@ export const handler: Handler<SaveUsageDataEvent, SaveUsageDataResponse> = async
         updatedAt: now,
       });
 
-      return {
+      const response: SaveUsageDataResponse = {
         success: true,
         usageDataId: latest.usageDataId || latest.id,
         message: 'Usage data updated successfully',
       };
+
+      // Return HTTP response if called via Function URL
+      if (isHttpRequest) {
+        return createResponse(200, response);
+      }
+
+      return response;
     } else {
       // No existing data, create a new record
       const usageDataId = `usage-${userId}-${Date.now()}`;
@@ -136,18 +214,32 @@ export const handler: Handler<SaveUsageDataEvent, SaveUsageDataResponse> = async
         updatedAt: now,
       });
 
-      return {
+      const response: SaveUsageDataResponse = {
         success: true,
         usageDataId,
         message: 'Usage data saved successfully',
       };
+
+      // Return HTTP response if called via Function URL
+      if (isHttpRequest) {
+        return createResponse(200, response);
+      }
+
+      return response;
     }
   } catch (error) {
     console.error('Error saving usage data:', error);
-    return {
+    const errorResponse: SaveUsageDataResponse = {
       success: false,
       error: error instanceof Error ? error.message : 'Failed to save usage data',
     };
+
+    // Return HTTP error response if called via Function URL
+    if (isHttpRequest) {
+      return createResponse(500, errorResponse);
+    }
+
+    return errorResponse;
   }
 };
 

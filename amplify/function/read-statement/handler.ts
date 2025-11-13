@@ -97,12 +97,73 @@ interface ReadStatementResponse {
   error?: string;
 }
 
+// CORS headers for Function URL responses
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Content-Type': 'application/json',
+};
+
+// Helper to create HTTP response
+function createResponse(
+  statusCode: number,
+  body: ReadStatementResponse
+): { statusCode: number; headers: Record<string, string>; body: string } {
+  return {
+    statusCode,
+    headers: corsHeaders,
+    body: JSON.stringify(body),
+  };
+}
+
 export const handler: Handler<
-  ReadStatementEvent,
-  ReadStatementResponse
+  ReadStatementEvent | { requestContext?: any; httpMethod?: string; body?: string; routeKey?: string; rawPath?: string; headers?: any },
+  ReadStatementResponse | { statusCode: number; headers: Record<string, string>; body: string }
 > = async (event) => {
+  // Check if this is an HTTP request (Function URL) vs direct invocation
+  const isHttpRequest = !!(event as any).routeKey || !!(event as any).requestContext || !!(event as any).rawPath;
+  const isDirectInvocation = !!(event as ReadStatementEvent).userId && !isHttpRequest;
+
+  // Handle OPTIONS preflight request
+  if (isHttpRequest && !isDirectInvocation) {
+    const httpMethod = (event as any).requestContext?.http?.method || 
+                       (event as any).requestContext?.httpMethod ||
+                       (event as any).httpMethod ||
+                       ((event as any).headers?.['x-amzn-http-method'] || '').toUpperCase();
+    
+    if (httpMethod === 'OPTIONS' || httpMethod === 'options') {
+      console.log('[read-statement] OPTIONS request detected');
+      return {
+        statusCode: 200,
+        headers: corsHeaders,
+        body: JSON.stringify({ success: true }),
+      };
+    }
+  }
+
+  // Parse Function URL HTTP request
+  let requestData: ReadStatementEvent;
+  if (isHttpRequest && (event as any).body) {
+    try {
+      const body = typeof (event as any).body === 'string' 
+        ? JSON.parse((event as any).body) 
+        : (event as any).body;
+      requestData = body as ReadStatementEvent;
+    } catch (error) {
+      console.error('[read-statement] Error parsing request body:', error);
+      return createResponse(400, {
+        success: false,
+        error: 'Invalid request body',
+      });
+    }
+  } else {
+    // Direct invocation
+    requestData = event as ReadStatementEvent;
+  }
+
   try {
-    const { userId, statementData } = event;
+    const { userId, statementData } = requestData;
     const { content, fileType, mimeType } = statementData;
 
     if (!process.env.OPENROUTER_API_KEY) {
@@ -352,16 +413,32 @@ Important:
       billingInfo: extractedData.billingInfo,
     };
 
-    return {
+    const response: ReadStatementResponse = {
       success: true,
       extractedData: normalizedData,
     };
+
+    // Return HTTP response if called via Function URL
+    if (isHttpRequest) {
+      return createResponse(200, response);
+    }
+
+    // Return direct invocation response
+    return response;
   } catch (error) {
     console.error('Error reading statement:', error);
-    return {
+    const errorResponse: ReadStatementResponse = {
       success: false,
       error: error instanceof Error ? error.message : 'Unknown error',
     };
+
+    // Return HTTP error response if called via Function URL
+    if (isHttpRequest) {
+      return createResponse(500, errorResponse);
+    }
+
+    // Return direct invocation error response
+    return errorResponse;
   }
 };
 
