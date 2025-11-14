@@ -31,8 +31,10 @@ export function RecommendationsPage() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [plans, setPlans] = useState<Map<string, EnergyPlan>>(new Map());
-  const [selectedPlans, setSelectedPlans] = useState<Set<string>>(new Set());
   const [showFeedbackFor, setShowFeedbackFor] = useState<string | null>(null);
+  const [satisfactionData, setSatisfactionData] = useState<
+    Map<string, { averageRating: number; reviewCount: number }>
+  >(new Map());
 
   const { generateRecommendations } = useRecommendations(
     userId,
@@ -62,8 +64,32 @@ export function RecommendationsPage() {
           preferences,
         },
         {
-          onSuccess: data => {
+          onSuccess: async data => {
             setRecommendations(data);
+
+            // Fetch satisfaction data for each plan
+            const satisfactionMap = new Map<
+              string,
+              { averageRating: number; reviewCount: number }
+            >();
+            for (const rec of data) {
+              try {
+                const satisfaction = await apiClient.getPlanSatisfaction(
+                  rec.planId
+                );
+                if (satisfaction) {
+                  satisfactionMap.set(rec.planId, satisfaction);
+                }
+              } catch (err) {
+                // Ignore errors - satisfaction is optional
+                console.warn(
+                  `Failed to fetch satisfaction for plan ${rec.planId}:`,
+                  err
+                );
+              }
+            }
+            setSatisfactionData(satisfactionMap);
+
             setIsGenerating(false);
           },
           onError: err => {
@@ -170,25 +196,13 @@ export function RecommendationsPage() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-semibold">Top Recommendations</h2>
-            <div className="flex gap-2">
-              {selectedPlans.size > 0 && (
-                <Button
-                  onClick={() => {
-                    const planIds = Array.from(selectedPlans).join(',');
-                    navigate(`/compare?plans=${planIds}`);
-                  }}
-                >
-                  Compare Selected ({selectedPlans.size})
-                </Button>
-              )}
-              <Button
-                variant="outline"
-                onClick={handleGenerateRecommendations}
-                disabled={isGenerating}
-              >
-                Regenerate
-              </Button>
-            </div>
+            <Button
+              variant="outline"
+              onClick={handleGenerateRecommendations}
+              disabled={isGenerating}
+            >
+              Regenerate
+            </Button>
           </div>
 
           <div className="space-y-6">
@@ -198,9 +212,7 @@ export function RecommendationsPage() {
                   key={recommendation.recommendationId || recommendation.planId}
                   recommendation={recommendation}
                   plan={plans.get(recommendation.planId)}
-                  isSelectedForComparison={selectedPlans.has(
-                    recommendation.planId
-                  )}
+                  satisfactionData={satisfactionData.get(recommendation.planId)}
                   onSelect={async () => {
                     if (!userId) {
                       setError('User ID is required');
@@ -231,16 +243,6 @@ export function RecommendationsPage() {
                           : 'Failed to select plan'
                       );
                     }
-                  }}
-                  onCompare={() => {
-                    // Toggle plan selection
-                    const newSelected = new Set(selectedPlans);
-                    if (newSelected.has(recommendation.planId)) {
-                      newSelected.delete(recommendation.planId);
-                    } else {
-                      newSelected.add(recommendation.planId);
-                    }
-                    setSelectedPlans(newSelected);
                   }}
                 />
               ))}

@@ -56,7 +56,6 @@ export interface Recommendation {
   rank: number;
   projectedSavings: number;
   explanation: string;
-  riskFlags?: string[];
   createdAt: string;
 }
 

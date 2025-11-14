@@ -1,0 +1,16 @@
+# Exclude unnecessary files from Lambda bundle
+node_modules/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__/
+*.md
+README.md
+package-lock.json
+tsconfig.json
+.eslintrc*
+.prettierrc*
+.gitignore
+*.log
+

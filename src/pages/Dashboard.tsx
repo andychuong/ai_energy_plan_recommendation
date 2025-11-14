@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUsageData } from '@/hooks/useUsageData';
 import { useUserPreferences } from '@/hooks/useUserPreferences';
+import { useSavedRecommendations } from '@/hooks/useSavedRecommendations';
 import { UsageChart } from '@/components/charts/UsageChart';
 
 export function Dashboard() {
@@ -22,38 +23,25 @@ export function Dashboard() {
     refetch: refetchUsageData,
   } = useUsageData(userId);
   const { preferences, isLoading: isLoadingPrefs } = useUserPreferences(userId);
+  const {
+    recommendations: savedRecommendations,
+    isLoading: isLoadingRecommendations,
+  } = useSavedRecommendations(userId);
 
   // Refetch usage data when component mounts or becomes visible
   // Also refetch when window regains focus (user navigates back to tab)
   React.useEffect(() => {
     if (userId) {
-      // eslint-disable-next-line no-console
-      console.log('[Dashboard] Component mounted, refetching usage data');
       refetchUsageData();
 
       // Refetch when window regains focus
       const handleFocus = () => {
-        // eslint-disable-next-line no-console
-        console.log('[Dashboard] Window focused, refetching usage data');
         refetchUsageData();
       };
       window.addEventListener('focus', handleFocus);
       return () => window.removeEventListener('focus', handleFocus);
     }
   }, [userId, refetchUsageData]);
-
-  // Log usage data for debugging
-  React.useEffect(() => {
-    if (usageData) {
-      // eslint-disable-next-line no-console
-      console.log('[Dashboard] Usage data loaded:', {
-        averageMonthlyKwh: usageData.aggregatedStats?.averageMonthlyKwh,
-        averageMonthlyCost: usageData.aggregatedStats?.averageMonthlyCost,
-        totalKwh: usageData.aggregatedStats?.totalKwh,
-        totalCost: usageData.aggregatedStats?.totalCost,
-      });
-    }
-  }, [usageData]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -214,19 +202,73 @@ export function Dashboard() {
           <CardHeader>
             <CardTitle>Recommendations</CardTitle>
             <CardDescription>
-              Get personalized energy plan recommendations
+              {savedRecommendations.length > 0
+                ? `Your latest recommendations (${savedRecommendations.length} plans)`
+                : 'Get personalized energy plan recommendations'}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Link to="/recommendations">
-              <Button className="w-full" disabled={!usageData || !preferences}>
-                View Recommendations
-              </Button>
-            </Link>
-            {(!usageData || !preferences) && (
-              <p className="mt-2 text-xs text-muted-foreground">
-                Add usage data and set preferences first
-              </p>
+            {isLoadingRecommendations ? (
+              <p className="text-sm text-muted-foreground">Loading...</p>
+            ) : savedRecommendations.length > 0 ? (
+              <div className="space-y-3">
+                {/* Show top 3 recommendations in summary */}
+                {savedRecommendations.slice(0, 3).map(rec => (
+                  <div
+                    key={rec.history.recommendationId}
+                    className="rounded-lg border p-3"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-semibold text-muted-foreground">
+                            #{rec.history.rank}
+                          </span>
+                          <p className="text-sm font-medium">
+                            {rec.plan?.planName || rec.history.planId}
+                          </p>
+                        </div>
+                        {rec.plan?.supplierName && (
+                          <p className="text-xs text-muted-foreground">
+                            {rec.plan.supplierName}
+                          </p>
+                        )}
+                        {rec.history.projectedSavings > 0 && (
+                          <p className="mt-1 text-xs font-semibold text-green-600">
+                            Save ${rec.history.projectedSavings.toFixed(2)}/year
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {savedRecommendations.length > 3 && (
+                  <p className="text-center text-xs text-muted-foreground">
+                    +{savedRecommendations.length - 3} more recommendations
+                  </p>
+                )}
+                <Link to="/recommendations">
+                  <Button variant="outline" className="mt-4 w-full">
+                    View All Recommendations
+                  </Button>
+                </Link>
+              </div>
+            ) : (
+              <>
+                <Link to="/recommendations">
+                  <Button
+                    className="w-full"
+                    disabled={!usageData || !preferences}
+                  >
+                    Generate Recommendations
+                  </Button>
+                </Link>
+                {(!usageData || !preferences) && (
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Add usage data and set preferences first
+                  </p>
+                )}
+              </>
             )}
           </CardContent>
         </Card>

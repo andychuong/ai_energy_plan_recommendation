@@ -1,6 +1,4 @@
 import type { Handler } from 'aws-lambda';
-import { generateClient } from 'aws-amplify/data';
-import type { Schema } from '../../data/resource';
 import OpenAI from 'openai';
 
 /**
@@ -9,12 +7,6 @@ import OpenAI from 'openai';
  * Normalizes energy usage data from various APIs to common format
  * Uses OpenRouter AI with GPT-3.5-turbo for cost efficiency
  */
-
-// Client will be used when implementing data storage
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _client = generateClient<Schema>({
-  authMode: 'iam',
-});
 
 // Initialize OpenRouter client
 const openrouter = new OpenAI({

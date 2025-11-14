@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -44,7 +43,6 @@ export function UsageDataPage() {
     refetch: refetchUsageData,
   } = useUsageData(userId);
   const { saveUserProfileAsync } = useUserProfile(userId);
-  const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -53,6 +51,7 @@ export function UsageDataPage() {
   );
   const [isDragging, setIsDragging] = useState(false);
   const [activeTab, setActiveTab] = useState<'upload' | 'manual'>('upload');
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Manual entry state
   const [selectedMonth, setSelectedMonth] = useState<string>('');
@@ -219,10 +218,22 @@ export function UsageDataPage() {
       const year = date.getFullYear();
 
       // Find matching usage data point
+      // Extract month/year directly from ISO string to avoid timezone issues
       let usagePoint: UsageDataPoint | null = null;
       if (usageData?.usageDataPoints) {
         usagePoint =
           usageData.usageDataPoints.find((point: UsageDataPoint) => {
+            // Parse ISO string directly: YYYY-MM-DDTHH:mm:ss.sssZ
+            const match = point.timestamp.match(/^(\d{4})-(\d{2})-/);
+            if (match) {
+              const pointYear = parseInt(match[1], 10);
+              const pointMonth = parseInt(match[2], 10) - 1; // Convert to 0-indexed
+              return (
+                pointMonth === date.getMonth() &&
+                pointYear === date.getFullYear()
+              );
+            }
+            // Fallback to Date parsing if format is different
             const pointDate = new Date(point.timestamp);
             return (
               pointDate.getMonth() === date.getMonth() &&
@@ -378,16 +389,24 @@ export function UsageDataPage() {
 
   const processFile = async (
     fileToProcess: File,
-    overrideDuplicates: boolean = false
+    _overrideDuplicates: boolean = false
   ) => {
     if (!fileToProcess || !userId) {
-      setError('Please select a file and ensure you are logged in');
+      const errorMsg = !fileToProcess
+        ? 'Please select a file'
+        : 'Please ensure you are logged in';
+      setError(errorMsg);
+      console.warn('[UsageDataPage] processFile validation failed:', {
+        hasFile: !!fileToProcess,
+        hasUserId: !!userId,
+      });
       return;
     }
 
     try {
       setError(null);
       setSuccess(false);
+      setIsProcessing(true);
 
       // Check file type
       const isCSV =
@@ -404,83 +423,174 @@ export function UsageDataPage() {
         fileToProcess.name.endsWith('.txt');
 
       if (isPDF || isImage || isText || isCSV) {
-        const usageData = await apiClient.readStatement(userId, fileToProcess);
-        setExtractedData(usageData);
+        let usageData: CustomerUsageData;
 
-        // Check for duplicates if not overriding
-        if (!overrideDuplicates) {
-          const duplicates: Array<{ month: string; year: number }> = [];
-          usageData.usageDataPoints.forEach(point => {
-            const pointDate = new Date(point.timestamp);
-            const monthName = pointDate.toLocaleString('default', {
-              month: 'long',
-            });
-            const year = pointDate.getFullYear();
-            if (hasExistingData(monthName, year)) {
-              duplicates.push({ month: monthName, year });
-            }
-          });
+        try {
+          usageData = await apiClient.readStatement(userId, fileToProcess);
+        } catch (err) {
+          const errorMessage =
+            err instanceof Error ? err.message : 'Failed to read statement';
 
-          if (duplicates.length > 0) {
-            const duplicateMonths = duplicates
-              .map(d => `${d.month} ${d.year}`)
-              .join(', ');
-            const shouldOverride = window.confirm(
-              `Data already exists for the following months: ${duplicateMonths}\n\n` +
-                `Do you want to override the existing data?`
+          // Check if it's a 500 error from the Lambda function
+          if (
+            errorMessage.includes('500') ||
+            errorMessage.includes('Internal Server Error')
+          ) {
+            setError(
+              'The AI service is temporarily unavailable. Please try again in a few moments, ' +
+                'or enter your usage data manually using the "Manual Entry" tab.'
             );
-            if (!shouldOverride) {
-              setError('Upload cancelled. Existing data was not overwritten.');
-              return;
-            }
-            // User confirmed, proceed with override
-            return processFile(fileToProcess, true);
+          } else {
+            setError(
+              `Failed to read statement: ${errorMessage}. Please try again or enter data manually.`
+            );
           }
+          return; // Don't proceed with upload if reading failed
         }
 
-        // Process and store the usage data
-        uploadUsageData(
-          {
-            userId,
-            usageData: {
-              userId,
-              usagePoints: usageData.usageDataPoints,
-              totalAnnualKwh: usageData.aggregatedStats.totalKwh,
-              averageMonthlyKwh: usageData.aggregatedStats.averageMonthlyKwh,
-              peakMonthKwh: usageData.aggregatedStats.peakMonthKwh,
-              peakMonth: usageData.aggregatedStats.peakMonth,
-            },
-          },
-          {
-            onSuccess: async () => {
-              setSuccess(true);
-              // Refetch usage data to update the UI
-              await refetchUsageData();
-              setTimeout(() => {
-                navigate('/dashboard');
-              }, 3000);
-            },
-            onError: err => {
-              setError(
-                err instanceof Error ? err.message : 'Failed to upload data'
-              );
-            },
-          }
-        );
+        setExtractedData(usageData);
+        setSuccess(false);
+        setIsProcessing(false);
       } else {
         setError(
           'Unsupported file type. Please upload PDF, image, CSV, or text file.'
         );
+        setIsProcessing(false); // Stop processing indicator
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to process file');
+      setIsProcessing(false); // Stop processing indicator on error
     }
   };
 
   const handleFileUpload = async () => {
-    if (file) {
-      await processFile(file);
+    if (!file) {
+      setError('Please select a file first');
+      console.warn('[UsageDataPage] No file selected');
+      return;
     }
+
+    if (!userId) {
+      setError('Please log in to upload files');
+      console.warn('[UsageDataPage] No userId');
+      return;
+    }
+
+    if (isUploading) {
+      console.warn('[UsageDataPage] Already uploading, ignoring click');
+      return;
+    }
+
+    try {
+      await processFile(file);
+    } catch (err) {
+      console.error('[UsageDataPage] Error in handleFileUpload:', err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'An unexpected error occurred. Please try again.'
+      );
+    }
+  };
+
+  const handleSaveExtractedData = async (
+    overrideDuplicates: boolean = false
+  ) => {
+    if (!extractedData || !userId) {
+      setError('No data to save. Please process a bill first.');
+      return;
+    }
+
+    // Check for duplicates if not overriding
+    // Extract month/year directly from ISO string to avoid timezone issues
+    const getMonthYearFromTimestamp = (
+      timestamp: string
+    ): { month: string; year: number } | null => {
+      const match = timestamp.match(/^(\d{4})-(\d{2})-/);
+      if (match) {
+        const year = parseInt(match[1], 10);
+        const monthNum = parseInt(match[2], 10) - 1; // 0-indexed
+        const monthNames = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December',
+        ];
+        return { month: monthNames[monthNum], year };
+      }
+      // Fallback to Date parsing
+      const pointDate = new Date(timestamp);
+      return {
+        month: pointDate.toLocaleString('default', { month: 'long' }),
+        year: pointDate.getFullYear(),
+      };
+    };
+
+    if (!overrideDuplicates) {
+      const duplicates: Array<{ month: string; year: number }> = [];
+      extractedData.usageDataPoints.forEach(point => {
+        const monthYear = getMonthYearFromTimestamp(point.timestamp);
+        if (monthYear && hasExistingData(monthYear.month, monthYear.year)) {
+          duplicates.push(monthYear);
+        }
+      });
+
+      if (duplicates.length > 0) {
+        const duplicateMonths = duplicates
+          .map(d => `${d.month} ${d.year}`)
+          .join(', ');
+        const shouldOverride = window.confirm(
+          `Data already exists for the following months: ${duplicateMonths}\n\n` +
+            `Do you want to override the existing data for these months?`
+        );
+        if (!shouldOverride) {
+          setError('Save cancelled. Existing data was not overwritten.');
+          return;
+        }
+        // User confirmed, proceed with override
+        return handleSaveExtractedData(true);
+      }
+    }
+
+    // Save the extracted data
+    uploadUsageData(
+      {
+        userId,
+        usageData: {
+          userId,
+          usagePoints: extractedData.usageDataPoints,
+          totalAnnualKwh: extractedData.aggregatedStats.totalKwh,
+          averageMonthlyKwh: extractedData.aggregatedStats.averageMonthlyKwh,
+          peakMonthKwh: extractedData.aggregatedStats.peakMonthKwh,
+          peakMonth: extractedData.aggregatedStats.peakMonth,
+        },
+      },
+      {
+        onSuccess: async () => {
+          setSuccess(true);
+          // Refetch usage data to update the UI
+          await refetchUsageData();
+          // Keep extracted data visible for a moment so user can see it was saved
+          // Don't clear immediately - let user see the success
+          setTimeout(() => {
+            setExtractedData(null);
+            setSuccess(false);
+          }, 2000);
+          // Don't redirect - let user stay on the page
+        },
+        onError: err => {
+          setError(err instanceof Error ? err.message : 'Failed to save data');
+        },
+      }
+    );
   };
 
   // Check if a month/year already has data
@@ -907,11 +1017,6 @@ export function UsageDataPage() {
 
     try {
       // Save custom averages to user profile
-      // eslint-disable-next-line no-console
-      console.log('[UsageDataPage] Saving custom averages:', {
-        avgKwh,
-        avgCost,
-      });
       await saveUserProfileAsync({
         userId,
         profile: {
@@ -919,8 +1024,6 @@ export function UsageDataPage() {
           customAverageCost: avgCost || undefined,
         },
       });
-      // eslint-disable-next-line no-console
-      console.log('[UsageDataPage] Custom averages saved to user profile');
 
       // Update all months with the average values
       setMonthlyData(prev =>
@@ -1372,6 +1475,233 @@ export function UsageDataPage() {
               </Alert>
             )}
 
+            {/* Show processing indicator */}
+            {isProcessing && (
+              <Alert className="mt-4 border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
+                <AlertDescription className="flex items-center gap-3">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-600 border-t-transparent"></div>
+                  <div>
+                    <p className="font-semibold text-blue-900 dark:text-blue-100">
+                      Processing your bill with AI...
+                    </p>
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
+                      This may take a few moments. Please wait.
+                    </p>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {/* Show extracted data preview before saving */}
+            {extractedData &&
+              !success &&
+              (() => {
+                // Calculate totals from actual usage data points
+                const usagePoints = extractedData.usageDataPoints || [];
+
+                // Calculate total energy used from actual data points
+                const totalEnergyUsed = usagePoints.reduce(
+                  (sum, p) => sum + (p.kwh || 0),
+                  0
+                );
+
+                // Calculate total cost from actual data points
+                const totalCostPaid = usagePoints.reduce(
+                  (sum, p) => sum + (p.cost || 0),
+                  0
+                );
+                const hasCostData = totalCostPaid > 0;
+
+                // Get billing period - prioritize billingPeriod from extracted data
+                // This is more accurate than timestamps from usage points
+                // Format date directly from ISO string without timezone conversion
+                const formatDate = (dateString: string) => {
+                  try {
+                    // Parse ISO string directly: YYYY-MM-DDTHH:mm:ss.sssZ
+                    const match = dateString.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                    if (match) {
+                      const year = parseInt(match[1], 10);
+                      const month = parseInt(match[2], 10) - 1; // 0-indexed
+                      const day = parseInt(match[3], 10);
+
+                      const monthNames = [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec',
+                      ];
+                      return `${monthNames[month]} ${day}, ${year}`;
+                    }
+                    // Fallback to Date parsing if format is different
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) return dateString;
+                    return date.toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
+                    });
+                  } catch {
+                    return dateString;
+                  }
+                };
+
+                let dateRange = 'N/A';
+
+                // Try to get billing period from extracted data structure
+                // Priority order:
+                // 1. billingInfo.billingPeriod (most specific, from bill header)
+                // 2. Top-level billingPeriod (from extracted data)
+                // 3. Usage data points periodStart/periodEnd
+                // 4. Usage data points timestamps (last resort)
+
+                // Check billingInfo.billingPeriod first (most specific)
+                if (
+                  extractedData.billingInfo?.billingPeriod?.start &&
+                  extractedData.billingInfo?.billingPeriod?.end
+                ) {
+                  const start = formatDate(
+                    extractedData.billingInfo.billingPeriod.start
+                  );
+                  const end = formatDate(
+                    extractedData.billingInfo.billingPeriod.end
+                  );
+                  dateRange = start === end ? start : `${start} - ${end}`;
+                }
+                // Fall back to top-level billingPeriod if available (check if it exists on the object)
+                else if (
+                  (
+                    extractedData as {
+                      billingPeriod?: { start?: string; end?: string };
+                    }
+                  ).billingPeriod?.start &&
+                  (
+                    extractedData as {
+                      billingPeriod?: { start?: string; end?: string };
+                    }
+                  ).billingPeriod?.end
+                ) {
+                  const billingPeriod = (
+                    extractedData as {
+                      billingPeriod?: { start?: string; end?: string };
+                    }
+                  ).billingPeriod;
+                  const start = formatDate(billingPeriod!.start!);
+                  const end = formatDate(billingPeriod!.end!);
+                  dateRange = start === end ? start : `${start} - ${end}`;
+                }
+                // Try periodStart/periodEnd from usage data points
+                else if (usagePoints.length > 0) {
+                  const periodStarts = usagePoints
+                    .map(p => (p.periodStart ? new Date(p.periodStart) : null))
+                    .filter(
+                      (d): d is Date => d !== null && !isNaN(d.getTime())
+                    );
+                  const periodEnds = usagePoints
+                    .map(p => (p.periodEnd ? new Date(p.periodEnd) : null))
+                    .filter(
+                      (d): d is Date => d !== null && !isNaN(d.getTime())
+                    );
+
+                  if (periodStarts.length > 0 && periodEnds.length > 0) {
+                    const earliest = periodStarts.sort(
+                      (a, b) => a.getTime() - b.getTime()
+                    )[0];
+                    const latest = periodEnds.sort(
+                      (a, b) => b.getTime() - a.getTime()
+                    )[0];
+                    const start = formatDate(earliest.toISOString());
+                    const end = formatDate(latest.toISOString());
+                    dateRange = start === end ? start : `${start} - ${end}`;
+                  }
+                  // Last resort: calculate from usage data points timestamps
+                  else {
+                    const dates = usagePoints
+                      .map(p => new Date(p.timestamp))
+                      .filter(d => !isNaN(d.getTime()))
+                      .sort((a, b) => a.getTime() - b.getTime());
+
+                    if (dates.length > 0) {
+                      const earliest = dates[0];
+                      const latest = dates[dates.length - 1];
+                      const start = formatDate(earliest.toISOString());
+                      const end = formatDate(latest.toISOString());
+                      dateRange = start === end ? start : `${start} - ${end}`;
+                    }
+                  }
+                }
+
+                return (
+                  <Alert className="mt-4 border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
+                    <AlertDescription className="space-y-4">
+                      <div>
+                        <p className="mb-2 font-semibold text-blue-900 dark:text-blue-100">
+                          ✓ Bill processed successfully! Review the extracted
+                          data below:
+                        </p>
+                        <div className="mt-3 rounded-md bg-white p-3 text-sm dark:bg-gray-900">
+                          <p className="mb-3 font-medium">
+                            Extracted Data Summary:
+                          </p>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between border-b pb-2">
+                              <span className="text-muted-foreground">
+                                Energy Used:
+                              </span>
+                              <span className="text-lg font-semibold">
+                                {totalEnergyUsed.toFixed(0)} kWh
+                              </span>
+                            </div>
+                            {hasCostData && (
+                              <div className="flex items-center justify-between border-b pb-2">
+                                <span className="text-muted-foreground">
+                                  Amount Paid:
+                                </span>
+                                <span className="text-lg font-semibold">
+                                  ${totalCostPaid.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
+                            {dateRange !== 'N/A' && (
+                              <div className="flex items-center justify-between pt-1 text-xs text-muted-foreground">
+                                <span>Billing Period:</span>
+                                <span>{dateRange}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={() => handleSaveExtractedData(false)}
+                          disabled={isUploading}
+                          className="flex-1"
+                        >
+                          {isUploading ? 'Saving...' : 'Save Data'}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setExtractedData(null);
+                            setFile(null);
+                          }}
+                          disabled={isUploading}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+                );
+              })()}
+
             {success && extractedData && (
               <Alert className="mt-4">
                 <AlertDescription className="space-y-3">
@@ -1404,7 +1734,7 @@ export function UsageDataPage() {
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Redirecting to dashboard...
+                    Your data has been saved successfully!
                   </p>
                 </AlertDescription>
               </Alert>
@@ -1413,9 +1743,7 @@ export function UsageDataPage() {
             {success && !extractedData && (
               <Alert className="mt-4">
                 <AlertDescription>
-                  <p className="font-semibold">
-                    ✓ Data saved successfully! Redirecting...
-                  </p>
+                  <p className="font-semibold">✓ Data saved successfully!</p>
                 </AlertDescription>
               </Alert>
             )}
@@ -1482,10 +1810,14 @@ export function UsageDataPage() {
 
               <Button
                 onClick={handleFileUpload}
-                disabled={!file || isUploading || success}
+                disabled={!file || isUploading || isProcessing || success}
                 className="w-full"
               >
-                {isUploading ? 'Processing with AI...' : 'Process Bill with AI'}
+                {isProcessing
+                  ? 'Processing with AI...'
+                  : isUploading
+                    ? 'Saving...'
+                    : 'Process Bill with AI'}
               </Button>
             </TabsContent>
 

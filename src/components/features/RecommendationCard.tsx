@@ -7,34 +7,32 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import type { Recommendation, EnergyPlan } from 'shared/types';
 import { formatCurrency } from '@/lib/format';
+
+interface SatisfactionData {
+  averageRating: number;
+  reviewCount: number;
+}
 
 interface RecommendationCardProps {
   recommendation: Recommendation;
   plan?: EnergyPlan;
   onSelect?: () => void;
-  onCompare?: () => void;
-  isSelectedForComparison?: boolean;
+  satisfactionData?: SatisfactionData;
 }
 
 export function RecommendationCard({
   recommendation,
   plan,
   onSelect,
-  onCompare,
-  isSelectedForComparison = false,
+  satisfactionData,
 }: RecommendationCardProps) {
   const savings = recommendation.projectedSavings;
   const isPositive = savings > 0;
 
   return (
-    <Card
-      className={`relative ${
-        isSelectedForComparison ? 'ring-2 ring-primary ring-offset-2' : ''
-      }`}
-    >
+    <Card className="relative">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
@@ -109,39 +107,43 @@ export function RecommendationCard({
           </p>
         </div>
 
-        {recommendation.riskFlags && recommendation.riskFlags.length > 0 && (
-          <Alert variant="destructive">
-            <AlertDescription>
-              <div className="space-y-1">
-                <p className="font-medium">Risk Flags:</p>
-                <ul className="list-inside list-disc space-y-1">
-                  {recommendation.riskFlags.map(
-                    (flag: string, index: number) => (
-                      <li key={index} className="text-sm">
-                        {flag
-                          .replace(/_/g, ' ')
-                          .replace(/\b\w/g, (l: string) => l.toUpperCase())}
-                      </li>
-                    )
-                  )}
-                </ul>
+        {plan && satisfactionData && (
+          <div className="rounded-lg border bg-muted/50 p-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium">Customer Satisfaction</p>
+                <div className="mt-1 flex items-center gap-2">
+                  <div className="flex items-center">
+                    {[1, 2, 3, 4, 5].map(star => (
+                      <span
+                        key={star}
+                        className={`text-lg ${
+                          star <= satisfactionData.averageRating
+                            ? 'text-yellow-400'
+                            : 'text-gray-300'
+                        }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <span className="text-sm font-semibold">
+                    {satisfactionData.averageRating.toFixed(1)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    ({satisfactionData.reviewCount}{' '}
+                    {satisfactionData.reviewCount === 1 ? 'review' : 'reviews'})
+                  </span>
+                </div>
               </div>
-            </AlertDescription>
-          </Alert>
+            </div>
+          </div>
         )}
       </CardContent>
       <CardFooter className="flex space-x-2">
         {onSelect && (
           <Button onClick={onSelect} className="flex-1">
             Select Plan
-          </Button>
-        )}
-        {onCompare && (
-          <Button
-            variant={isSelectedForComparison ? 'default' : 'outline'}
-            onClick={onCompare}
-          >
-            {isSelectedForComparison ? 'Selected' : 'Compare'}
           </Button>
         )}
       </CardFooter>

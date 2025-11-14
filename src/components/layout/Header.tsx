@@ -36,9 +36,6 @@ export function Header() {
               <Link to="/recommendations">
                 <Button variant="ghost">Recommendations</Button>
               </Link>
-              <Link to="/compare">
-                <Button variant="ghost">Compare Plans</Button>
-              </Link>
               <Link to="/preferences">
                 <Button variant="ghost">Preferences</Button>
               </Link>

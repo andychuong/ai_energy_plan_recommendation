@@ -120,7 +120,6 @@ export function generateMockRecommendations(): Recommendation[] {
       projectedSavings: 120,
       explanation:
         'Best match for your usage pattern with 100% renewable energy',
-      riskFlags: [],
       createdAt: now,
     },
     {
@@ -129,7 +128,6 @@ export function generateMockRecommendations(): Recommendation[] {
       rank: 2,
       projectedSavings: 180,
       explanation: 'Lowest cost option, but no renewable energy',
-      riskFlags: ['high_termination_fee'],
       createdAt: now,
     },
     {
@@ -138,7 +136,6 @@ export function generateMockRecommendations(): Recommendation[] {
       rank: 3,
       projectedSavings: 60,
       explanation: 'Flexible contract with 50% renewable energy',
-      riskFlags: ['variable_rate'],
       createdAt: now,
     },
   ];

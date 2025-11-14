@@ -8,7 +8,6 @@ import { Dashboard } from './pages/Dashboard';
 import { UsageDataPage } from './pages/UsageDataPage';
 import { PreferencesPage } from './pages/PreferencesPage';
 import { RecommendationsPage } from './pages/RecommendationsPage';
-import { PlanComparisonPage } from './pages/PlanComparisonPage';
 import { SignIn } from './components/auth/SignIn';
 
 const queryClient = new QueryClient({
@@ -68,14 +67,6 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <RecommendationsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/compare"
-                element={
-                  <ProtectedRoute>
-                    <PlanComparisonPage />
                   </ProtectedRoute>
                 }
               />

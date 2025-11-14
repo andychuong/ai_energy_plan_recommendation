@@ -25,16 +25,44 @@ import type {
 /**
  * Check if we should use mock data
  * Set VITE_USE_MOCK_API=true in .env for development
+ * In Jest tests, use process.env.VITE_USE_MOCK_API (set before importing this module)
+ *
+ * Note: In Jest, import.meta is not available, so we check process.env first.
+ * In Vite, import.meta.env is available and will be used if process.env is not set.
+ *
+ * The jest-transform.js file replaces import.meta.env with process.env before compilation.
  */
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true';
+// Check process.env first (for Jest tests and Node.js)
+// The transform will replace import.meta.env with process.env before TypeScript compilation
+const USE_MOCK_API =
+  (typeof process !== 'undefined' &&
+    process.env?.VITE_USE_MOCK_API === 'true') ||
+  // This will be transformed to process.env by jest-transform.js in test environment
+  import.meta?.env?.VITE_USE_MOCK_API === 'true';
 
 /**
  * Initialize Amplify Data client
  * Uses Cognito User Pool authentication
+ * Lazy initialization to ensure Amplify is configured first
  */
-const dataClient = generateClient<Schema>({
-  authMode: 'userPool',
-});
+let dataClient: ReturnType<typeof generateClient<Schema>> | null = null;
+
+const getDataClient = () => {
+  if (!dataClient) {
+    // Ensure Amplify is configured
+    try {
+      dataClient = generateClient<Schema>({
+        authMode: 'userPool',
+      });
+    } catch (error) {
+      console.error('Failed to initialize Amplify Data client:', error);
+      throw new Error(
+        'Amplify has not been configured. Please call Amplify.configure() before using this service.'
+      );
+    }
+  }
+  return dataClient;
+};
 
 /**
  * API Client Class
@@ -71,7 +99,7 @@ class ApiClient {
 
     try {
       // Query DynamoDB for plans by state
-      const plans = await dataClient.models.EnergyPlan.list({
+      const plans = await getDataClient().models.EnergyPlan.list({
         filter: {
           state: { eq: targetState },
         },
@@ -172,19 +200,9 @@ class ApiClient {
       const useCustomAverages = profile?.useCustomAverages || false;
       const customAverageKwh = profile?.customAverageKwh;
       const customAverageCost = profile?.customAverageCost;
-      // eslint-disable-next-line no-console
-      console.log('[getUsageData] User profile:', {
-        useCustomAverages,
-        customAverageKwh,
-        customAverageCost,
-        useCustomAveragesType: typeof useCustomAverages,
-        customAverageKwhType: typeof customAverageKwh,
-        customAverageKwhValue: customAverageKwh,
-        conditionCheck: useCustomAverages && customAverageKwh,
-      });
 
       // Get the most recent usage data for the user
-      const result = await dataClient.models.CustomerUsageData.list({
+      const result = await getDataClient().models.CustomerUsageData.list({
         filter: { userId: { eq: userId } },
       });
 
@@ -197,8 +215,25 @@ class ApiClient {
         const latest = sorted[0];
 
         // Convert to CustomerUsageData format
-        const usagePoints: UsageDataPoint[] =
-          (latest.usagePoints as UsageDataPoint[]) || [];
+        // usagePoints is stored as a JSON string (AWSJSON type), so we need to parse it
+        let usagePoints: UsageDataPoint[] = [];
+        if (latest.usagePoints) {
+          if (typeof latest.usagePoints === 'string') {
+            // Parse JSON string back to array
+            try {
+              usagePoints = JSON.parse(latest.usagePoints) as UsageDataPoint[];
+            } catch (e) {
+              console.error(
+                '[getUsageData] Failed to parse usagePoints JSON:',
+                e
+              );
+              usagePoints = [];
+            }
+          } else if (Array.isArray(latest.usagePoints)) {
+            // Already an array (shouldn't happen with AWSJSON, but handle it)
+            usagePoints = latest.usagePoints as UsageDataPoint[];
+          }
+        }
         const billingInfo: Record<string, unknown> =
           (latest.billingInfo as Record<string, unknown>) || {};
 
@@ -208,32 +243,16 @@ class ApiClient {
         let totalKwh: number;
         let totalCost: number;
 
-        // eslint-disable-next-line no-console
-        console.log('[getUsageData] Checking custom averages condition:', {
-          useCustomAverages,
-          customAverageKwh,
-          condition: useCustomAverages && customAverageKwh,
-        });
-
         if (useCustomAverages && customAverageKwh) {
           // Use custom averages
-          // eslint-disable-next-line no-console
-          console.log('[getUsageData] Using custom averages:', {
-            customAverageKwh,
-            customAverageCost,
-          });
           averageMonthlyKwh = customAverageKwh;
           averageMonthlyCost = customAverageCost || 0;
           totalKwh = averageMonthlyKwh * 12;
           totalCost = averageMonthlyCost * 12;
         } else {
-          // eslint-disable-next-line no-console
-          console.log(
-            '[getUsageData] NOT using custom averages, using calculated values'
-          );
           // Use calculated averages from usage data
-          averageMonthlyKwh = latest.averageMonthlyKwh || 0;
-          totalKwh = latest.totalAnnualKwh || 0;
+          averageMonthlyKwh = latest.averageMonthlyKwh ?? 0;
+          totalKwh = latest.totalAnnualKwh ?? 0;
 
           // Calculate totalCost and averageMonthlyCost from usage points if available
           if (usagePoints.length > 0) {
@@ -281,21 +300,11 @@ class ApiClient {
           billingInfo: billingInfo as CustomerUsageData['billingInfo'],
         };
 
-        // eslint-disable-next-line no-console
-        console.log(
-          '[getUsageData] Returning result with aggregatedStats:',
-          usageDataResult.aggregatedStats
-        );
         return usageDataResult;
       }
 
       // No usage data found - check if user wants to use custom averages
       if (useCustomAverages && customAverageKwh) {
-        // eslint-disable-next-line no-console
-        console.log(
-          '[getUsageData] No usage data, but using custom averages:',
-          { customAverageKwh, customAverageCost }
-        );
         const averageMonthlyKwh = customAverageKwh;
         const averageMonthlyCost = customAverageCost || 0;
         const totalKwh = averageMonthlyKwh * 12;
@@ -332,11 +341,6 @@ class ApiClient {
           },
         };
 
-        // eslint-disable-next-line no-console
-        console.log(
-          '[getUsageData] Returning result with custom averages (no usage data):',
-          result.aggregatedStats
-        );
         return result;
       }
 
@@ -372,7 +376,6 @@ class ApiClient {
    */
   async readStatement(userId: string, file: File): Promise<CustomerUsageData> {
     if (USE_MOCK_API) {
-      // For mock, return mock data
       return mockApi.getUsageData(userId);
     }
 
@@ -434,27 +437,30 @@ class ApiClient {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error(`Function call failed: ${response.statusText}`);
-      }
-
-      // Parse response
+      // Parse response (whether success or error)
       const result = (await response.json()) as {
         success: boolean;
         extractedData?: CustomerUsageData;
         error?: string;
       };
 
-      if (!result.success || !result.extractedData) {
-        throw new Error(result.error || 'Failed to read statement');
+      if (!response.ok || !result.success || !result.extractedData) {
+        const errorMsg =
+          result.error || `Function call failed: ${response.statusText}`;
+        console.error('[readStatement] Lambda function error:', {
+          status: response.status,
+          statusText: response.statusText,
+          error: errorMsg,
+          result,
+        });
+        throw new Error(errorMsg);
       }
 
       return result.extractedData;
     } catch (error) {
       console.error('Error reading statement:', error);
-      // Fallback to mock data if function call fails
-      console.warn('Falling back to mock data due to function error');
-      return mockApi.getUsageData(userId);
+      // Don't fallback to mock data - throw the error so the UI can handle it
+      throw error;
     }
   }
 
@@ -569,14 +575,12 @@ class ApiClient {
           rank: number;
           projectedSavings: number;
           explanation: string;
-          riskFlags?: string[];
         }) => ({
           recommendationId: `rec-${Date.now()}-${rec.rank}`,
           planId: rec.planId,
           rank: rec.rank,
           projectedSavings: rec.projectedSavings,
           explanation: rec.explanation,
-          riskFlags: rec.riskFlags,
           createdAt: now,
         })
       );
@@ -598,16 +602,11 @@ class ApiClient {
 
     try {
       // UserPreferences uses userId as a field, not as the id
-      const result = await dataClient.models.UserPreferences.list({
+      const result = await getDataClient().models.UserPreferences.list({
         filter: { userId: { eq: userId } },
       });
 
       if (!result.data || result.data.length === 0) {
-        // eslint-disable-next-line no-console
-        console.log(
-          '[getUserPreferences] No preferences found for userId:',
-          userId
-        );
         return null;
       }
 
@@ -615,11 +614,6 @@ class ApiClient {
       const preferences = result.data[0];
 
       // Map from Amplify model to shared type
-      // eslint-disable-next-line no-console
-      console.log('[getUserPreferences] Found preferences:', {
-        userId: preferences.userId,
-        costSavingsPriority: preferences.costSavingsPriority,
-      });
       return {
         userId: preferences.userId,
         costSavingsPriority: preferences.costSavingsPriority as
@@ -668,26 +662,59 @@ class ApiClient {
 
     try {
       const now = new Date().toISOString();
-      const result = await dataClient.models.UserPreferences.create({
-        userId: request.userId,
-        costSavingsPriority: request.preferences.costSavingsPriority,
-        flexibilityPreference: request.preferences.flexibilityPreference,
-        renewableEnergyPreference:
-          request.preferences.renewableEnergyPreference,
-        supplierRatingPreference: request.preferences.supplierRatingPreference,
-        contractTypePreference:
-          request.preferences.contractTypePreference || null,
-        earlyTerminationFeeTolerance:
-          request.preferences.earlyTerminationFeeTolerance,
-        maxMonthlyCost: request.preferences.budgetConstraints?.maxMonthlyCost,
-        maxAnnualCost: request.preferences.budgetConstraints?.maxAnnualCost,
-        sustainabilityGoals: request.preferences.sustainabilityGoals,
-        createdAt: now,
-        updatedAt: now,
+
+      // Check if preferences already exist
+      const existing = await getDataClient().models.UserPreferences.list({
+        filter: { userId: { eq: request.userId } },
       });
 
+      let result;
+      if (existing.data && existing.data.length > 0) {
+        // Update existing preferences
+        const existingPrefs = existing.data[0];
+        result = await getDataClient().models.UserPreferences.update({
+          id: existingPrefs.id,
+          costSavingsPriority: request.preferences.costSavingsPriority,
+          flexibilityPreference: request.preferences.flexibilityPreference,
+          renewableEnergyPreference:
+            request.preferences.renewableEnergyPreference,
+          supplierRatingPreference:
+            request.preferences.supplierRatingPreference,
+          contractTypePreference:
+            request.preferences.contractTypePreference || null,
+          earlyTerminationFeeTolerance:
+            request.preferences.earlyTerminationFeeTolerance,
+          maxMonthlyCost: request.preferences.budgetConstraints?.maxMonthlyCost,
+          maxAnnualCost: request.preferences.budgetConstraints?.maxAnnualCost,
+          sustainabilityGoals: request.preferences.sustainabilityGoals,
+          updatedAt: now,
+          // Keep original createdAt
+          createdAt: existingPrefs.createdAt,
+        });
+      } else {
+        // Create new preferences
+        result = await getDataClient().models.UserPreferences.create({
+          userId: request.userId,
+          costSavingsPriority: request.preferences.costSavingsPriority,
+          flexibilityPreference: request.preferences.flexibilityPreference,
+          renewableEnergyPreference:
+            request.preferences.renewableEnergyPreference,
+          supplierRatingPreference:
+            request.preferences.supplierRatingPreference,
+          contractTypePreference:
+            request.preferences.contractTypePreference || null,
+          earlyTerminationFeeTolerance:
+            request.preferences.earlyTerminationFeeTolerance,
+          maxMonthlyCost: request.preferences.budgetConstraints?.maxMonthlyCost,
+          maxAnnualCost: request.preferences.budgetConstraints?.maxAnnualCost,
+          sustainabilityGoals: request.preferences.sustainabilityGoals,
+          createdAt: now,
+          updatedAt: now,
+        });
+      }
+
       if (!result.data) {
-        throw new Error('Failed to create user preferences');
+        throw new Error('Failed to create/update user preferences');
       }
 
       // Map from Amplify model to shared type
@@ -722,7 +749,7 @@ class ApiClient {
         updatedAt: result.data.updatedAt,
       };
     } catch (error) {
-      console.error('Error creating user preferences:', error);
+      console.error('Error creating/updating user preferences:', error);
       throw error;
     }
   }
@@ -736,7 +763,7 @@ class ApiClient {
     }
 
     try {
-      const result = await dataClient.models.UsagePattern.list({
+      const result = await getDataClient().models.UsagePattern.list({
         filter: {
           userId: { eq: userId },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -789,7 +816,7 @@ class ApiClient {
     try {
       const now = new Date().toISOString();
       const patternId = `pattern-${Date.now()}`;
-      const result = await dataClient.models.UsagePattern.create({
+      const result = await getDataClient().models.UsagePattern.create({
         userId: request.userId,
         patternId,
         averageMonthlyKwh: request.patternData.averageMonthlyKwh,
@@ -847,7 +874,7 @@ class ApiClient {
     }
 
     try {
-      const result = await dataClient.models.RecommendationHistory.list({
+      const result = await getDataClient().models.RecommendationHistory.list({
         filter: {
           userId: { eq: userId },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -886,7 +913,7 @@ class ApiClient {
 
     try {
       const now = new Date().toISOString();
-      const result = await dataClient.models.RecommendationHistory.create({
+      const result = await getDataClient().models.RecommendationHistory.create({
         userId: request.userId,
         recommendationId: request.recommendationId,
         planId: request.planId,
@@ -926,7 +953,7 @@ class ApiClient {
     }
 
     try {
-      const result = await dataClient.models.Feedback.list({
+      const result = await getDataClient().models.Feedback.list({
         filter: {
           userId: { eq: userId },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -955,6 +982,83 @@ class ApiClient {
   }
 
   /**
+   * Get customer satisfaction data for a plan
+   * Aggregates feedback ratings for all recommendations of a given plan
+   */
+  async getPlanSatisfaction(planId: string): Promise<{
+    averageRating: number;
+    reviewCount: number;
+  } | null> {
+    if (USE_MOCK_API) {
+      // Return mock satisfaction data
+      return {
+        averageRating: 4.2,
+        reviewCount: 15,
+      };
+    }
+
+    try {
+      // Get all recommendation history entries for this plan
+      const recommendationHistory =
+        await getDataClient().models.RecommendationHistory.list({
+          filter: {
+            planId: { eq: planId },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } as any,
+        });
+
+      if (
+        !recommendationHistory.data ||
+        recommendationHistory.data.length === 0
+      ) {
+        return null;
+      }
+
+      // Get all recommendation IDs
+      const recommendationIds = recommendationHistory.data.map(
+        rec => rec.recommendationId
+      );
+
+      // Get all feedback for these recommendations
+      // Note: We need to query feedback for each recommendationId
+      // Since Amplify doesn't support "IN" queries easily, we'll fetch all feedback
+      // and filter client-side (for now - could be optimized later)
+      const allFeedback = await getDataClient().models.Feedback.list({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any);
+
+      if (!allFeedback.data) {
+        return null;
+      }
+
+      // Filter feedback for our recommendation IDs and aggregate
+      const relevantFeedback = allFeedback.data.filter(fb =>
+        recommendationIds.includes(fb.recommendationId)
+      );
+
+      if (relevantFeedback.length === 0) {
+        return null;
+      }
+
+      // Calculate average rating (use overallSatisfaction if available, otherwise rating)
+      const ratings = relevantFeedback.map(
+        fb => fb.overallSatisfaction || fb.rating
+      );
+      const averageRating =
+        ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+
+      return {
+        averageRating,
+        reviewCount: relevantFeedback.length,
+      };
+    } catch (error) {
+      console.error('Error fetching plan satisfaction:', error);
+      // Don't throw - return null so UI can handle gracefully
+      return null;
+    }
+  }
+
+  /**
    * Create feedback
    */
   async createFeedback(request: CreateFeedbackRequest) {
@@ -965,7 +1069,7 @@ class ApiClient {
     try {
       const now = new Date().toISOString();
       const feedbackId = `feedback-${Date.now()}`;
-      const result = await dataClient.models.Feedback.create({
+      const result = await getDataClient().models.Feedback.create({
         userId: request.userId,
         feedbackId,
         recommendationId: request.recommendationId,
@@ -1017,64 +1121,37 @@ class ApiClient {
     }
 
     try {
-      const functionUrl = (
-        outputs as { custom?: { [key: string]: { url?: string } } }
-      ).custom?.saveCurrentPlanFunction?.url;
-
-      if (!functionUrl) {
-        // Fallback to direct data client
-        const existing = await dataClient.models.CurrentPlan.list({
-          filter: { userId: { eq: userId } },
-        });
-
-        const now = new Date().toISOString();
-        if (existing.data && existing.data.length > 0) {
-          await dataClient.models.CurrentPlan.update({
-            id: existing.data[0].id,
-            supplierName: currentPlan.supplierName,
-            planName: currentPlan.planName || null,
-            contractStartDate: currentPlan.contractStartDate || null,
-            contractEndDate: currentPlan.contractEndDate || null,
-            earlyTerminationFee: currentPlan.earlyTerminationFee || null,
-            contractType: currentPlan.contractType || null,
-            updatedAt: now,
-          });
-        } else {
-          await dataClient.models.CurrentPlan.create({
-            userId,
-            supplierName: currentPlan.supplierName,
-            planName: currentPlan.planName || null,
-            contractStartDate: currentPlan.contractStartDate || null,
-            contractEndDate: currentPlan.contractEndDate || null,
-            earlyTerminationFee: currentPlan.earlyTerminationFee || null,
-            contractType: currentPlan.contractType || null,
-            createdAt: now,
-            updatedAt: now,
-          });
-        }
-        return;
-      }
-
-      const { fetchAuthSession } = await import('aws-amplify/auth');
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-        body: JSON.stringify({ userId, currentPlan }),
+      // Use Amplify Data API directly to avoid CORS issues with Lambda function URLs
+      const existing = await getDataClient().models.CurrentPlan.list({
+        filter: { userId: { eq: userId } },
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to save current plan: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.error || 'Failed to save current plan');
+      const now = new Date().toISOString();
+      if (existing.data && existing.data.length > 0) {
+        // Update existing plan
+        await getDataClient().models.CurrentPlan.update({
+          id: existing.data[0].id,
+          supplierName: currentPlan.supplierName,
+          planName: currentPlan.planName || null,
+          contractStartDate: currentPlan.contractStartDate || null,
+          contractEndDate: currentPlan.contractEndDate || null,
+          earlyTerminationFee: currentPlan.earlyTerminationFee || null,
+          contractType: currentPlan.contractType || null,
+          updatedAt: now,
+        });
+      } else {
+        // Create new plan
+        await getDataClient().models.CurrentPlan.create({
+          userId,
+          supplierName: currentPlan.supplierName,
+          planName: currentPlan.planName || null,
+          contractStartDate: currentPlan.contractStartDate || null,
+          contractEndDate: currentPlan.contractEndDate || null,
+          earlyTerminationFee: currentPlan.earlyTerminationFee || null,
+          contractType: currentPlan.contractType || null,
+          createdAt: now,
+          updatedAt: now,
+        });
       }
     } catch (error) {
       console.error('Error saving current plan:', error);
@@ -1110,115 +1187,161 @@ class ApiClient {
     }
 
     try {
-      const functionUrl = (
-        outputs as { custom?: { [key: string]: { url?: string } } }
-      ).custom?.saveUsageDataFunction?.url;
+      // Use Amplify Data API directly to avoid CORS issues with Lambda function URLs
+      const now = new Date().toISOString();
 
-      if (!functionUrl) {
-        // Fallback to direct data client - update existing or create new
-        const now = new Date().toISOString();
-
-        // Check if there's existing usage data for this user
-        const existingData = await dataClient.models.CustomerUsageData.list({
-          filter: { userId: { eq: userId } },
-        });
-
-        if (existingData.data && existingData.data.length > 0) {
-          // Get the most recent record
-          const sorted = existingData.data.sort(
-            (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-          const latest = sorted[0];
-
-          // Merge usage points: combine existing and new, removing duplicates by timestamp
-          const existingPoints = (latest.usagePoints as UsageDataPoint[]) || [];
-          const newPoints = usageData.usagePoints;
-
-          // Create a map of existing points by timestamp (month/year)
-          const pointsMap = new Map<
-            string,
-            { timestamp: string; kwh: number; cost?: number }
-          >();
-          existingPoints.forEach(
-            (point: { timestamp: string; kwh: number; cost?: number }) => {
-              const date = new Date(point.timestamp);
-              const key = `${date.getFullYear()}-${date.getMonth()}`;
-              pointsMap.set(key, point);
-            }
-          );
-
-          // Overwrite with new points (they take precedence)
-          newPoints.forEach(
-            (point: { timestamp: string; kwh: number; cost?: number }) => {
-              const date = new Date(point.timestamp);
-              const key = `${date.getFullYear()}-${date.getMonth()}`;
-              pointsMap.set(key, point);
-            }
-          );
-
-          // Convert map back to array and sort by timestamp
-          const mergedPoints = Array.from(pointsMap.values()).sort(
-            (a, b) =>
-              new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-          );
-
-          // Update the existing record
-          await dataClient.models.CustomerUsageData.update({
-            id: latest.id,
-            usagePoints: mergedPoints as UsageDataPoint[],
-            totalAnnualKwh:
-              usageData.totalAnnualKwh || latest.totalAnnualKwh || null,
-            averageMonthlyKwh:
-              usageData.averageMonthlyKwh || latest.averageMonthlyKwh || null,
-            peakMonthKwh: usageData.peakMonthKwh || latest.peakMonthKwh || null,
-            peakMonth: usageData.peakMonth || latest.peakMonth || null,
-            billingInfo:
-              (usageData.billingInfo as Record<string, unknown>) ||
-              latest.billingInfo ||
-              null,
-            updatedAt: now,
-          });
-        } else {
-          // No existing data, create a new record
-          const usageDataId = `usage-${userId}-${Date.now()}`;
-          await dataClient.models.CustomerUsageData.create({
-            userId,
-            usageDataId,
-            usagePoints: usageData.usagePoints as UsageDataPoint[],
-            totalAnnualKwh: usageData.totalAnnualKwh || null,
-            averageMonthlyKwh: usageData.averageMonthlyKwh || null,
-            peakMonthKwh: usageData.peakMonthKwh || null,
-            peakMonth: usageData.peakMonth || null,
-            billingInfo:
-              (usageData.billingInfo as Record<string, unknown>) || null,
-            createdAt: now,
-            updatedAt: now,
-          });
-        }
-        return;
-      }
-
-      const { fetchAuthSession } = await import('aws-amplify/auth');
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-
-      const response = await fetch(functionUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
-        body: JSON.stringify({ userId, usageData }),
+      // Check if there's existing usage data for this user
+      const existingData = await getDataClient().models.CustomerUsageData.list({
+        filter: { userId: { eq: userId } },
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to save usage data: ${response.statusText}`);
-      }
+      if (existingData.data && existingData.data.length > 0) {
+        // Get the most recent record
+        const sorted = existingData.data.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        const latest = sorted[0];
 
-      const result = await response.json();
-      if (!result.success) {
-        throw new Error(result.error || 'Failed to save usage data');
+        // Merge usage points: combine existing and new, removing duplicates by timestamp
+        // Parse existing points from JSON string (AWSJSON type)
+        let existingPoints: UsageDataPoint[] = [];
+        if (latest.usagePoints) {
+          if (typeof latest.usagePoints === 'string') {
+            try {
+              existingPoints = JSON.parse(
+                latest.usagePoints
+              ) as UsageDataPoint[];
+            } catch (e) {
+              console.error(
+                '[saveUsageData] Failed to parse existing usagePoints JSON:',
+                e
+              );
+              existingPoints = [];
+            }
+          } else if (Array.isArray(latest.usagePoints)) {
+            existingPoints = latest.usagePoints as UsageDataPoint[];
+          }
+        }
+        const newPoints = usageData.usagePoints;
+
+        // Create a map of existing points by timestamp (month/year)
+        // Extract month/year directly from ISO string to avoid timezone issues
+        const getMonthYearKey = (timestamp: string): string => {
+          // Parse ISO string directly: YYYY-MM-DDTHH:mm:ss.sssZ
+          const match = timestamp.match(/^(\d{4})-(\d{2})-/);
+          if (match) {
+            const year = match[1];
+            const month = parseInt(match[2], 10) - 1; // Convert to 0-indexed
+            return `${year}-${month}`;
+          }
+          // Fallback to Date parsing if format is different
+          const date = new Date(timestamp);
+          return `${date.getFullYear()}-${date.getMonth()}`;
+        };
+
+        const pointsMap = new Map<
+          string,
+          { timestamp: string; kwh: number; cost?: number }
+        >();
+        existingPoints.forEach(
+          (point: { timestamp: string; kwh: number; cost?: number }) => {
+            const key = getMonthYearKey(point.timestamp);
+            pointsMap.set(key, point);
+          }
+        );
+
+        // Overwrite with new points (they take precedence)
+        newPoints.forEach(
+          (point: { timestamp: string; kwh: number; cost?: number }) => {
+            const key = getMonthYearKey(point.timestamp);
+            pointsMap.set(key, point);
+          }
+        );
+
+        // Convert map back to array and sort by timestamp
+        const mergedPoints = Array.from(pointsMap.values()).sort(
+          (a, b) =>
+            new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+        );
+
+        // Ensure usagePoints is a plain array for JSON field
+        const mergedPointsData = mergedPoints.map(point => {
+          const plainPoint: Record<string, unknown> = {
+            timestamp: point.timestamp,
+            kwh: point.kwh,
+          };
+          // Only include cost if it's defined
+          if (point.cost !== undefined && point.cost !== null) {
+            plainPoint.cost = point.cost;
+          }
+          return plainPoint;
+        });
+
+        // AWSJSON scalar type requires a JSON string
+        const mergedPointsJson = JSON.stringify(mergedPointsData);
+
+        // Update the existing record
+        await getDataClient().models.CustomerUsageData.update({
+          id: latest.id,
+          usagePoints: mergedPointsJson, // AWSJSON expects a JSON string
+          totalAnnualKwh:
+            usageData.totalAnnualKwh || latest.totalAnnualKwh || null,
+          averageMonthlyKwh:
+            usageData.averageMonthlyKwh || latest.averageMonthlyKwh || null,
+          peakMonthKwh: usageData.peakMonthKwh || latest.peakMonthKwh || null,
+          peakMonth: usageData.peakMonth || latest.peakMonth || null,
+          billingInfo:
+            (usageData.billingInfo as Record<string, unknown>) ||
+            latest.billingInfo ||
+            null,
+          updatedAt: now,
+        });
+      } else {
+        // No existing data, create a new record
+        const usageDataId = `usage-${userId}-${Date.now()}`;
+        // Ensure usagePoints is a plain array with only the required fields
+        // AWSJSON type in GraphQL expects a JSON string, not a JavaScript object
+        const usagePointsData = usageData.usagePoints.map(point => {
+          const plainPoint: Record<string, unknown> = {
+            timestamp: point.timestamp,
+            kwh: point.kwh,
+          };
+          // Only include cost if it's defined
+          if (point.cost !== undefined && point.cost !== null) {
+            plainPoint.cost = point.cost;
+          }
+          return plainPoint;
+        });
+
+        // AWSJSON scalar type requires a JSON string
+        const usagePointsJson = JSON.stringify(usagePointsData);
+
+        const createData = {
+          userId,
+          usageDataId,
+          usagePoints: usagePointsJson, // AWSJSON expects a JSON string
+          totalAnnualKwh: usageData.totalAnnualKwh || null,
+          averageMonthlyKwh: usageData.averageMonthlyKwh || null,
+          peakMonthKwh: usageData.peakMonthKwh || null,
+          peakMonth: usageData.peakMonth || null,
+          billingInfo:
+            (usageData.billingInfo as Record<string, unknown>) || null,
+          createdAt: now,
+          updatedAt: now,
+        };
+        const createResult =
+          await getDataClient().models.CustomerUsageData.create(createData);
+
+        if (createResult.errors && createResult.errors.length > 0) {
+          throw new Error(
+            `Failed to create usage data: ${JSON.stringify(createResult.errors)}`
+          );
+        }
+
+        if (!createResult.data) {
+          throw new Error('Failed to create usage data: No data returned');
+        }
       }
     } catch (error) {
       console.error('Error saving usage data:', error);
@@ -1242,7 +1365,7 @@ class ApiClient {
     }
 
     try {
-      const result = await dataClient.models.CurrentPlan.list({
+      const result = await getDataClient().models.CurrentPlan.list({
         filter: { userId: { eq: userId } },
       });
 
@@ -1280,7 +1403,7 @@ class ApiClient {
     }
 
     try {
-      const result = await dataClient.models.UserProfile.list({
+      const result = await getDataClient().models.UserProfile.list({
         filter: { userId: { eq: userId } },
       });
 
@@ -1322,13 +1445,13 @@ class ApiClient {
     }
 
     try {
-      const existing = await dataClient.models.UserProfile.list({
+      const existing = await getDataClient().models.UserProfile.list({
         filter: { userId: { eq: userId } },
       });
 
       const now = new Date().toISOString();
       if (existing.data && existing.data.length > 0) {
-        await dataClient.models.UserProfile.update({
+        await getDataClient().models.UserProfile.update({
           id: existing.data[0].id,
           state:
             profile.state !== undefined ? profile.state || null : undefined,
@@ -1348,17 +1471,8 @@ class ApiClient {
               : undefined,
           updatedAt: now,
         });
-        // eslint-disable-next-line no-console
-        console.log(
-          '[saveUserProfile] Updated user profile with custom averages:',
-          {
-            useCustomAverages: profile.useCustomAverages,
-            customAverageKwh: profile.customAverageKwh,
-            customAverageCost: profile.customAverageCost,
-          }
-        );
       } else {
-        await dataClient.models.UserProfile.create({
+        await getDataClient().models.UserProfile.create({
           userId,
           state: profile.state || null,
           address: profile.address || null,
@@ -1368,15 +1482,6 @@ class ApiClient {
           createdAt: now,
           updatedAt: now,
         });
-        // eslint-disable-next-line no-console
-        console.log(
-          '[saveUserProfile] Created new user profile with custom averages:',
-          {
-            useCustomAverages: profile.useCustomAverages,
-            customAverageKwh: profile.customAverageKwh,
-            customAverageCost: profile.customAverageCost,
-          }
-        );
       }
     } catch (error) {
       console.error('Error saving user profile:', error);

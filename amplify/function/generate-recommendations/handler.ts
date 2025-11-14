@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-console */
 import type { Handler } from 'aws-lambda';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, QueryCommand, PutCommand } from '@aws-sdk/lib-dynamodb';
@@ -85,8 +84,6 @@ interface GenerateRecommendationsResponse {
     percentageSavings: number;
     paybackPeriodMonths?: number;
     explanation: string;
-    riskFlags: string[];
-    riskScore: number; // 0-100, higher = more risk
   }>;
   error?: string;
 }
@@ -141,71 +138,40 @@ function calculatePaybackPeriod(
 }
 
 /**
- * Assess risk flags and calculate risk score
+ * Calculate compatibility score (replaces risk assessment)
+ * Higher score = better match with user preferences
  */
-function assessRisk(
+function calculateCompatibilityScore(
   plan: GenerateRecommendationsEvent['availablePlans'][0],
-  preferences: GenerateRecommendationsEvent['preferences'],
-  usageData: GenerateRecommendationsEvent['usageData']
-): { riskFlags: string[]; riskScore: number } {
-  const riskFlags: string[] = [];
-  let riskScore = 0;
+  preferences: GenerateRecommendationsEvent['preferences']
+): number {
+  let score = 100; // Start with perfect score
 
-  // Variable rate risk
-  if (plan.contractType === 'variable') {
-    riskFlags.push('variable_rate');
-    riskScore += 30;
+  // Contract type match bonus
+  if (preferences.contractTypePreference && plan.contractType === preferences.contractTypePreference) {
+    score += 10;
   }
 
-  // High termination fee risk
-  if (plan.earlyTerminationFee) {
-    const feeRatio = plan.earlyTerminationFee / (usageData.aggregatedStats.averageMonthlyCost * 12);
-    if (feeRatio > 0.1) {
-      // More than 10% of annual cost
-      riskFlags.push('high_termination_fee');
-      riskScore += 25;
-    } else if (plan.earlyTerminationFee > preferences.earlyTerminationFeeTolerance) {
-      riskFlags.push('termination_fee_above_tolerance');
-      riskScore += 15;
-    }
-  }
-
-  // Low supplier rating
-  if (plan.supplierRating && plan.supplierRating < preferences.supplierRatingPreference) {
-    riskFlags.push('low_supplier_rating');
-    riskScore += 20;
-  }
-
-  // Contract type mismatch
-  if (
-    preferences.contractTypePreference &&
-    plan.contractType !== preferences.contractTypePreference
-  ) {
-    riskFlags.push('contract_type_mismatch');
-    riskScore += 10;
-  }
-
-  // Renewable energy mismatch
+  // Renewable energy match bonus
   if (
     preferences.renewableEnergyPreference > 0 &&
-    (!plan.renewablePercentage || plan.renewablePercentage < preferences.renewableEnergyPreference)
+    plan.renewablePercentage &&
+    plan.renewablePercentage >= preferences.renewableEnergyPreference
   ) {
-    riskFlags.push('renewable_energy_mismatch');
-    riskScore += 5;
+    score += 10;
   }
 
-  // Long contract with high termination fee
-  if (plan.contractLength && plan.contractLength > preferences.flexibilityPreference) {
-    if (plan.earlyTerminationFee && plan.earlyTerminationFee > 0) {
-      riskFlags.push('inflexible_contract');
-      riskScore += 15;
-    }
+  // Supplier rating bonus
+  if (plan.supplierRating && plan.supplierRating >= preferences.supplierRatingPreference) {
+    score += 10;
   }
 
-  // Cap risk score at 100
-  riskScore = Math.min(riskScore, 100);
+  // Early termination fee penalty (lower is better)
+  if (plan.earlyTerminationFee && plan.earlyTerminationFee > preferences.earlyTerminationFeeTolerance) {
+    score -= 10;
+  }
 
-  return { riskFlags, riskScore };
+  return Math.max(0, Math.min(score, 150)); // Cap between 0-150
 }
 
 /**
@@ -216,31 +182,30 @@ function scorePlan(
   currentAnnualCost: number,
   annualKwh: number,
   preferences: GenerateRecommendationsEvent['preferences'],
-  usageData: GenerateRecommendationsEvent['usageData']
+  _usageData: GenerateRecommendationsEvent['usageData']
 ): {
   plan: typeof plan;
   score: number;
   savings: ReturnType<typeof calculateSavings>;
-  risk: ReturnType<typeof assessRisk>;
+  compatibilityScore: number;
   paybackPeriod?: number;
 } {
   const planAnnualCost = calculateAnnualCost(plan, annualKwh);
   const savings = calculateSavings(currentAnnualCost, planAnnualCost);
-  const risk = assessRisk(plan, preferences, usageData);
+  const compatibilityScore = calculateCompatibilityScore(plan, preferences);
 
   // Calculate upfront costs (termination fee if switching)
   const upfrontCosts = plan.earlyTerminationFee || 0;
   const paybackPeriod = calculatePaybackPeriod(upfrontCosts, savings.monthlySavings);
 
   // Scoring algorithm with dynamic weights based on costSavingsPriority:
-  // - High priority: Savings 60%, Risk -25%, Preferences 15%
-  // - Medium priority: Savings 50%, Risk -30%, Preferences 20%
-  // - Low priority: Savings 40%, Risk -30%, Preferences 30%
+  // - High priority: Savings 60%, Compatibility 40%
+  // - Medium priority: Savings 50%, Compatibility 50%
+  // - Low priority: Savings 40%, Compatibility 60%
   
   const savingsWeight = preferences.costSavingsPriority === 'high' ? 60 : 
                         preferences.costSavingsPriority === 'medium' ? 50 : 40;
-  const riskWeight = preferences.costSavingsPriority === 'high' ? 25 : 30;
-  const preferenceWeight = 100 - savingsWeight - riskWeight;
+  const compatibilityWeight = 100 - savingsWeight;
   
   let score = 0;
 
@@ -264,36 +229,16 @@ function scorePlan(
   }
   score += savingsComponent;
 
-  // Risk component (-riskWeight to 0 points)
-  const riskComponent = -(risk.riskScore / 100) * riskWeight;
-  score += riskComponent;
-
-  // Preference match component (0 to preferenceWeight points)
-  let preferenceMatch = 0;
-  const pointsPerMatch = preferenceWeight / 4; // Divide points across 4 preference checks
-  
-  if (preferences.contractTypePreference && plan.contractType === preferences.contractTypePreference) {
-    preferenceMatch += pointsPerMatch;
-  }
-  if (
-    plan.renewablePercentage &&
-    plan.renewablePercentage >= preferences.renewableEnergyPreference
-  ) {
-    preferenceMatch += pointsPerMatch;
-  }
-  if (plan.supplierRating && plan.supplierRating >= preferences.supplierRatingPreference) {
-    preferenceMatch += pointsPerMatch;
-  }
-  if (!plan.earlyTerminationFee || plan.earlyTerminationFee <= preferences.earlyTerminationFeeTolerance) {
-    preferenceMatch += pointsPerMatch;
-  }
-  score += preferenceMatch;
+  // Compatibility component (0 to compatibilityWeight points)
+  // Normalize compatibility score (0-150) to 0-compatibilityWeight range
+  const compatibilityComponent = (compatibilityScore / 150) * compatibilityWeight;
+  score += compatibilityComponent;
 
   return {
     plan,
     score,
     savings,
-    risk,
+    compatibilityScore,
     paybackPeriod,
   };
 }
@@ -307,7 +252,6 @@ function getTableName(modelName: string): string {
   const envVarName = `${modelName.toUpperCase()}_TABLE_NAME`;
   const tableName = process.env[envVarName];
   if (tableName) {
-    console.log(`[getTableName] Using table name from environment: ${tableName}`);
     return tableName;
   }
   
@@ -319,7 +263,6 @@ function getTableName(modelName: string): string {
   
   if (graphqlApiId) {
     const constructedTableName = `${modelName}-${graphqlApiId}-NONE`;
-    console.log(`[getTableName] Constructed table name from GraphQL endpoint: ${constructedTableName}`);
     return constructedTableName;
   }
   
@@ -382,7 +325,6 @@ export const handler: Handler<
     
     // If it's OPTIONS method OR doesn't have a valid body, treat as OPTIONS preflight
     if (httpMethod === 'OPTIONS' || httpMethod === 'options' || (isHttpRequest && !hasValidBody)) {
-      console.log('[generate-recommendations] OPTIONS request detected:', { httpMethod, hasValidBody, isHttpRequest });
       return {
         statusCode: 200,
         headers: corsHeaders,
@@ -567,8 +509,6 @@ ${JSON.stringify(
             monthlySavings: scored.savings.monthlySavings,
             percentageSavings: scored.savings.percentageSavings,
             paybackPeriodMonths: scored.paybackPeriod,
-            riskFlags: scored.risk.riskFlags,
-            riskScore: scored.risk.riskScore,
           })),
           null,
           2
@@ -584,7 +524,7 @@ Instructions:
 1. Generate a clear, personalized explanation for each of the 3 plans
 2. Explain why this plan is recommended based on usage patterns and preferences
 3. Mention specific savings amounts and percentages
-4. Address any risk flags in a balanced way
+4. Highlight positive aspects and benefits of each plan
 5. Keep explanations concise (2-3 sentences each)
 6. Return valid JSON only
 
@@ -640,8 +580,6 @@ Return format:
             percentageSavings: scored.savings.percentageSavings,
             paybackPeriodMonths: scored.paybackPeriod,
             explanation,
-            riskFlags: scored.risk.riskFlags,
-            riskScore: scored.risk.riskScore,
           };
         });
       } catch (error) {
@@ -661,8 +599,6 @@ Return format:
         percentageSavings: scored.savings.percentageSavings,
         paybackPeriodMonths: scored.paybackPeriod,
         explanation: `This ${scored.plan.contractType} plan from ${scored.plan.supplierName} offers ${scored.savings.percentageSavings.toFixed(1)}% annual savings ($${scored.savings.annualSavings.toFixed(2)}/year).`,
-        riskFlags: scored.risk.riskFlags,
-        riskScore: scored.risk.riskScore,
       }));
     }
 

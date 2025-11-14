@@ -25,6 +25,10 @@ interface ComparisonPlan {
   annualSavings: number;
   monthlySavings: number;
   percentageSavings: number;
+  satisfaction?: {
+    averageRating: number;
+    reviewCount: number;
+  };
 }
 
 export function PlanComparisonPage() {
@@ -87,7 +91,7 @@ export function PlanComparisonPage() {
 
             // Calculate costs
             const energyCost = plan.ratePerKwh * annualKwh;
-            const monthlyFees = 0; // Assuming no monthly fees for now
+            const monthlyFees = 0;
             const annualCost = energyCost + monthlyFees;
             const monthlyCost = annualCost / 12;
             const annualSavings = currentAnnualCost - annualCost;
@@ -112,7 +116,25 @@ export function PlanComparisonPage() {
           })
           .filter((p): p is ComparisonPlan => p !== null);
 
-        setPlans(comparisonPlans);
+        // Fetch satisfaction data for each plan
+        const plansWithSatisfaction = await Promise.all(
+          comparisonPlans.map(async comparisonPlan => {
+            try {
+              const satisfaction = await apiClient.getPlanSatisfaction(
+                comparisonPlan.plan.planId
+              );
+              return {
+                ...comparisonPlan,
+                satisfaction: satisfaction || undefined,
+              };
+            } catch (err) {
+              // Ignore errors - satisfaction is optional
+              return comparisonPlan;
+            }
+          })
+        );
+
+        setPlans(plansWithSatisfaction);
       } catch (err) {
         setError(
           err instanceof Error
@@ -475,44 +497,54 @@ export function PlanComparisonPage() {
                   ))}
                 </tr>
 
-                {/* Risk Flags */}
-                {plans.some(
-                  p =>
-                    p.recommendation?.riskFlags &&
-                    p.recommendation.riskFlags.length > 0
-                ) && (
-                  <tr className="border-b">
-                    <td className="p-4 font-medium">Risk Flags</td>
-                    <td className="p-4 text-center text-muted-foreground">—</td>
-                    {plans.map(comparisonPlan => (
+                {/* Customer Satisfaction */}
+                <tr className="border-b">
+                  <td className="p-4 font-medium">Customer Satisfaction</td>
+                  <td className="p-4 text-center text-muted-foreground">—</td>
+                  {plans.map(comparisonPlan => {
+                    // We'll fetch satisfaction data - for now show placeholder
+                    const satisfaction = comparisonPlan.satisfaction;
+                    return (
                       <td
                         key={comparisonPlan.plan.planId}
                         className="p-4 text-center"
                       >
-                        {comparisonPlan.recommendation?.riskFlags &&
-                        comparisonPlan.recommendation.riskFlags.length > 0 ? (
-                          <div className="space-y-1">
-                            {comparisonPlan.recommendation.riskFlags.map(
-                              (flag, idx) => (
-                                <Badge
-                                  key={idx}
-                                  variant="destructive"
-                                  className="mr-1"
+                        {satisfaction ? (
+                          <div className="flex flex-col items-center gap-1">
+                            <div className="flex items-center">
+                              {[1, 2, 3, 4, 5].map(star => (
+                                <span
+                                  key={star}
+                                  className={`text-sm ${
+                                    star <= satisfaction.averageRating
+                                      ? 'text-yellow-400'
+                                      : 'text-gray-300'
+                                  }`}
                                 >
-                                  {flag
-                                    .replace(/_/g, ' ')
-                                    .replace(/\b\w/g, l => l.toUpperCase())}
-                                </Badge>
+                                  ★
+                                </span>
+                              ))}
+                            </div>
+                            <span className="text-xs font-semibold">
+                              {satisfaction.averageRating.toFixed(1)}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              ({satisfaction.reviewCount}{' '}
+                              {satisfaction.reviewCount === 1
+                                ? 'review'
+                                : 'reviews'}
                               )
-                            )}
+                            </span>
                           </div>
                         ) : (
-                          <span className="text-green-600">None</span>
+                          <span className="text-sm text-muted-foreground">
+                            No reviews yet
+                          </span>
                         )}
                       </td>
-                    ))}
-                  </tr>
-                )}
+                    );
+                  })}
+                </tr>
               </tbody>
             </table>
           </div>

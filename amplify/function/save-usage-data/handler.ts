@@ -173,17 +173,29 @@ export const handler: Handler<HandlerEvent, unknown> = async (event) => {
       const newPoints = usageData.usagePoints;
       
       // Create a map of existing points by timestamp (month/year)
+      // Extract month/year directly from ISO string to avoid timezone issues
+      const getMonthYearKey = (timestamp: string): string => {
+        // Parse ISO string directly: YYYY-MM-DDTHH:mm:ss.sssZ
+        const match = timestamp.match(/^(\d{4})-(\d{2})-/);
+        if (match) {
+          const year = match[1];
+          const month = parseInt(match[2], 10) - 1; // Convert to 0-indexed
+          return `${year}-${month}`;
+        }
+        // Fallback to Date parsing if format is different
+        const date = new Date(timestamp);
+        return `${date.getFullYear()}-${date.getMonth()}`;
+      };
+      
       const pointsMap = new Map<string, UsageDataPoint>();
       existingPoints.forEach((point: UsageDataPoint) => {
-        const date = new Date(point.timestamp);
-        const key = `${date.getFullYear()}-${date.getMonth()}`;
+        const key = getMonthYearKey(point.timestamp);
         pointsMap.set(key, point);
       });
 
       // Overwrite with new points (they take precedence)
       newPoints.forEach((point: UsageDataPoint) => {
-        const date = new Date(point.timestamp);
-        const key = `${date.getFullYear()}-${date.getMonth()}`;
+        const key = getMonthYearKey(point.timestamp);
         pointsMap.set(key, point);
       });
 

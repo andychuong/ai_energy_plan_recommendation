@@ -23,6 +23,11 @@ export const normalizeDataFunction = defineFunction({
   environment: {
     OPENROUTER_API_KEY: secret('OPENROUTER_API_KEY'),
   },
+  timeoutSeconds: 30, // AI operations need more time
+  memoryMB: 512,
+  bundling: {
+    minify: true,
+  },
 });
 
 /**
@@ -35,6 +40,11 @@ export const generateRecommendationsFunction = defineFunction({
   entry: '../function/generate-recommendations/handler.ts',
   environment: {
     OPENROUTER_API_KEY: secret('OPENROUTER_API_KEY'),
+  },
+  timeoutSeconds: 60, // AI operations can take time
+  memoryMB: 1024, // More memory for AI processing
+  bundling: {
+    minify: true,
   },
 });
 
@@ -55,6 +65,11 @@ export const updatePlanCatalogFunction = defineFunction({
     // Table name will be set dynamically by backend.ts from the data resource
     // This allows the table name to be determined at deployment time
   },
+  timeoutSeconds: 60, // API calls to external services can take time
+  memoryMB: 512,
+  bundling: {
+    minify: true,
+  },
 });
 
 /**
@@ -64,6 +79,9 @@ export const updatePlanCatalogFunction = defineFunction({
 export const processUsageDataFunction = defineFunction({
   name: 'process-usage-data',
   entry: '../function/process-usage-data/handler.ts',
+  bundling: {
+    minify: true,
+  },
 });
 
 /**
@@ -77,6 +95,11 @@ export const readStatementFunction = defineFunction({
   entry: '../function/read-statement/handler.ts',
   environment: {
     OPENROUTER_API_KEY: secret('OPENROUTER_API_KEY'),
+  },
+  timeoutSeconds: 60, // AI operations can take time, especially for PDF/image processing
+  memoryMB: 1024, // More memory for processing large files
+  bundling: {
+    minify: true,
   },
 });
 
@@ -99,6 +122,9 @@ export const autoConfirmUserFunction = defineFunction({
 export const saveCurrentPlanFunction = defineFunction({
   name: 'save-current-plan',
   entry: '../function/save-current-plan/handler.ts',
+  bundling: {
+    minify: true,
+  },
 });
 
 /**
@@ -108,5 +134,8 @@ export const saveCurrentPlanFunction = defineFunction({
 export const saveUsageDataFunction = defineFunction({
   name: 'save-usage-data',
   entry: '../function/save-usage-data/handler.ts',
+  bundling: {
+    minify: true,
+  },
 });
 

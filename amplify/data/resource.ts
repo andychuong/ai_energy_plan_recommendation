@@ -3,6 +3,7 @@ import {
   updatePlanCatalogFunction,
   saveCurrentPlanFunction,
   saveUsageDataFunction,
+  readStatementFunction,
 } from '../api/resource';
 
 /**
@@ -182,11 +183,35 @@ const schema = a.schema({
     .authorization((allow) => [
       allow.owner(), // Users can only access their own profile
     ]),
+
+  /**
+   * Statement Format Pattern
+   * Stores learned patterns from successful statement extractions
+   * Used to improve AI accuracy by providing examples and context
+   */
+  StatementFormat: a
+    .model({
+      formatId: a.id().required(),
+      utilityName: a.string().required(), // Utility/supplier name
+      fileType: a.string().required(), // 'pdf' | 'image' | 'csv' | 'text'
+      formatPattern: a.json().required(), // Structure: column names, date formats, etc.
+      exampleExtraction: a.json().required(), // Example of successful extraction
+      columnMappings: a.json(), // CSV column mappings (if applicable)
+      dateFormats: a.string().array(), // Common date formats found
+      successCount: a.integer().required(), // Number of successful extractions with this format
+      lastUsedAt: a.datetime().required(), // Last time this format was used
+      createdAt: a.datetime().required(),
+      updatedAt: a.datetime().required(),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(['read']), // All authenticated users can read (for learning)
+    ]),
 })
   .authorization((allow) => [
     allow.resource(updatePlanCatalogFunction).to(['query', 'mutate']), // Function can query and mutate all models
     allow.resource(saveCurrentPlanFunction).to(['query', 'mutate']), // Function can query and mutate all models
     allow.resource(saveUsageDataFunction).to(['query', 'mutate']), // Function can query and mutate all models
+    allow.resource(readStatementFunction).to(['query', 'mutate']), // Function can query and mutate all models
   ]);
 
 export type Schema = ClientSchema<typeof schema>;

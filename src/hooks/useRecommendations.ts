@@ -29,6 +29,8 @@ export function useRecommendations(
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recommendations'] });
+      // Also invalidate saved recommendations so dashboard updates
+      queryClient.invalidateQueries({ queryKey: ['savedRecommendations'] });
     },
   });
 

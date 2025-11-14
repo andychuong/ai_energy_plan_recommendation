@@ -11,17 +11,7 @@ export function useUsageData(userId: string | undefined) {
       if (!userId) {
         throw new Error('User ID is required');
       }
-      // eslint-disable-next-line no-console
-      console.log('[useUsageData] Fetching usage data for userId:', userId);
-      const data = await apiClient.getUsageData(userId);
-      // eslint-disable-next-line no-console
-      console.log('[useUsageData] Fetched usage data:', {
-        averageMonthlyKwh: data.aggregatedStats?.averageMonthlyKwh,
-        averageMonthlyCost: data.aggregatedStats?.averageMonthlyCost,
-        totalKwh: data.aggregatedStats?.totalKwh,
-        totalCost: data.aggregatedStats?.totalCost,
-      });
-      return data;
+      return await apiClient.getUsageData(userId);
     },
     enabled: !!userId,
     refetchOnWindowFocus: true,
