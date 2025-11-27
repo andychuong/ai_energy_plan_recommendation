@@ -142,7 +142,7 @@ arbor_ai_energy/
 - Upload bills or manually enter usage data
 - Visualize usage patterns with charts
 - Edit and update monthly usage data
-- Automatic aggregation and statistics  
+- Automatic aggregation and statistics    
 
 ## CI/CD
 
