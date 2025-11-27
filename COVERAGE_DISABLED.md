@@ -1,5 +1,9 @@
 # Coverage Collection Temporarily Disabled
 
+## Why Was This Changed?
+
+The CI/CD pipeline was **failing** because it was trying to run `npm run test:coverage`, which is incompatible with Node.js 20. The tests themselves were passing with `npm run test:ci`, but the coverage generation step was causing the pipeline to fail.
+
 ## Issue
 
 Coverage collection has been temporarily disabled due to a Node.js 20 compatibility issue with the `test-exclude` package (used by `babel-plugin-istanbul` for coverage instrumentation).
