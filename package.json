@@ -21,7 +21,7 @@
     "sandbox": "ampx sandbox --exclude '**/node_modules/**' --exclude '**/.amplify/**' --exclude '**/.amplify-hosting/**' --exclude '**/build/**' --exclude '**/dist/**' --exclude '**/coverage/**'"
   },
   "dependencies": {
-    "@aws-amplify/backend": "^1.17.0",
+    "@aws-amplify/backend": "^1.18.0",
     "@aws-amplify/backend-cli": "^1.8.0",
     "@aws-amplify/ui-react": "^6.13.1",
     "@hookform/resolvers": "^3.3.2",
@@ -69,7 +69,14 @@
     "vite": "^5.0.0"
   },
   "overrides": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "glob": "^11.1.0",
+    "@aws-amplify/data-construct": {
+      "glob": "^11.1.0"
+    },
+    "@aws-amplify/graphql-api-construct": {
+      "glob": "^11.1.0"
+    }
   },
   "engines": {
     "node": ">=18.0.0",
