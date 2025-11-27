@@ -6,23 +6,11 @@ module.exports = {
     '^shared/(.*)$': '<rootDir>/shared/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/**/*.stories.{ts,tsx}',
-    '!src/**/__tests__/**',
-    '!src/index.tsx',
-    '!src/main.tsx',
-  ],
-  // Coverage thresholds - set lower initially, can be increased as more tests are added
-  coverageThreshold: {
-    global: {
-      branches: 0,
-      functions: 0,
-      lines: 0,
-      statements: 0,
-    },
-  },
+  // Coverage collection disabled due to test-exclude incompatibility with Node.js 20
+  // See: https://github.com/istanbuljs/test-exclude/issues/52
+  collectCoverage: false,
+  collectCoverageFrom: [],
+  coverageThreshold: {},
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.{ts,tsx}',
     '<rootDir>/src/**/*.{spec,test}.{ts,tsx}',
