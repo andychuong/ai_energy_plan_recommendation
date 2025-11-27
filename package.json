@@ -16,7 +16,7 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:ci": "jest --ci --coverage --maxWorkers=2 --passWithNoTests",
+    "test:ci": "jest --ci --maxWorkers=2 --passWithNoTests",
     "test:coverage": "jest --coverage --passWithNoTests",
     "sandbox": "ampx sandbox --exclude '**/node_modules/**' --exclude '**/.amplify/**' --exclude '**/.amplify-hosting/**' --exclude '**/build/**' --exclude '**/dist/**' --exclude '**/coverage/**'"
   },
