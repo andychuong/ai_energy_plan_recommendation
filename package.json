@@ -71,7 +71,7 @@
   "overrides": {
     "esbuild": "^0.25.0",
     "glob": "^11.1.0",
-    "yaml": "^2.8.1",
+    "yaml": "1.10.2",
     "@aws-amplify/data-construct": {
       "glob": "^11.1.0"
     },
